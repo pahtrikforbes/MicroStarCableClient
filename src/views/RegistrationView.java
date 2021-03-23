@@ -41,10 +41,10 @@ public class RegistrationView  extends JFrame implements ActionListener  {
     private AuthController authController;
     
     
-	public RegistrationForm()
+	public void RegistrationForm()
 	    {
 		
-		super();
+//		super();
 		//labels
 		this.roles = new String[] {"Customer","Representative","Technician"};
 		this.firstNameLabel=new JLabel("FIRST NAME");
