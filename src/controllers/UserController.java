@@ -16,11 +16,13 @@ public class UserController {
 	private ServerConnector serverConnector;
 	private Socket socket;
 	private String operation;
+	private String endPoint;
 	
 	public UserController() {
 		this.serverConnector = new ServerConnector();
 		this.socket = null;
 		this.operation = "";
+		this.endPoint = "user";
 	}
 
 	
@@ -37,6 +39,7 @@ public class UserController {
 			
 			 initializeStreams();
 			 objectOutStream.writeObject(operation);
+			 objectOutStream.writeObject(endPoint);
 			 objectOutStream.writeObject(user);
 			 
 			 try {
@@ -80,7 +83,7 @@ public class UserController {
 	    	socket = this.serverConnector.getSocket();
 			initializeStreams();
 			objectOutStream.writeObject(operation);
-			
+			objectOutStream.writeObject(endPoint);
 			userList = (ArrayList<User>)objectInStream.readObject();
 			socket.close();
 		} catch (Exception e) {
@@ -102,6 +105,7 @@ public class UserController {
 			socket = this.serverConnector.getSocket();
 			initializeStreams();
 			objectOutStream.writeObject(operation);
+			objectOutStream.writeObject(endPoint);
 			objectOutStream.writeObject(userId);
 		    user = (User)objectInStream.readObject();
 		    socket.close();
@@ -124,8 +128,9 @@ public class UserController {
 			socket = this.serverConnector.getSocket();
 			initializeStreams();
 			objectOutStream.writeObject(operation);
+			objectOutStream.writeObject(endPoint);
 			objectOutStream.writeObject(email);
-		    User  user =(User)objectInStream.readObject();
+		    boolean userFound =(boolean)objectInStream.readObject();
 		   socket.close();
 		} catch (Exception e) {
 			// TODO manage and log exceptions
@@ -145,6 +150,7 @@ public class UserController {
 			socket = this.serverConnector.getSocket();
 			initializeStreams();
 			objectOutStream.writeObject(operation);
+			objectOutStream.writeObject(endPoint);
 			objectOutStream.writeObject(updatedUser);
 		    user =(User)objectInStream.readObject();
 		    socket.close();
@@ -169,6 +175,7 @@ public class UserController {
 			
 			 initializeStreams();
 			 objectOutStream.writeObject(operation);
+			 objectOutStream.writeObject(endPoint);
 			 objectOutStream.writeObject(userId);
 			 
 			 try {
