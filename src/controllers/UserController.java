@@ -13,14 +13,14 @@ public class UserController {
 	
 	private ObjectOutputStream objectOutStream;
 	private ObjectInputStream objectInStream;
-	private ServerConnector serverConnector;
 	private Socket socket;
 	private String operation;
 	private String endPoint;
 	
-	public UserController() {
-		this.serverConnector = new ServerConnector();
-		this.socket = null;
+	public UserController(ObjectOutputStream objectOutStream,  ObjectInputStream objectInStream,Socket socket) {
+		this.objectInStream = objectInStream;
+		this.objectOutStream = objectOutStream;
+		this.socket = socket;
 		this.operation = "";
 		this.endPoint = "user";
 	}
@@ -32,12 +32,9 @@ public class UserController {
 		 int userId = -1;
 		 //operation that should be done on database
 	     operation = "createUser";
-	    //short lived socket that will carry out the operation
 	
 		try {
-			socket = this.serverConnector.getSocket();
 			
-			 initializeStreams();
 			 objectOutStream.writeObject(operation);
 			 objectOutStream.writeObject(endPoint);
 			 objectOutStream.writeObject(user);

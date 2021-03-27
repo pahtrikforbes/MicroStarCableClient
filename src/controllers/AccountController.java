@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import serverconnector.ServerConnector;
 import utils.CustomizedException;
+import models.Account;
 import models.Complaint;
 
 public class AccountController {
@@ -26,20 +27,20 @@ public class AccountController {
 	
 	
 //	Method to create a new complaint  
-	public int createComplaint(Complaint complaint) throws CustomizedException {
-		int complaintID = -1;
+	public int createAccount(Account account) throws CustomizedException {
+		int acctId = -1;
 		
-		operation = "createComplaint";
+		operation = "createAccount";
 		
 		try {
 			socket = this.serverConnector.getSocket();
 			
 			 initializeStreams();
 			 objectOutStream.writeObject(operation);
-			 objectOutStream.writeObject(complaint);
+			 objectOutStream.writeObject(account);
 			 
 			 try {
-				complaintID = (int)objectInStream.readObject();
+				acctId = (int)objectInStream.readObject();
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -53,7 +54,7 @@ public class AccountController {
 		}
 		
 		
-		return complaintID;
+		return acctId;
 	}
 	
 	
@@ -70,17 +71,17 @@ public class AccountController {
 	
 	
 	/* Method to  READ all the complaints returned from database through network stream */
-	public ArrayList<Complaint> getAllComplaints() throws CustomizedException {
-		ArrayList<Complaint> complaintList = new ArrayList<>();
+	public ArrayList<Account> getAllAccounts() throws CustomizedException {
+		ArrayList<Account> acctList = new ArrayList<>();
 
-	    operation = "getAllComplaints";
+	    operation = "getAllAccounts";
 	    
 	    try {
 	    	socket = this.serverConnector.getSocket();
 			initializeStreams();
 			objectOutStream.writeObject(operation);
 			
-			complaintList = (ArrayList<Complaint>)objectInStream.readObject();
+			acctList = (ArrayList<Account>)objectInStream.readObject();
 			socket.close();
 		} catch (Exception e) {
 			// TODO manage and log exceptions
@@ -88,21 +89,21 @@ public class AccountController {
 			throw new CustomizedException(e.getMessage());
 		}
 	    
-	    return complaintList;
+	    return acctList;
 	}
 	
 	
 	/* Method to  READ one complaint. Returns a single complaint. */
-	public Complaint findById(int complaintID) throws CustomizedException {
+	public Account findById(int complaintID) throws CustomizedException {
 		
-		Complaint complaint = null;
-		operation = "Find By Id";
+		Account account = null;
+		operation = "findById";
 		try {
 			socket = this.serverConnector.getSocket();
 			initializeStreams();
 			objectOutStream.writeObject(operation);
 			objectOutStream.writeObject(complaintID);
-		    complaint = (Complaint)objectInStream.readObject();
+			account = (Account)objectInStream.readObject();
 		    socket.close();
 		} catch (Exception e) {
 			// TODO manage and log exceptions
@@ -110,20 +111,20 @@ public class AccountController {
 			throw new CustomizedException(e.getMessage());
 		}
 		
-		return complaint;
+		return account;
 	}
 	
 
 	/*Method to UPDATE a complaint*/
-	public Complaint updateComplaint(Complaint updatedComplaint) throws CustomizedException {
-		Complaint complaint = null;
-		operation = "updateComplaint";
+	public Account updateAccount(Account updatedAccount) throws CustomizedException {
+		Account account = null;
+		operation = "updateAccount";
 		try {
 			socket = this.serverConnector.getSocket();
 			initializeStreams();
 			objectOutStream.writeObject(operation);
-			objectOutStream.writeObject(updatedComplaint);
-		    complaint =(Complaint)objectInStream.readObject();
+			objectOutStream.writeObject(updatedAccount);
+			account =(Account)objectInStream.readObject();
 		    socket.close();
 		}
 		  catch (Exception e) {
@@ -131,25 +132,25 @@ public class AccountController {
 			System.out.println(e);
 		}
 		
-		return complaint;
+		return account;
 	}
 	
 	
 	/*Method to delete a complaint*/
-	public int deleteComplaint(int complaintID) throws CustomizedException {
+	public int deleteAccount(int accountID) throws CustomizedException {
 		int result = -1;
 	
-	     operation = "deleteComplaint";
+	     operation = "deleteAccount";
 	
 		try {
 			socket = this.serverConnector.getSocket();
 			
 			 initializeStreams();
 			 objectOutStream.writeObject(operation);
-			 objectOutStream.writeObject(complaintID);
+			 objectOutStream.writeObject(accountID);
 			 
 			 try {
-				complaintID = (int)objectInStream.readObject();
+				 result = (int)objectInStream.readObject();
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
