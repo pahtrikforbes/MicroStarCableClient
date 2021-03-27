@@ -1,16 +1,28 @@
 package models;
 
+import java.io.Serializable;
 
+/*
+ * This class will serve as the account domain object
+ * 
+ * it will map to the accounts table in the mysql database
+ */
 
 import utils.PaymentStatus;
 
-public class Account {
+public class Account implements Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6828446970537092562L;
 
 	private int acct_id;
 	
 	private PaymentStatus payment_status;
 	
 	private float amt_due;
+	
 	private User user_id;
 	
 	//Constructors 

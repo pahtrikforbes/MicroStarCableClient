@@ -3,6 +3,7 @@ package models;
 import java.io.Serializable;
 
 /*This class will serve as the user domain object.
+
  * it will map to the users table in the mysql database
  * 
  * */
@@ -112,8 +113,6 @@ public class User implements Serializable {
 	public void setRole(Role role) {
 		this.role = role;
 	}
-	
-	
 
 
 	@Override
