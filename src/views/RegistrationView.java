@@ -41,9 +41,8 @@ public class RegistrationView  extends JFrame implements ActionListener  {
     private AuthController authController;
     
     
-	public RegistrationForm()
-	    {
-		
+	public RegistrationView()
+	    {	
 		super();
 		//labels
 		this.roles = new String[] {"Customer","Representative","Technician"};
@@ -66,6 +65,8 @@ public class RegistrationView  extends JFrame implements ActionListener  {
 	    this.resetButton=new JButton("RESET");
 	    this.authController = new AuthController();
 	      
+	    showForm();
+	    reset();
 	    }
 	
     public void createWindow()

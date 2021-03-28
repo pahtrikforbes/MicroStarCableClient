@@ -7,6 +7,6 @@ import java.net.UnknownHostException;
 public class ServerConnector {
 
 	public Socket getSocket() throws UnknownHostException, IOException {
-	return	new Socket("localhost",3600);
+	return	new Socket("localhost",3306);
 	}
 }
