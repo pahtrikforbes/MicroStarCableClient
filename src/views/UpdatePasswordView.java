@@ -42,6 +42,8 @@ public class UpdatePasswordView  extends JFrame implements ActionListener{
     	this.newPasswordField = new JPasswordField();
     	this.confirmPasswordField = new JPasswordField();
     	this.authController = new AuthController();
+    	showForm();
+    	reset();
     }
     
     public void createWindow()

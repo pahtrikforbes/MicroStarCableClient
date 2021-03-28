@@ -4,6 +4,8 @@ import utils.CustomizedException;
 
 import utils.Role;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import models.User;
 /*This class will isolate the logic for authentication and updating password.*/
 public class AuthController {
@@ -83,4 +85,9 @@ public class AuthController {
 		
 		return userId;
 	}
+	
+	
+	
+	
+	
 }

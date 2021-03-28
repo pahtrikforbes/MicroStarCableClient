@@ -5,6 +5,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+
+import org.mindrot.jbcrypt.BCrypt;
+
 import models.User;
 import serverconnector.ServerConnector;
 import utils.CustomizedException;
@@ -185,6 +188,27 @@ public class UserController {
 			throw new CustomizedException(e.getMessage());
 		}
 	   return result;
+	}
+	
+	
+	public String generatePasswordHash(String password) {
+		
+		String encrypted = BCrypt.hashpw(password, BCrypt.gensalt());
+		return encrypted;
+	}
+	
+	
+	//Method to test if a plain text password matches the hash when converted
+	//using BCrypt
+	public boolean validatePassword(String testPassword,String encrypted) throws CustomizedException {
+
+		if (BCrypt.checkpw(testPassword, encrypted)) {	
+	        return true;
+		}
+		else {
+			throw new CustomizedException("Password invalid.");
+		}
+		        
 	}
 	
 }
