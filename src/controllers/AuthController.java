@@ -1,4 +1,4 @@
-package controllers;
+ package controllers;
 
 import utils.CustomizedException;
 
@@ -23,7 +23,7 @@ public class AuthController {
 	private String operation;
 	
 	public AuthController() {
-		this.userController = new UserController();
+		this.userController = new UserController(objectOutStream,objectInStream,socket);
 		this.serverConnector = new ServerConnector();
 		this.socket = null;
 		this.operation = "";

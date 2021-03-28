@@ -14,13 +14,11 @@ public class AccountController {
 	
 	private ObjectOutputStream objectOutStream;
 	private ObjectInputStream objectInStream;
-	private ServerConnector serverConnector;
 	private Socket socket;
 	private String operation;
 
 	
 	public AccountController() {
-		this.serverConnector = new ServerConnector();
 		this.socket = null;
 		this.operation = "";
 	}
