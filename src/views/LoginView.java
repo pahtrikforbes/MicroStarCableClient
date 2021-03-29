@@ -31,7 +31,7 @@ public class LoginView extends JFrame implements ActionListener {
 	
 	public LoginView() {
 		super();
-		
+		System.out.println("Now inside LoginView()\n");
 		this.staffIDLabel = new JLabel("STAFF ID");
 		this.custIDLabel = new JLabel("CUSTOMER ID");
 		this.passwordLabel = new JLabel("PASSWORD");
@@ -41,6 +41,10 @@ public class LoginView extends JFrame implements ActionListener {
 		
 		 this.authController = new AuthController();
 		 role = null;
+		 
+		 showForm(role);
+		 reset();
+
 	}
 	
 	
@@ -122,5 +126,5 @@ public class LoginView extends JFrame implements ActionListener {
 		
 	}
 
-
+	
 }

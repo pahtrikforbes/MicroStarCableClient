@@ -1,87 +1,59 @@
 package controllers;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
 import java.util.ArrayList;
-import serverconnector.ServerConnector;
-import utils.CustomizedException;
+import client.Client;
 import models.Complaint;
+import utils.CustomizedException;
 
 public class ComplaintController {
 	
-	private ObjectOutputStream objectOutStream;
-	private ObjectInputStream objectInStream;
-	private ServerConnector serverConnector;
-	private Socket socket;
-	private String operation;
-
+	private Client client;
 	
 	public ComplaintController() {
-		this.serverConnector = new ServerConnector();
-		this.socket = null;
-		this.operation = "";
+
+		this.client = new Client();
+
 	}
 	
-	
-//	Method to create a new complaint  
-	public int createComplaint(Complaint complaint) throws CustomizedException {
-		int complaintID = -1;
-		
-		operation = "createComplaint";
-		
+	public int createComplaint(Complaint complaint) throws CustomizedException{
+		 int complaintId = -1;
+		 client.setOperation("createComplaint");
+		 client.setEndPoint("complaint");
+		 
 		try {
-			socket = this.serverConnector.getSocket();
-			
-			 initializeStreams();
-			 objectOutStream.writeObject(operation);
-			 objectOutStream.writeObject(complaint);
-			 
+
+			client.getObjectOutStream().writeObject(client.getOperation());
+			client.getObjectOutStream().writeObject(client.getEndPoint());
+			client.getObjectOutStream().writeObject(complaint);
 			 try {
-				complaintID = (int)objectInStream.readObject();
+				complaintId = (int)client.getObjectInStream().readObject();
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				throw new CustomizedException(e.getMessage());
 			}
-			 socket.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new CustomizedException(e.getMessage());
 		}
 		
-		
-		return complaintID;
+		return complaintId;
 	}
-	
-	
-	
-	private void initializeStreams()  throws CustomizedException  {
-		try {
-			this.objectOutStream = new ObjectOutputStream(socket.getOutputStream());
-			this.objectInStream = new ObjectInputStream(socket.getInputStream());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}	
-	
-	
+		
 	/* Method to  READ all the complaints returned from database through network stream */
 	public ArrayList<Complaint> getAllComplaints() throws CustomizedException {
 		ArrayList<Complaint> complaintList = new ArrayList<>();
 
-	    operation = "getAllComplaints";
+		 client.setOperation("getAllComplaints");
+		 client.setEndPoint("complaint");
 	    
 	    try {
-	    	socket = this.serverConnector.getSocket();
-			initializeStreams();
-			objectOutStream.writeObject(operation);
+	    	client.getObjectOutStream().writeObject(client.getOperation());
+			client.getObjectOutStream().writeObject(client.getEndPoint());
 			
-			complaintList = (ArrayList<Complaint>)objectInStream.readObject();
-			socket.close();
+			complaintList = (ArrayList<Complaint>)client.getObjectInStream().readObject();
 		} catch (Exception e) {
 			// TODO manage and log exceptions
 			e.printStackTrace();
@@ -92,18 +64,42 @@ public class ComplaintController {
 	}
 	
 	
-	/* Method to  READ one complaint. Returns a single complaint. */
-	public Complaint findById(int complaintID) throws CustomizedException {
+	/* Method to accept a user id and returns an ArrayList of complaints
+	that are tied to that specific User from database through network stream */
+	public ArrayList<Complaint> getComplaintsPerUser(int complaintId) throws CustomizedException {
+		ArrayList<Complaint> userComplaintList = new ArrayList<>();
+
+		 client.setOperation("getAllUserComplaints");
+		 client.setEndPoint("complaint");
+	    
+	    try {
+	    	client.getObjectOutStream().writeObject(client.getOperation());
+			client.getObjectOutStream().writeObject(client.getEndPoint());
+			
+			userComplaintList = (ArrayList<Complaint>)client.getObjectInStream().readObject();
+		} catch (Exception e) {
+			// TODO manage and log exceptions
+			e.printStackTrace();
+			throw new CustomizedException(e.getMessage());
+		}
+	    
+	    return userComplaintList;
+	}
+	
+	
+	/* Method to READ one complaint. Returns a single complaint. */
+	public Complaint findById(int complaintId) throws CustomizedException {
 		
 		Complaint complaint = null;
-		operation = "findById";
+		client.setOperation("findById");
+		client.setEndPoint("complaint");
+		
 		try {
-			socket = this.serverConnector.getSocket();
-			initializeStreams();
-			objectOutStream.writeObject(operation);
-			objectOutStream.writeObject(complaintID);
-		    complaint = (Complaint)objectInStream.readObject();
-		    socket.close();
+			client.getObjectOutStream().writeObject(client.getOperation());
+			client.getObjectOutStream().writeObject(client.getEndPoint());
+			client.getObjectOutStream().writeObject(complaintId);
+			
+		    complaint = (Complaint)client.getObjectInStream().readObject();
 		} catch (Exception e) {
 			// TODO manage and log exceptions
 			e.printStackTrace();
@@ -117,14 +113,14 @@ public class ComplaintController {
 	/*Method to UPDATE a complaint*/
 	public Complaint updateComplaint(Complaint updatedComplaint) throws CustomizedException {
 		Complaint complaint = null;
-		operation = "updateComplaint";
+		client.setOperation("updateComplaint");
+		client.setEndPoint("complaint");
+		
 		try {
-			socket = this.serverConnector.getSocket();
-			initializeStreams();
-			objectOutStream.writeObject(operation);
-			objectOutStream.writeObject(updatedComplaint);
-		    complaint =(Complaint)objectInStream.readObject();
-		    socket.close();
+			client.getObjectOutStream().writeObject(client.getOperation());
+			client.getObjectOutStream().writeObject(client.getEndPoint());
+			client.getObjectOutStream().writeObject(updatedComplaint);
+		    complaint = (Complaint)client.getObjectInStream().readObject();
 		}
 		  catch (Exception e) {
 			// TODO: handle exception
@@ -134,28 +130,47 @@ public class ComplaintController {
 		return complaint;
 	}
 	
-	
-	/*Method to delete a complaint*/
-	public int deleteComplaint(int complaintID) throws CustomizedException {
-		int result = -1;
-	
-	     operation = "deleteComplaint";
-	
+	/*Method to assign a Technician to a Complaint*/
+	public Complaint assignTechnician(Complaint assignComplaint) throws CustomizedException {
+		Complaint complaint = null;
+		
+		client.setOperation("assignTechnician");
+		client.setEndPoint("complaint");
 		try {
-			socket = this.serverConnector.getSocket();
+			client.getObjectOutStream().writeObject(client.getOperation());
+			client.getObjectOutStream().writeObject(client.getEndPoint());
+			client.getObjectOutStream().writeObject(assignComplaint);
+		    complaint = (Complaint)client.getObjectInStream().readObject();
+		}
+		  catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+		}	
+		return complaint;
+	}
+	
+	
+	/*Method to delete complaint*/
+	public int deleteComplaint(int complaintId) throws CustomizedException {
+		int result = -1;
+		client.setOperation("deleteComplaint");
+		client.setEndPoint("complaint");
+		
+		try {
+			client.getObjectOutStream().writeObject(client.getOperation());
+			client.getObjectOutStream().writeObject(client.getEndPoint());
 			
-			 initializeStreams();
-			 objectOutStream.writeObject(operation);
-			 objectOutStream.writeObject(complaintID);
+			client.getObjectOutStream().writeObject(complaintId);
+			 
 			 
 			 try {
-				complaintID = (int)objectInStream.readObject();
+				 complaintId = (int)client.getObjectInStream().readObject();
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				throw new CustomizedException(e.getMessage());
 			}
-			 socket.close();
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -163,6 +178,5 @@ public class ComplaintController {
 		}
 	   return result;
 	}
-	
 	
 }

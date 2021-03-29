@@ -212,5 +212,4 @@ public class RegistrationView  extends JFrame implements ActionListener  {
 		
 	}
 
-
 }

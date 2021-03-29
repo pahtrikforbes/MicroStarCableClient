@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import client.Client;
+
 import models.User;
 import utils.CustomizedException;
 
@@ -155,5 +156,4 @@ public class UserController {
 		}
 	   return result;
 	}
-	
 }
