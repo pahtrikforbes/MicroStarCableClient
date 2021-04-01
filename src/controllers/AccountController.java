@@ -21,8 +21,11 @@ public class AccountController{
 	private String endPoint;
 	
 	
-	public AccountController() {
+	public AccountController(ObjectOutputStream objectOutStream, ObjectInputStream objectInStream) {
 		
+		
+		this.objectOutStream = objectOutStream;
+		this.objectInStream = objectInStream;
 		this.serverConnector = new ServerConnector();
 		this.socket = null;
 		this.operation = "";

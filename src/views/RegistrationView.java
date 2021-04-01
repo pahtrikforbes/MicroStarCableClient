@@ -41,7 +41,7 @@ public class RegistrationView  extends JFrame implements ActionListener  {
     private AuthController authController;
     
     
-	public RegistrationForm()
+	public RegistrationView()
 	    {
 		
 		super();
