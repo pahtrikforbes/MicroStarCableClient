@@ -1,112 +1,111 @@
-
 package controllers;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
 import java.util.ArrayList;
+
+import client.Client;
 import utils.CustomizedException;
 import models.Account;
-import models.Complaint;
 
 public class AccountController {
 	
-	private ObjectOutputStream objectOutStream;
-	private ObjectInputStream objectInStream;
-	private Socket socket;
-	private String operation;
-
+	private Client client;
 	
 	public AccountController() {
-		this.socket = null;
-		this.operation = "";
+		this.client = new Client();
+		this.client.setEndPoint("account");
 	}
 	
-	
-//	Method to create a new complaint  
+//	Method to create a new account 
 	public int createAccount(Account account) throws CustomizedException {
 		int acctId = -1;
 		
-		operation = "createAccount";
-		
+		client.setOperation("createAccount");
 		try {
-			socket = this.serverConnector.getSocket();
-			
-			 initializeStreams();
-			 objectOutStream.writeObject(operation);
-			 objectOutStream.writeObject(account);
+			client.initDataStreams();
+	    	client.getObjectOutStream().writeObject(client.getOperation());
+			client.getObjectOutStream().writeObject(client.getEndPoint());
+			client.getObjectOutStream().writeObject(account);
 			 
-			 try {
-				acctId = (int)objectInStream.readObject();
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			String success = (String)client.getObjectInStream().readObject();
+			
+			if(success.equalsIgnoreCase("success")) {
+				acctId = (int)client.getObjectInStream().readObject();
+			}
+			else {
+				CustomizedException e = (CustomizedException)client.getObjectInStream().readObject();
 				throw new CustomizedException(e.getMessage());
 			}
-			 socket.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new CustomizedException(e.getMessage());
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			throw new CustomizedException(e1.getMessage());
 		}
-		
-		
 		return acctId;
 	}
 	
-	
-	
-	private void initializeStreams()  throws CustomizedException  {
-		try {
-			this.objectOutStream = new ObjectOutputStream(socket.getOutputStream());
-			this.objectInStream = new ObjectInputStream(socket.getInputStream());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}	
-	
-	
-	/* Method to  READ all the complaints returned from database through network stream */
+	/* Method to  READ all the accounts returned from database through network stream */
+	@SuppressWarnings("unchecked")
 	public ArrayList<Account> getAllAccounts() throws CustomizedException {
 		ArrayList<Account> acctList = new ArrayList<>();
-
-	    operation = "getAllAccounts";
-	    
-	    try {
-	    	socket = this.serverConnector.getSocket();
-			initializeStreams();
-			objectOutStream.writeObject(operation);
+		client.setOperation("getAllAccounts");
+	    try {	
+	    	client.initDataStreams();
+	    	client.getObjectOutStream().writeObject(client.getOperation());
+			client.getObjectOutStream().writeObject(client.getEndPoint());
 			
-			acctList = (ArrayList<Account>)objectInStream.readObject();
-			socket.close();
-		} catch (Exception e) {
+			String success = (String)client.getObjectInStream().readObject();
+			
+			if(success.equalsIgnoreCase("success")) {
+				acctList = (ArrayList<Account>)client.getObjectInStream().readObject();
+			}
+			else {
+				CustomizedException e = (CustomizedException)client.getObjectInStream().readObject();
+				throw new CustomizedException(e.getMessage());
+			}
+		} catch (IOException e) {
 			// TODO manage and log exceptions
 			e.printStackTrace();
 			throw new CustomizedException(e.getMessage());
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			throw new CustomizedException(e1.getMessage());
 		}
 	    
 	    return acctList;
 	}
 	
 	
-	/* Method to  READ one complaint. Returns a single complaint. */
-	public Account findById(int complaintID) throws CustomizedException {
+	/* Method to  READ one account. Returns a single account. */
+	public Account findById(int accountId) throws CustomizedException {
 		
 		Account account = null;
-		operation = "findById";
+		client.setOperation("findById");
 		try {
-			socket = this.serverConnector.getSocket();
-			initializeStreams();
-			objectOutStream.writeObject(operation);
-			objectOutStream.writeObject(complaintID);
-			account = (Account)objectInStream.readObject();
-		    socket.close();
-		} catch (Exception e) {
+			client.initDataStreams();
+	    	client.getObjectOutStream().writeObject(client.getOperation());
+			client.getObjectOutStream().writeObject(client.getEndPoint());
+			client.getObjectOutStream().writeObject(accountId);
+		
+			String success = (String)client.getObjectInStream().readObject();
+			
+			if(success.equalsIgnoreCase("success")) {
+				account = (Account)client.getObjectInStream().readObject();
+			}
+			else {
+				CustomizedException e = (CustomizedException)client.getObjectInStream().readObject();
+				throw new CustomizedException(e.getMessage());
+			}
+		} catch (IOException e) {
 			// TODO manage and log exceptions
 			e.printStackTrace();
 			throw new CustomizedException(e.getMessage());
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			throw new CustomizedException(e1.getMessage());
 		}
 		
 		return account;
@@ -116,14 +115,23 @@ public class AccountController {
 	/*Method to UPDATE a complaint*/
 	public Account updateAccount(Account updatedAccount) throws CustomizedException {
 		Account account = null;
-		operation = "updateAccount";
+		client.setOperation("updateAccount");
+		
 		try {
-			socket = this.serverConnector.getSocket();
-			initializeStreams();
-			objectOutStream.writeObject(operation);
-			objectOutStream.writeObject(updatedAccount);
-			account =(Account)objectInStream.readObject();
-		    socket.close();
+			client.initDataStreams();
+	    	client.getObjectOutStream().writeObject(client.getOperation());
+			client.getObjectOutStream().writeObject(client.getEndPoint());
+			client.getObjectOutStream().writeObject(updatedAccount);
+			
+			String success = (String)client.getObjectInStream().readObject();
+			
+			if(success.equalsIgnoreCase("success")) {
+				account = (Account)client.getObjectInStream().readObject();
+			}
+			else {
+				CustomizedException e = (CustomizedException)client.getObjectInStream().readObject();
+				throw new CustomizedException(e.getMessage());
+			}
 		}
 		  catch (Exception e) {
 			// TODO: handle exception
@@ -134,31 +142,33 @@ public class AccountController {
 	}
 	
 	
-	/*Method to delete a complaint*/
+	/*Method to delete an account*/
 	public int deleteAccount(int accountID) throws CustomizedException {
 		int result = -1;
 	
-	     operation = "deleteAccount";
-	
+		client.setOperation("deleteAccount");
 		try {
-			socket = this.serverConnector.getSocket();
-			
-			 initializeStreams();
-			 objectOutStream.writeObject(operation);
-			 objectOutStream.writeObject(accountID);
+			client.initDataStreams();
+	    	client.getObjectOutStream().writeObject(client.getOperation());
+			client.getObjectOutStream().writeObject(client.getEndPoint());
+			client.getObjectOutStream().writeObject(accountID);
 			 
-			 try {
-				 result = (int)objectInStream.readObject();
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			String success = (String)client.getObjectInStream().readObject();
+			
+			if(success.equalsIgnoreCase("success")) {
+				result = (int)client.getObjectInStream().readObject();
+			}
+			else {
+				CustomizedException e = (CustomizedException)client.getObjectInStream().readObject();
 				throw new CustomizedException(e.getMessage());
 			}
-			 socket.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new CustomizedException(e.getMessage());
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			throw new CustomizedException(e1.getMessage());
 		}
 	   return result;
 	}

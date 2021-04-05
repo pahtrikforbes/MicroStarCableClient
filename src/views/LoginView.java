@@ -6,17 +6,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.InternalFrameListener;
 
 import controllers.AuthController;
 import utils.Role;
 
-public class LoginView extends JFrame implements ActionListener {
-
+public class LoginView extends JInternalFrame implements InternalFrameListener, ActionListener {
+	
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 	private JLabel staffIDLabel;
 	private JLabel custIDLabel;
@@ -25,40 +30,33 @@ public class LoginView extends JFrame implements ActionListener {
 	private JPasswordField passwordField;
 	private JButton loginButton;
 	private AuthController authController;
-	
 	private Role role;
 	
 	
+	
+	
 	public LoginView() {
-		super();
-		System.out.println("Now inside LoginView()\n");
+		super("Login Form",false, //resizable
+		          true, //closable
+		          false, //maximizable
+		          true);//iconifiable
 		this.staffIDLabel = new JLabel("STAFF ID");
 		this.custIDLabel = new JLabel("CUSTOMER ID");
 		this.passwordLabel = new JLabel("PASSWORD");
 		this.idTextField = new JTextField();
 		this.passwordField = new JPasswordField();
 		this.loginButton = new JButton("LOGIN");
-		
-		 this.authController = new AuthController();
-		 role = null;
-		 
-		 showForm(role);
-		 reset();
-
+		this.role = null;
 	}
-	
 	
 	 public void createWindow()
 	    {
 	       //Setting properties of JFrame; i.e this frame
-	        this.setTitle("Login Form");
-	        this.setBounds(550,100,400,220);
+	        this.setBounds(300,100,400,220);
 	        this.getContentPane().setBackground(Color.white);
 	        this.getContentPane().setLayout(null);
 	        this.setVisible(true);
-	        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	        this.setResizable(false);
-	        
+	        this.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE); 
 	    }
 	 public void setLocationAndSize() {
 		 this.staffIDLabel.setBounds(20,20,80,70);
@@ -105,18 +103,63 @@ public class LoginView extends JFrame implements ActionListener {
 		 this.passwordField.setText("");
 	 }
 
+	
+
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void internalFrameOpened(InternalFrameEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println(e);
+		
+	}
+
+	@Override
+	public void internalFrameClosing(InternalFrameEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println(e);
+	}
+
+	@Override
+	public void internalFrameClosed(InternalFrameEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println(e);
+	}
+
+	@Override
+	public void internalFrameIconified(InternalFrameEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println(e);
+	}
+
+	@Override
+	public void internalFrameDeiconified(InternalFrameEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println(e);
+	}
+
+	@Override
+	public void internalFrameActivated(InternalFrameEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println(e);
+	}
+
+	@Override
+	public void internalFrameDeactivated(InternalFrameEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println(e);
+	}
+	
+public void actionPerformed(ActionEvent e) {
 		
 		if(e.getSource() == this.loginButton) {
 			try {
 				int userId = Integer.parseInt(this.idTextField.getText());
 				char[] password = this.passwordField.getPassword();
-				
-				this.authController.login(userId, String.copyValueOf(password),this.role);
+				 authController = new AuthController();
+				 authController.login(userId, String.copyValueOf(password),this.role);
 				
 				JOptionPane.showMessageDialog(null,"User logged in successfully.");
 				this.reset();
+				//this.dispose();
 			} catch (Exception e2) {
 				// TODO: handle exception
 				JOptionPane.showMessageDialog(null,e2.getMessage());
@@ -125,6 +168,4 @@ public class LoginView extends JFrame implements ActionListener {
 		}
 		
 	}
-
-	
 }

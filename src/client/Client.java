@@ -8,18 +8,17 @@ import java.net.UnknownHostException;
 
 public class Client {
 
+	private String operation;
+	private String endPoint;
 	private ObjectOutputStream objectOutStream;
 	private ObjectInputStream objectInStream;
 	private Socket socket;
-	private String operation;
-	private String endPoint;
 	
 	public Client() {
 		try {
-			this.socket = new Socket("localhost",3600);
+			socket = new Socket("localhost",5000);
 			this.operation = "";
 			this.endPoint = "";
-			initDataStreams();
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -73,10 +72,14 @@ public class Client {
 		this.endPoint = endPoint;
 	}
 
-	private void initDataStreams() throws IOException{
-		this.objectOutStream = new ObjectOutputStream(this.socket.getOutputStream());
-		this.objectInStream = new ObjectInputStream(this.socket.getInputStream());
-		
+	public void initDataStreams() throws IOException {
+		try {
+			this.objectOutStream = new ObjectOutputStream(this.socket.getOutputStream());
+			this.objectInStream = new ObjectInputStream(this.socket.getInputStream());
+
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
 	}
 	
 }

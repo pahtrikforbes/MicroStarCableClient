@@ -2,9 +2,7 @@ package controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
 import client.Client;
-
 import models.User;
 import utils.CustomizedException;
 
@@ -12,51 +10,64 @@ public class UserController {
 	
 	private Client client;
 	
-	
 	public UserController() {
-		
 		this.client = new Client();
+		this.client.setEndPoint("user");
 	}
 
 	public int createUser(User user) throws CustomizedException{
 		 int userId = -1;
 		 client.setOperation("createUser");
-		 client.setEndPoint("user");
+		
 		try {
-			
+			client.initDataStreams();
 			client.getObjectOutStream().writeObject(client.getOperation());
 			client.getObjectOutStream().writeObject(client.getEndPoint());
 			client.getObjectOutStream().writeObject(user);
-			 try {
+			String success = (String)client.getObjectInStream().readObject();
+			
+			if(success.equalsIgnoreCase("success")) {
 				userId = (int)client.getObjectInStream().readObject();
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			}
+			else {
+				CustomizedException e = (CustomizedException)client.getObjectInStream().readObject();
+				userId = -1;
 				throw new CustomizedException(e.getMessage());
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new CustomizedException(e.getMessage());
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			throw new CustomizedException(e1.getMessage());
 		}
 	   
 	   return userId;
 	}
 		
 	/* Method to  READ all the users returned from database through network stream */
+	@SuppressWarnings("unchecked")
 	public ArrayList<User> getAllUsers() throws CustomizedException {
 		ArrayList<User> userList = new ArrayList<>();
 
 		 client.setOperation("getAllUsers");
-		 client.setEndPoint("user");
 	    
 	    try {
-	    	
+	    	client.initDataStreams();
 	    	client.getObjectOutStream().writeObject(client.getOperation());
 			client.getObjectOutStream().writeObject(client.getEndPoint());
 			
-			userList = (ArrayList<User>)client.getObjectInStream().readObject();
-		} catch (Exception e) {
+			 String success = (String)client.getObjectInStream().readObject();
+				
+				if(success.equalsIgnoreCase("success")) {
+					userList = (ArrayList<User>)client.getObjectInStream().readObject();
+				}
+				else {
+					CustomizedException e = (CustomizedException)client.getObjectInStream().readObject();
+					throw new CustomizedException(e.getMessage());
+				}
+			} catch (Exception e) {
 			// TODO manage and log exceptions
 			e.printStackTrace();
 			throw new CustomizedException(e.getMessage());
@@ -71,14 +82,22 @@ public class UserController {
 		
 		User user = null;
 		client.setOperation("findById");
-		client.setEndPoint("user");
-		
 		try {
+			client.initDataStreams();
 			client.getObjectOutStream().writeObject(client.getOperation());
 			client.getObjectOutStream().writeObject(client.getEndPoint());
 			client.getObjectOutStream().writeObject(userId);
 			
-		    user = (User)client.getObjectInStream().readObject();
+			String success = (String)client.getObjectInStream().readObject();
+			
+			if(success.equalsIgnoreCase("success")) {
+			    user = (User)client.getObjectInStream().readObject();
+			}
+			else {
+				CustomizedException e = (CustomizedException)client.getObjectInStream().readObject();
+				throw new CustomizedException(e.getMessage());
+			}
+		
 		} catch (Exception e) {
 			// TODO manage and log exceptions
 			e.printStackTrace();
@@ -93,13 +112,23 @@ public class UserController {
 	public boolean findByEmail(String email) throws CustomizedException {
 		boolean userFound = false;
 		client.setOperation("findByEmail");
-		client.setEndPoint("user");
+
 		try {
-		    
+			client.initDataStreams();
 			client.getObjectOutStream().writeObject(client.getOperation());
 			client.getObjectOutStream().writeObject(client.getEndPoint());
 			client.getObjectOutStream().writeObject(email);
-		    userFound =(boolean)client.getObjectInStream().readObject();
+
+			String success = (String)client.getObjectInStream().readObject();
+			
+			if(success.equalsIgnoreCase("success")) {
+				 userFound =(boolean)client.getObjectInStream().readObject();
+			}
+			else {
+				CustomizedException e = (CustomizedException)client.getObjectInStream().readObject();
+				throw new CustomizedException(e.getMessage());
+			}
+		   
 		} catch (Exception e) {
 			// TODO manage and log exceptions
 			e.printStackTrace();
@@ -114,16 +143,26 @@ public class UserController {
 	public User updateUser(User updatedUser) throws CustomizedException {
 		User user = null;
 		client.setOperation("updateUser");
-		client.setEndPoint("user");
 		try {
+			client.initDataStreams();
 			client.getObjectOutStream().writeObject(client.getOperation());
 			client.getObjectOutStream().writeObject(client.getEndPoint());
 			client.getObjectOutStream().writeObject(updatedUser);
-		    user = (User)client.getObjectInStream().readObject();
+			
+			String success = (String)client.getObjectInStream().readObject();
+			
+			if(success.equalsIgnoreCase("success")) {
+				 user = (User)client.getObjectInStream().readObject();
+			}
+			else {
+				CustomizedException e = (CustomizedException)client.getObjectInStream().readObject();
+				throw new CustomizedException(e.getMessage());
+			}
 		}
 		  catch (Exception e) {
 			// TODO: handle exception
 			System.out.println(e);
+			throw new CustomizedException(e.getMessage());
 		}
 		
 		return user;
@@ -134,26 +173,30 @@ public class UserController {
 	public int deleteUser(int userId) throws CustomizedException {
 		int result = -1;
 		client.setOperation("deleteUser");
-		client.setEndPoint("user");
 	
 		try {
+			client.initDataStreams();
 			client.getObjectOutStream().writeObject(client.getOperation());
 			client.getObjectOutStream().writeObject(client.getEndPoint());
-			
 			client.getObjectOutStream().writeObject(userId);
 			 
-			 try {
+			String success = (String)client.getObjectInStream().readObject();
+			if(success.equalsIgnoreCase("success")) {
 				userId = (int)client.getObjectInStream().readObject();
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			}
+			else {
+				CustomizedException e = (CustomizedException)client.getObjectInStream().readObject();
 				throw new CustomizedException(e.getMessage());
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new CustomizedException(e.getMessage());
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			throw new CustomizedException(e1.getMessage());
 		}
 	   return result;
 	}
+	
 }
