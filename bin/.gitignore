@@ -1,4 +1,8 @@
-/driver/
-/serverconnector/
-/controllers/
 /client/
+/controllers/
+/driver/
+/models/
+/serverconnector/
+/utils/
+/views/
+/complaintsViews/
