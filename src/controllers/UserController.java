@@ -1,52 +1,38 @@
 package controllers;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
 import java.util.ArrayList;
+
+import client.Client;
 import models.User;
-import serverconnector.ServerConnector;
 import utils.CustomizedException;
 
 public class UserController {
 	
-	private ObjectOutputStream objectOutStream;
-	private ObjectInputStream objectInStream;
-	private ServerConnector serverConnector;
-	private Socket socket;
-	private String operation;
+	private Client client;
+	
 	
 	public UserController() {
-		this.serverConnector = new ServerConnector();
-		this.socket = null;
-		this.operation = "";
+		
+		this.client = new Client();
 	}
-
-	
-
 
 	public int createUser(User user) throws CustomizedException{
 		 int userId = -1;
-		 //operation that should be done on database
-	     operation = "createUser";
-	    //short lived socket that will carry out the operation
-	
+		 client.setOperation("createUser");
+		 client.setEndPoint("user");
 		try {
-			socket = this.serverConnector.getSocket();
 			
-			 initializeStreams();
-			 objectOutStream.writeObject(operation);
-			 objectOutStream.writeObject(user);
-			 
+			client.getObjectOutStream().writeObject(client.getOperation());
+			client.getObjectOutStream().writeObject(client.getEndPoint());
+			client.getObjectOutStream().writeObject(user);
 			 try {
-				userId = (int)objectInStream.readObject();
+				userId = (int)client.getObjectInStream().readObject();
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				throw new CustomizedException(e.getMessage());
 			}
-			 socket.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -55,34 +41,20 @@ public class UserController {
 	   
 	   return userId;
 	}
-	
-	
-	private void initializeStreams()  throws CustomizedException  {
-		try {
-			this.objectOutStream = new ObjectOutputStream(socket.getOutputStream());
-			this.objectInStream = new ObjectInputStream(socket.getInputStream());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
-	}
-	
-	
-	
 	/* Method to  READ all the users returned from database through network stream */
 	public ArrayList<User> getAllUsers() throws CustomizedException {
 		ArrayList<User> userList = new ArrayList<>();
 
-	    operation = "getAllUsers";
+		 client.setOperation("getAllUsers");
+		 client.setEndPoint("user");
 	    
 	    try {
-	    	socket = this.serverConnector.getSocket();
-			initializeStreams();
-			objectOutStream.writeObject(operation);
+	    	
+	    	client.getObjectOutStream().writeObject(client.getOperation());
+			client.getObjectOutStream().writeObject(client.getEndPoint());
 			
-			userList = (ArrayList<User>)objectInStream.readObject();
-			socket.close();
+			userList = (ArrayList<User>)client.getObjectInStream().readObject();
 		} catch (Exception e) {
 			// TODO manage and log exceptions
 			e.printStackTrace();
@@ -97,14 +69,15 @@ public class UserController {
 	public User findById(int userId) throws CustomizedException {
 		
 		User user = null;
-		operation = "findById";
+		client.setOperation("findById");
+		client.setEndPoint("user");
+		
 		try {
-			socket = this.serverConnector.getSocket();
-			initializeStreams();
-			objectOutStream.writeObject(operation);
-			objectOutStream.writeObject(userId);
-		    user = (User)objectInStream.readObject();
-		    socket.close();
+			client.getObjectOutStream().writeObject(client.getOperation());
+			client.getObjectOutStream().writeObject(client.getEndPoint());
+			client.getObjectOutStream().writeObject(userId);
+			
+		    user = (User)client.getObjectInStream().readObject();
 		} catch (Exception e) {
 			// TODO manage and log exceptions
 			e.printStackTrace();
@@ -117,37 +90,35 @@ public class UserController {
 
 	/* Method to  READ one user. Returns a single user. */
 	public boolean findByEmail(String email) throws CustomizedException {
-		
-		operation = "findByEmail";
+		boolean userFound = false;
+		client.setOperation("findByEmail");
+		client.setEndPoint("user");
 		try {
 		    
-			socket = this.serverConnector.getSocket();
-			initializeStreams();
-			objectOutStream.writeObject(operation);
-			objectOutStream.writeObject(email);
-		    User  user =(User)objectInStream.readObject();
-		   socket.close();
+			client.getObjectOutStream().writeObject(client.getOperation());
+			client.getObjectOutStream().writeObject(client.getEndPoint());
+			client.getObjectOutStream().writeObject(email);
+		    userFound =(boolean)client.getObjectInStream().readObject();
 		} catch (Exception e) {
 			// TODO manage and log exceptions
 			e.printStackTrace();
 			 throw new CustomizedException(e.getMessage());
 		}
 		
-		return true;
+		return userFound ;
 	}
 	
 
 	/*Method to UPDATE a user*/
 	public User updateUser(User updatedUser) throws CustomizedException {
 		User user = null;
-		operation = "updateUser";
+		client.setOperation("updateUser");
+		client.setEndPoint("user");
 		try {
-			socket = this.serverConnector.getSocket();
-			initializeStreams();
-			objectOutStream.writeObject(operation);
-			objectOutStream.writeObject(updatedUser);
-		    user =(User)objectInStream.readObject();
-		    socket.close();
+			client.getObjectOutStream().writeObject(client.getOperation());
+			client.getObjectOutStream().writeObject(client.getEndPoint());
+			client.getObjectOutStream().writeObject(updatedUser);
+		    user = (User)client.getObjectInStream().readObject();
 		}
 		  catch (Exception e) {
 			// TODO: handle exception
@@ -161,24 +132,22 @@ public class UserController {
 	/*Method to delete user*/
 	public int deleteUser(int userId) throws CustomizedException {
 		int result = -1;
-	
-	     operation = "deleteUser";
+		client.setOperation("deleteUser");
+		client.setEndPoint("user");
 	
 		try {
-			socket = this.serverConnector.getSocket();
+			client.getObjectOutStream().writeObject(client.getOperation());
+			client.getObjectOutStream().writeObject(client.getEndPoint());
 			
-			 initializeStreams();
-			 objectOutStream.writeObject(operation);
-			 objectOutStream.writeObject(userId);
+			client.getObjectOutStream().writeObject(userId);
 			 
 			 try {
-				userId = (int)objectInStream.readObject();
+				userId = (int)client.getObjectInStream().readObject();
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				throw new CustomizedException(e.getMessage());
 			}
-			 socket.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
