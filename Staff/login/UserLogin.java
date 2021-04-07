@@ -30,8 +30,8 @@ JFrame f;
 	UserLogin(){
 		//super("Login Autentification");
 		
-		setSize(420,300);
-		setLocation(500,280);
+		setSize(900,700);
+		setLocation(50,50);
 		panel.setLayout (null);  
 		
 		//userName.setBounds(30, 30, 100, 20);
@@ -65,6 +65,7 @@ JFrame f;
 			dispose();
 			registrationForm register = new registrationForm();
 			panel.add(register);
+			pack();
 			
 		}
 	});
@@ -107,6 +108,6 @@ JFrame f;
 
 		public static void main(String[] args) {
 			UserLogin userlogin = new UserLogin();
-
+			
 }
 }

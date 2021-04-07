@@ -2,6 +2,7 @@ package view;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Point;
@@ -11,9 +12,11 @@ import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
@@ -44,12 +47,13 @@ public class MicroMainFrame extends JFrame implements ActionListener{
 	private JDesktopPane desktopPane;
 	private JDesktopPane leftTopPane;
 	private JDesktopPane leftBottomPane;
-	private JComboBox comboBox;
+	//private JComboBox comboBox;
 	private JFrame frame, serviceFrame;
-	private JButton outstanding, resolve;
-	private JLabel header, resolved_value, oustanding_value, label;
+	private JButton outstanding, resolve, comboBoxbtn;
+	private JLabel header, resolved_value, oustanding_value, label,lbl_clock;
+	private JComboBox <String> comboBox;
+	private ImageIcon ii;
 
-	private JPanel panel;
  
 	//internal JFrame to facilitate password pane and mainframe
 	
@@ -104,7 +108,6 @@ public class MicroMainFrame extends JFrame implements ActionListener{
   		a4 = new JMenuItem("Update Account");
   		a5 = new JMenuItem("Delete Account");
   		
-  		
   		desktopPane = new JDesktopPane(); 
   		leftTopPane = new JDesktopPane();
   		leftBottomPane = new JDesktopPane();
@@ -129,32 +132,44 @@ public class MicroMainFrame extends JFrame implements ActionListener{
 		//window for the logo
 		leftTopPane.setBounds(5, 10, 400, 400);
 		leftTopPane.setBackground(Color.gray);	
+		//leftTopPane = new microStarViews();
 		
-		//Insert heading in the top-left pane
-		ImageIcon microImage = new ImageIcon("microImage.jpg");
-		label = new JLabel("Micro Star Cable Company",microImage, SwingConstants.CENTER);
-		label.setBounds(0, 40, 500, 400);
-		leftTopPane.add(label);
-		
+		ii = logo();
+        JLabel label = new JLabel(ii);
+        leftTopPane.add(label);
+        
 		//Bottom pane 
-		leftBottomPane.setBounds(5, 10, 400, 400);
-		leftBottomPane.setBackground(Color.gray); 
-		//final JComboBox internet = new JComboBox();
-	    //final JComboBox cable = new JComboBox();
-	    
+		leftBottomPane.setBounds(5, 410, 400, 400);
+		leftBottomPane.setBackground(Color.WHITE); 
+		
 	    //internet.setBounds(5, 12, 150, 20);
 	    //cable.setBounds(150, 12,150,20);
 	    
-
-		  servicesComboBox services = new servicesComboBox();
-		  leftBottomPane.add(services).setVisible(true);
-		  leftBottomPane.moveToFront(services);
-		  services.setSize(leftBottomPane.getWidth(), leftBottomPane.getHeight());
-		  services.setLocation(0,0);
-		  
-	    //this.leftBottomPane.add(new servicesComboBox());
-	    //this.leftBottomPane.add(cable);
 		
+	    JLabel service_lbl = new JLabel("Services");
+	    JLabel service_lblSub = new JLabel("Please specify the service you are requesting information on:");
+        service_lbl.setFont(new Font("Impact", Font.PLAIN, 20));
+        service_lbl.setHorizontalAlignment(JLabel.CENTER);
+        service_lblSub.setBounds(5,40,400,30);
+
+	    service_lbl.setBounds(10,10,300,20);
+	    //service_lbl.setVisible(true);
+	    leftBottomPane.add(service_lbl);
+	    leftBottomPane.add(service_lblSub);
+	    
+		serviceBox();
+	    leftBottomPane.add(comboBox);
+	    leftBottomPane.add(comboBoxbtn);
+	    
+	    
+	    
+		 //servicesComboBox services = new servicesComboBox();
+		 //leftBottomPane.add(services).setVisible(true);
+		 //leftBottomPane.moveToFront(services);
+		 //services.setSize(leftBottomPane.getWidth(), leftBottomPane.getHeight());
+		 //services.setLocation(0,0);
+		 
+	   
 	
 		//actionListeners for the users
 		this.i1.addActionListener(this);
@@ -229,6 +244,7 @@ public class MicroMainFrame extends JFrame implements ActionListener{
 		this.setJMenuBar(menuBar);
 		this.add(desktopPane);
 		this.add(leftTopPane);
+		this.add(leftBottomPane);
 	}
 	
 	public void showForm() {
@@ -504,12 +520,85 @@ public class MicroMainFrame extends JFrame implements ActionListener{
 		   // serviceFrame.setVisible(true);  
 
 		}  
+	
+	public void serviceBox() {
+	    	
+		 String defaultselect = "Service type...";
+	        String services[] = {defaultselect,"Cable","Broadband"};
+	        //String cable[] = {"fibre", "Cooper"};
+	        comboBox = new JComboBox<>(services);
+	        comboBox.setSelectedIndex(0);
+	        comboBox.setBounds(20, 80, 300, 40);
+	        this.add(comboBox);
+	        this.setLayout(null);
+	        
+	        comboBoxbtn = new JButton("Submit Service");
+	        comboBoxbtn. setBounds(70,180,200,50);
+	        this.add(comboBoxbtn);
+	        comboBoxbtn.setVisible(true);
+	        this.setLayout(null);
+
+	        
+	        ActionListener actionListioner = new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					
+					String choice = null;
+					switch (choice) {//check for a match
+					    case "Cable":
+					    	
+					        System.out.println("You're choice is cable");
+					        break;
+					    case "BroadBand":    
+					        System.out.println("You're choice is broadnad");
+					        break;
+					    default:
+					        break;
+					}
+					
+				}
+	        	
+	        };
+	    }
+
+	
+    private ImageIcon logo (JComponent... arg) {
+
+        ImageIcon loadImage = new ImageIcon("src/logo/microImage.png");
+        
+        Container pane = getRootPane();
+        GroupLayout gl = new GroupLayout(pane);
+        pane.setLayout(gl);
+        gl.setHorizontalGroup(gl.createSequentialGroup()
+
+                .addComponent(arg[0])
+
+        );
+        gl.setVerticalGroup(gl.createParallelGroup()
+
+                .addComponent(arg[0])
+
+        );
+        
+        return loadImage;
+    }
+
+    private void createLayout() {
+
+       
+
+    }
 
 
-	public static void main(String[] args) {
-		new MicroMainFrame();
 
-	}
+
+		public static void main(String[] args) {
+			new MicroMainFrame();
+
+		}
+		
+	
 	
 	
 	
