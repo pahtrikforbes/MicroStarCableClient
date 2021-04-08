@@ -8,18 +8,20 @@ import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.InternalFrameListener;
 
-import controllers.AuthController;
+import controllers.UserController;
 import models.User;
 import utils.CustomizedException;
 import utils.Role;
 
-public class RegistrationView  extends JFrame implements ActionListener  {
+public class RegistrationView extends JInternalFrame implements InternalFrameListener, ActionListener {
 	
 	private static final long serialVersionUID = 1L;
 	//local variables
@@ -38,13 +40,14 @@ public class RegistrationView  extends JFrame implements ActionListener  {
     private JTextField emailTextField;
     private JButton registerButton;
     private JButton resetButton;
-    private AuthController authController;
-    
-    
-	public RegistrationForm()
+        
+	public RegistrationView()
 	    {
 		
-		super();
+		super("Registration Form",false, //resizable
+		          true, //closable
+		          false, //maximizable
+		          true);//iconifiable
 		//labels
 		this.roles = new String[] {"Customer","Representative","Technician"};
 		this.firstNameLabel=new JLabel("FIRST NAME");
@@ -63,22 +66,17 @@ public class RegistrationView  extends JFrame implements ActionListener  {
 	    this.roleComboBox=new JComboBox<String>(this.roles);
 	    this.roleComboBox.setSelectedIndex(0);
 	    this.registerButton=new JButton("REGISTER");
-	    this.resetButton=new JButton("RESET");
-	    this.authController = new AuthController();
-	      
+	    this.resetButton=new JButton("RESET");     
 	    }
 	
     public void createWindow()
     {
-       //Setting properties of JFrame; i.e this frame
-        this.setTitle("Registration Form");
-        this.setBounds(550,100,400,550);
+       //Setting properties of JInternalFrame; i.e this frame
+        this.setBounds(300,100,400,550);
         this.getContentPane().setBackground(Color.white);
         this.getContentPane().setLayout(null);
         this.setVisible(true);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setResizable(false);
-        
+        this.setDefaultCloseOperation(JInternalFrame.EXIT_ON_CLOSE);    
     }
     
     
@@ -146,8 +144,6 @@ public class RegistrationView  extends JFrame implements ActionListener  {
     	this.registerButton.addActionListener(this);
     	this.resetButton.addActionListener(this);
     	
-
-    
     }
 	
     
@@ -160,8 +156,6 @@ public class RegistrationView  extends JFrame implements ActionListener  {
     	this.roleComboBox.setSelectedIndex(0);
     }
 	
-	
-	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -171,7 +165,7 @@ public class RegistrationView  extends JFrame implements ActionListener  {
 			user.setFirstName(this.firstNameTextField.getText());
 			user.setLastName(this.lastNameTextField.getText());
 			user.setEmail(this.emailTextField.getText());
-			user.setPassword(this.passwordField.getPassword().toString()) ;
+			user.setPassword(String.copyValueOf(this.passwordField.getPassword()));
 			switch (((String) this.roleComboBox.getSelectedItem()).toLowerCase()) {
 		    case "customer": 
 			user.setRole(Role.CUSTOMER);
@@ -189,11 +183,12 @@ public class RegistrationView  extends JFrame implements ActionListener  {
 			//TODO validate form
 			if(Arrays.equals(this.passwordField.getPassword(), this.confirmPasswordField.getPassword())) {
 				try {
-					int userId = this.authController.register(user);
+					UserController uc = new UserController();
+					int userId = uc.createUser(user);
+					
 					if(userId > 0) {
-						 JOptionPane.showMessageDialog(null,"User Registered Successfully");
-						 this.reset();
-						
+						this.reset();
+						 JOptionPane.showMessageDialog(null,"User Registered Successfully\nYour Login ID:"+userId);
 					}
 				} catch (CustomizedException e1) {
 					// TODO Auto-generated catch block
@@ -212,5 +207,46 @@ public class RegistrationView  extends JFrame implements ActionListener  {
 		
 	}
 
+	@Override
+	public void internalFrameOpened(InternalFrameEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void internalFrameClosing(InternalFrameEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void internalFrameClosed(InternalFrameEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void internalFrameIconified(InternalFrameEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void internalFrameDeiconified(InternalFrameEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void internalFrameActivated(InternalFrameEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void internalFrameDeactivated(InternalFrameEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
