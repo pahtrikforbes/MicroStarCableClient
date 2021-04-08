@@ -27,23 +27,19 @@ JPasswordField passArea = new JPasswordField(15);
 protected Icon icon;
 JFrame f;
 
-	UserLogin(){
+	public UserLogin(){
 		//super("Login Autentification");
 		
-		setSize(900,700);
-		setLocation(50,50);
+		setSize(1000,450);
+		setLocationRelativeTo(null);
 		panel.setLayout (null);  
 		
-		//userName.setBounds(30, 30, 100, 20);
-		//userPassword.setBounds(30,65,100,20);
 		
-		//textArea.setBounds(130,30,150,20);
-		//passArea.setBounds(130,65,150,20);
-		
-		heading.setBounds(10,15,600,20);
-		loginArea.setBounds(150,40,120,80);
-		registerLabel.setBounds(140, 125, 200, 40);
-		registerArea.setBounds(150,160,120,80);
+		heading.setBounds(280,60,400,20);
+		heading.setHorizontalAlignment(JLabel.CENTER);
+		loginArea.setBounds(420,100,120,80);
+		registerLabel.setBounds(410,180, 200, 40);
+		registerArea.setBounds(420,240,120,80);
 		//registerArea.setVisible(false);
 		
 		panel.add(heading);
@@ -74,7 +70,7 @@ JFrame f;
 		public void actionPerformed(ActionEvent ae) {
 			Object[] possibilities = {"Staff", "Customer"};
 			Component frame = null;
-			setLocation(520,280);
+			setLocation(18,18);
 		//frame;
 			String choice = (String)JOptionPane.showInputDialog(
 			 frame, "Please specify the role youre registering as:\n"

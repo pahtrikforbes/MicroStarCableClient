@@ -48,9 +48,10 @@ public class MicroMainFrame extends JFrame implements ActionListener{
 	private JDesktopPane leftTopPane;
 	private JDesktopPane leftBottomPane;
 	//private JComboBox comboBox;
-	private JFrame frame, serviceFrame;
+	private JFrame logOut;
 	private JButton outstanding, resolve, comboBoxbtn;
-	private JLabel header, resolved_value, oustanding_value, label,lbl_clock;
+	private JLabel header, resolved_value, oustanding_value, label,lbl_clock, 
+					service_lblSub, service_lbl;
 	private JComboBox <String> comboBox;
 	private ImageIcon ii;
 
@@ -69,7 +70,7 @@ public class MicroMainFrame extends JFrame implements ActionListener{
 		menu4 = new JMenu("Accounts");
 		menu4.setPreferredSize(new Dimension(200, menu4.getPreferredSize().height));
 		clock = new JMenu();
-		clock.setPreferredSize(new Dimension(370, menu1.getPreferredSize().height));
+		clock.setPreferredSize(new Dimension(200, menu1.getPreferredSize().height));
 		logoutBtn = new JButton("LOGOUT");
 		
 		menuBar= new JMenuBar();
@@ -118,7 +119,7 @@ public class MicroMainFrame extends JFrame implements ActionListener{
 	
 	public void createWindow() {
 		 this.setTitle("MicroStar Frame");
-		 this.setBounds(0,0,1500,800);
+		 this.setBounds(0,0,1500,800); //(40,45,1500,700)
 		 this.getContentPane().setLayout(null);
 	     this.setVisible(true);
 	     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -126,15 +127,15 @@ public class MicroMainFrame extends JFrame implements ActionListener{
 	}
 	
 	public void setLocationAndSize() { 
-		this.desktopPane.setBounds(360,10,900,700);
+		this.desktopPane.setBounds(405,10,600,700); //(315,7,870,620)
 		this.desktopPane.setBackground(Color.white);
 		
 		//window for the logo
 		leftTopPane.setBounds(5, 10, 400, 400);
-		leftTopPane.setBackground(Color.gray);	
+		leftTopPane.setBackground(Color.black);	
 		//leftTopPane = new microStarViews();
 		
-		ii = logo();
+		//ii = logo();
         JLabel label = new JLabel(ii);
         leftTopPane.add(label);
         
@@ -146,8 +147,8 @@ public class MicroMainFrame extends JFrame implements ActionListener{
 	    //cable.setBounds(150, 12,150,20);
 	    
 		
-	    JLabel service_lbl = new JLabel("Services");
-	    JLabel service_lblSub = new JLabel("Please specify the service you are requesting information on:");
+	    service_lbl = new JLabel("Services");
+	    service_lblSub = new JLabel("Please specify the service you are requesting information on:");
         service_lbl.setFont(new Font("Impact", Font.PLAIN, 20));
         service_lbl.setHorizontalAlignment(JLabel.CENTER);
         service_lblSub.setBounds(5,40,400,30);
@@ -157,19 +158,11 @@ public class MicroMainFrame extends JFrame implements ActionListener{
 	    leftBottomPane.add(service_lbl);
 	    leftBottomPane.add(service_lblSub);
 	    
+	    //adding the ComboBox to the Bottom Pane
 		serviceBox();
 	    leftBottomPane.add(comboBox);
 	    leftBottomPane.add(comboBoxbtn);
 	    
-	    
-	    
-		 //servicesComboBox services = new servicesComboBox();
-		 //leftBottomPane.add(services).setVisible(true);
-		 //leftBottomPane.moveToFront(services);
-		 //services.setSize(leftBottomPane.getWidth(), leftBottomPane.getHeight());
-		 //services.setLocation(0,0);
-		 
-	   
 	
 		//actionListeners for the users
 		this.i1.addActionListener(this);
@@ -201,6 +194,7 @@ public class MicroMainFrame extends JFrame implements ActionListener{
 
 		//actionListerners for logout button
 		this.logoutBtn.addActionListener(this);
+		this.comboBoxbtn.addActionListener(this);
 	}
 	
 	public void addComponentsToFrame() {
@@ -258,7 +252,10 @@ public class MicroMainFrame extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		
 		if (e.getSource() == logoutBtn) {
-			System.out.println("go to the login screen");
+			dispose();
+			logOut = new JFrame();
+		    JOptionPane.showMessageDialog(logOut, "Logged out");
+		    new UserLogin();
 		}
 		else if (e.getSource() == i1) {
 			
@@ -448,6 +445,23 @@ public class MicroMainFrame extends JFrame implements ActionListener{
 				AccFrame5.setLocation(0,0);
 			}
 		
+			else if (e.getSource() == comboBoxbtn) {
+				System.out.println("Services Status");
+				desktopPane.removeAll();
+				serviceForm(comboBox.getSelectedItem().toString());
+				/*
+				desktopPane.add(ServicesChoice).setVisible(true);
+				desktopPane.moveToFront(ServicesChoice);
+				ServicesChoice.setSize(desktopPane.getWidth(), desktopPane.getHeight());
+				ServicesChoice.setLocation(0,0);*/
+			}
+			else if (e.getSource() == comboBox) {
+				System.out.println("Services Status");
+				desktopPane.removeAll();
+				
+				
+			}
+		
 			 
 	}
 	
@@ -481,41 +495,60 @@ public class MicroMainFrame extends JFrame implements ActionListener{
 		clock.start();
     }
 
-	public void serviceForm() {
-
+	public void serviceForm(String service) {
+			int outstandingCount = 0;
+			int resolvedCount = 0;
+			
 			//serviceFrame = new JFrame("Service Status"); 
-			header = new JLabel("Status of Services");
+			header = new JLabel(service);
 			header.setFont(new Font("Times New Roman", Font.PLAIN, 25));
 			header.setHorizontalAlignment(JLabel.CENTER);
-			header.setBounds(150, 30, 200, 40);
+			header.setBounds(190, 30, 200, 40);
 
 			
-
-			this.resolved_value = new JLabel("Unresolved Complaints: ");
+			this.resolved_value = new JLabel("Unresolved Complaints: " + outstandingCount);
 			this.resolved_value.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-			this.resolved_value.setBounds(260,130, 200, 20);
+			this.resolved_value.setBounds(300,130, 200, 20);
 
-			
-
-			this.oustanding_value = new JLabel("Resolved Complaints: ");
+			this.oustanding_value = new JLabel("Resolved Complaints: " + resolvedCount);
 			this.oustanding_value.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-			this.oustanding_value.setBounds(70,130, 200, 20);
+			this.oustanding_value.setBounds(110,130, 200, 20);
 
 		    resolve =new JButton("Resolved");  
 		    outstanding = new JButton("Outstanding");
-		    outstanding.setBounds(60,100,150,30);  
-
-		    resolve.setBounds(250,100,150,30);  
-
-		    desktopPane.add(header);
-		    desktopPane.add(outstanding);  
-		    desktopPane.add(resolve);
-		    desktopPane.add(resolved_value);
-		    desktopPane.add(oustanding_value);
-
-		    desktopPane.setBounds(0,0,490,580);
+		    outstanding.setBounds(100,100,150,30);
+		    resolve.setBounds(290,100,150,30);  
+		    
+		    ActionListener actionListioner = new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+						
+						if(e.getSource()==resolve) {
+							System.out.println("RESOLVE TABLE.");
+						}else if(e.getSource()==outstanding) {
+							System.out.println("OUSTANDING TABLE.");
+						}
+					}
+		    };
+	        
+	        resolve.addActionListener(actionListioner);
+	        outstanding.addActionListener(actionListioner);
+	        
+		    desktopPane.removeAll();
+		    desktopPane.add(header).setVisible(true);
+		    desktopPane.add(outstanding).setVisible(true);  
+		    desktopPane.add(resolve).setVisible(true);
+		    desktopPane.add(resolved_value).setVisible(true);
+		    desktopPane.add(oustanding_value).setVisible(true);
+		    desktopPane.moveToFront(header);
+		    desktopPane.moveToFront(outstanding);  
+		    desktopPane.moveToFront(resolve);
+		    desktopPane.moveToFront(resolved_value);
+		    desktopPane.moveToFront(oustanding_value);
+		    desktopPane.setBounds(405,10,600,700);
 
 		    desktopPane.setLayout(null);  
+		    //desktopPane.setVisible(true);
 
 		   // serviceFrame.setVisible(true);  
 
@@ -523,8 +556,8 @@ public class MicroMainFrame extends JFrame implements ActionListener{
 	
 	public void serviceBox() {
 	    	
-		 String defaultselect = "Service type...";
-	        String services[] = {defaultselect,"Cable","Broadband"};
+		 //String defaultselect = "Service type...";
+	        String services[] = {"Cable","Broadband"};
 	        //String cable[] = {"fibre", "Cooper"};
 	        comboBox = new JComboBox<>(services);
 	        comboBox.setSelectedIndex(0);
@@ -536,30 +569,39 @@ public class MicroMainFrame extends JFrame implements ActionListener{
 	        comboBoxbtn. setBounds(70,180,200,50);
 	        this.add(comboBoxbtn);
 	        comboBoxbtn.setVisible(true);
-	        this.setLayout(null);
-
-	        
+	        this.setLayout(null);	        
 	        ActionListener actionListioner = new ActionListener() {
-
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					
-					String choice = null;
-					switch (choice) {//check for a match
-					    case "Cable":
-					    	
-					        System.out.println("You're choice is cable");
-					        break;
-					    case "BroadBand":    
-					        System.out.println("You're choice is broadnad");
-					        break;
-					    default:
-					        break;
+					if(e.getSource()==comboBoxbtn) {
+						String choice = comboBox.getSelectedItem().toString();
+						System.out.println(choice);
+						switch (choice) {//check for a match
+						    case "Cable":
+						    	System.out.println("You're choice is Cable");
+						    		serviceForm("Cable");
+						        break;
+						    case "BroadBand":    
+						        System.out.println("You're choice is BroadBand");
+						        	serviceForm("BroadBand");
+						        break;
+						    default:
+						    	//removeAll();
+						        break;
+						}
+					}else if(e.getSource()==resolve) {
+						System.out.println("RESOLVE TABLE.");
+					}else if(e.getSource()==outstanding) {
+						System.out.println("OUSTANDING TABLE.");
 					}
-					
+
 				}
 	        	
 	        };
+	       
+	        comboBoxbtn.addActionListener(actionListioner);
+    
+	        
 	    }
 
 	
@@ -585,8 +627,6 @@ public class MicroMainFrame extends JFrame implements ActionListener{
     }
 
     private void createLayout() {
-
-       
 
     }
 

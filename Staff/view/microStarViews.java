@@ -52,6 +52,8 @@ public class microStarViews extends JDesktopPane {
         );
 
     }
+    
+    
 
 
 }
