@@ -3,6 +3,7 @@ package models;
 import java.util.Date;
 
 import utils.ComplaintCategory;
+import utils.ComplaintStatus;
 import utils.ComplaintType;
 
 
@@ -27,6 +28,8 @@ public class Complaint {
 	private Date complaintDate;
 	
 	private ComplaintType complaintType;
+	
+	private ComplaintStatus complaintStatus;
 
 	
 	public Complaint() {
@@ -36,16 +39,18 @@ public class Complaint {
 		this.complaint = "";
 		this.complaintDate =  new Date();
 		this.complaintType = null;
+		this.complaintStatus = ComplaintStatus.OUTSTANDING;
 	}
 	
 	public Complaint(int custID, int empID, ComplaintCategory category, String complaint, Date complaintDate,
-			ComplaintType complaintType) {
+			ComplaintType complaintType, ComplaintStatus complaintStatus) {
 		this.custID = custID;
 		this.empID = empID;
 		this.category = category;
 		this.complaint = complaint;
 		this.complaintDate = complaintDate;
 		this.complaintType = complaintType;
+		this.complaintStatus = complaintStatus;
 	}
 	
 	
@@ -57,6 +62,7 @@ public class Complaint {
 		this.complaint = c.complaint;
 		this.complaintDate = c.complaintDate;
 		this.complaintType = c.complaintType;
+		this.complaintStatus = c.complaintStatus;
 	}
 
 	public int getComplaintID() {
@@ -115,13 +121,22 @@ public class Complaint {
 		this.complaintType = complaintType;
 	}
 
+	public ComplaintStatus getComplaintStatus() {
+		return complaintStatus;
+	}
+
+	public void setComplaintStatus(ComplaintStatus complaintStatus) {
+		this.complaintStatus = complaintStatus;
+	}
+	
 	@Override
 	public String toString() {
 		return "\nComplaints \ncomplaintID: " + complaintID + "\ncustID: " + custID +
 				"\nempID: " + empID + "\ncategory: "
 				+ category + "\ncomplaint: " + complaint + "\ncomplaintDate: " + complaintDate + 
 				"\ncomplaintType: "
-				+ complaintType + "\n";
+				+ complaintType + "\n"
+				+ complaintStatus + "\n";
 	}
 	
 	
