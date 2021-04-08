@@ -16,7 +16,7 @@ public class Client {
 	
 	public Client() {
 		try {
-			this.socket = new Socket("localhost",3600);
+			this.socket = new Socket("localhost",5000);
 			this.operation = "";
 			this.endPoint = "";
 			initDataStreams();
@@ -73,7 +73,7 @@ public class Client {
 		this.endPoint = endPoint;
 	}
 
-	private void initDataStreams() throws IOException{
+	public void initDataStreams() throws IOException{
 		this.objectOutStream = new ObjectOutputStream(this.socket.getOutputStream());
 		this.objectInStream = new ObjectInputStream(this.socket.getInputStream());	
 	}
