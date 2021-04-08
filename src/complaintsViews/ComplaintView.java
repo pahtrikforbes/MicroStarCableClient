@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.Statement;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -17,11 +15,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
-
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.exception.ConstraintViolationException;
 
 import controllers.ComplaintController;
 import controllers.UserController;
@@ -55,21 +48,9 @@ public class ComplaintView extends JInternalFrame implements ActionListener{
 	
 	private JButton submitButton;
     private JButton resetButton;
-	
 //    Have the submit button do both send the info as well 
 //    to send the date at which the form complaint form
 //    was filled out
-	
-    
-  //hibernate session config
-  	private SessionFactory sessionFactory;
-  	private Transaction transaction;
-  	private Session session;
-  	
-  	//traditional connection vars
-  	private Connection connect;
-  	private Statement statement;
-  	private String sqlQuery;
     
     
 	
@@ -95,14 +76,6 @@ public class ComplaintView extends JInternalFrame implements ActionListener{
 	    this.custIdEmptyLabel = new JLabel("Error message");
 		this.complaintEmptyLabel = new JLabel("Error message");
 		
-		
-		this.sessionFactory = null;
-		this.transaction = null;
-		this.session = null;
-		this.connect = null;
-		this.statement = null;
-		this.sqlQuery = "";
-		this.statement = null;
 	    
 	    showForm();
 	}
@@ -125,12 +98,11 @@ public class ComplaintView extends JInternalFrame implements ActionListener{
 	public void setLocationAndSize()
     {
 //		Setting Location and Size of Each Component
-        this.custIdLabel.setBounds(20,20,160,70);
-        this.categoryLabel.setBounds(20,70,160,70);
-        this.typeLabel.setBounds(20,120,160,70);
-        this.complaintLabel.setBounds(20,170,160,70);
-        this.custIdEmptyLabel.setBounds(180,63,185,24);
-		this.complaintEmptyLabel.setBounds(180,363,185,24);
+        this.custIdLabel.setBounds(240,20,160,70);
+        this.categoryLabel.setBounds(240,70,160,70);
+        this.typeLabel.setBounds(240,120,160,70);
+        this.complaintLabel.setBounds(240,170,160,70);
+
         
 //		Set label fonts
         this.custIdLabel.setFont(new Font("Times New Roman", Font.BOLD,12));
@@ -148,14 +120,14 @@ public class ComplaintView extends JInternalFrame implements ActionListener{
         this.typeComboBox.setFont(new Font("Times New Roman", Font.BOLD,12));
         
 //		Set bounds
-        this.custIdTextField.setBounds(180,43,185,23);
-        this.categoryComboBox.setBounds(180,93,185,23);
-        this.typeComboBox.setBounds(180,143,185,23);
-        this.complaintTextArea.setBounds(180,193,185,170);       
+        this.custIdTextField.setBounds(400,43,185,23);
+        this.categoryComboBox.setBounds(400,93,185,23);
+        this.typeComboBox.setBounds(400,143,185,23);
+        this.complaintTextArea.setBounds(400,193,185,170);       
         Border border = BorderFactory.createLineBorder(Color.GRAY, 1);
         complaintTextArea.setBorder(border);
-        this.submitButton.setBounds(70,395,100,35);
-        this.resetButton.setBounds(220,395,100,35);     
+        this.submitButton.setBounds(300,395,100,35);
+        this.resetButton.setBounds(440,395,100,35);     
         
     }
 	
@@ -215,15 +187,15 @@ public class ComplaintView extends JInternalFrame implements ActionListener{
 				int custId = Integer.parseInt(custIdText.trim());
 				User userId = null;
 				try {
-					userId = uc.findById(custId);
+					 userId = uc.findById(custId);
 				} catch (CustomizedException e2) {
 					// TODO Auto-generated catch block
 					e2.printStackTrace();
 				}
 				
-				complaint.setCustID(custId);
+				complaint.setCustID(userId);
 				complaint.setComplaint(this.complaintTextArea.getText());
-				complaint.setEmpID((Integer) null);
+				complaint.setEmpID(null);
 
 				switch(((String)this.categoryComboBox.getSelectedItem()).toLowerCase()){
 					case "mild":
@@ -262,22 +234,23 @@ public class ComplaintView extends JInternalFrame implements ActionListener{
 				
 				
 				try {
-					cc.createComplaint(complaint);
-					JOptionPane.showMessageDialog(ComplaintView.this,
-							"Complaint added successfully!\n"
-							+ "Submitted: "+sqlDate
-			          			    );
+					int complaintId = cc.createComplaint(complaint);
+					
+					if(complaintId > 0) {
+						JOptionPane.showMessageDialog(ComplaintView.this,
+								"Complaint added successfully!\n"
+								+ "Submitted: "+sqlDate
+				          			    );
+					} else {
+						System.out.println("Complaint creation unsuccessful");
+					}
+					
+					
 				} catch (CustomizedException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 					
-				} catch (ConstraintViolationException cve) {
-					JOptionPane.showMessageDialog(ComplaintView.this,
-	           			  	"Complaint was not added successfully! "
-	           			  	+ "Please enter a valid customer Id",
-	           			    "Invalid Submission",
-	           			    JOptionPane.WARNING_MESSAGE);
-				}
+				} 
 				
 			} else {
 				 JOptionPane.showMessageDialog(ComplaintView.this,

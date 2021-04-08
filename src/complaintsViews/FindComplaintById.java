@@ -52,8 +52,8 @@ public class FindComplaintById extends JInternalFrame {
 				 Object rowData[] = new Object[8];
 			        for (int i =0; i < 1; i++ ){
 			            rowData[0] = complaint.getComplaintID();
-			            rowData[1] = complaint.getCustID();
-			            rowData[2] = complaint.getEmpID();
+			            rowData[1] = complaint.getCustID().getUserId();
+  			            rowData[2] = complaint.getEmpID() != null?complaint.getEmpID().getUserId():null;
 			            rowData[3] = complaint.getCategory();
 			            rowData[4] = complaint.getComplaint();
 			            rowData[5] = complaint.getComplaintDate();

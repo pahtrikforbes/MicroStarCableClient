@@ -36,8 +36,8 @@ public class DisplayAllComplaintsView extends javax.swing.JInternalFrame {
   				 Object rowData[] = new Object[8];
   			        for (int i =0; i < displayList.size(); i++ ){
   			            rowData[0] = displayList.get(i).getComplaintID();
-  			            rowData[1] = displayList.get(i).getCustID();
-  			            rowData[2] = displayList.get(i).getEmpID();
+  			            rowData[1] = displayList.get(i).getCustID().getUserId();
+  			            rowData[2] = displayList.get(i).getEmpID() != null?displayList.get(i).getEmpID().getUserId():null;
   			            rowData[3] = displayList.get(i).getCategory();
   			            rowData[4] = displayList.get(i).getComplaint();
   			            rowData[5] = displayList.get(i).getComplaintDate();
@@ -55,11 +55,12 @@ public class DisplayAllComplaintsView extends javax.swing.JInternalFrame {
     		  try {
   				ArrayList <Complaint> displayList = cc.getAllMildComplaints();
   				System.out.println("List successfully retrieved!");
+  				System.out.println(displayList);
   				 Object rowData[] = new Object[8];
   			        for (int i =0; i < displayList.size(); i++ ){
   			            rowData[0] = displayList.get(i).getComplaintID();
-  			            rowData[1] = displayList.get(i).getCustID();
-  			            rowData[2] = displayList.get(i).getEmpID();
+  			            rowData[1] = displayList.get(i).getCustID().getUserId();
+  			            rowData[2] = displayList.get(i).getEmpID() != null?displayList.get(i).getEmpID().getUserId():null;
   			            rowData[3] = displayList.get(i).getCategory();
   			            rowData[4] = displayList.get(i).getComplaint();
   			            rowData[5] = displayList.get(i).getComplaintDate();
@@ -79,8 +80,8 @@ public class DisplayAllComplaintsView extends javax.swing.JInternalFrame {
   				 Object rowData[] = new Object[8];
   			        for (int i =0; i < displayList.size(); i++ ){
   			            rowData[0] = displayList.get(i).getComplaintID();
-  			            rowData[1] = displayList.get(i).getCustID();
-  			            rowData[2] = displayList.get(i).getEmpID();
+  			            rowData[1] = displayList.get(i).getCustID().getUserId();
+  			            rowData[2] = displayList.get(i).getEmpID() != null?displayList.get(i).getEmpID().getUserId():null;
   			            rowData[3] = displayList.get(i).getCategory();
   			            rowData[4] = displayList.get(i).getComplaint();
   			            rowData[5] = displayList.get(i).getComplaintDate();
@@ -100,8 +101,8 @@ public class DisplayAllComplaintsView extends javax.swing.JInternalFrame {
   				 Object rowData[] = new Object[8];
   			        for (int i =0; i < displayList.size(); i++ ){
   			            rowData[0] = displayList.get(i).getComplaintID();
-  			            rowData[1] = displayList.get(i).getCustID();
-  			            rowData[2] = displayList.get(i).getEmpID();
+  			            rowData[1] = displayList.get(i).getCustID().getUserId();
+  			            rowData[2] = displayList.get(i).getEmpID() != null?displayList.get(i).getEmpID().getUserId():null;
   			            rowData[3] = displayList.get(i).getCategory();
   			            rowData[4] = displayList.get(i).getComplaint();
   			            rowData[5] = displayList.get(i).getComplaintDate();
