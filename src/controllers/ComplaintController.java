@@ -105,12 +105,13 @@ public class ComplaintController {
 	    
 	    return complaintList;
 	}
-	
-	
+
+		
 //	*************************************************************************	
 
 	
-	/* Method to  READ all MILD complaints returned from database through network stream */
+	/* Method to  READ all the complaints returned from database through network stream */
+
 	@SuppressWarnings("unchecked")
 	public ArrayList<Complaint> getAllModerateComplaints() throws CustomizedException {
 		ArrayList<Complaint> complaintList = new ArrayList<>();
@@ -141,7 +142,7 @@ public class ComplaintController {
 	    return complaintList;
 	}
 	
-//	*************************************************************************	
+//	*************************************************************************		
 
 
 	/* Method to  READ all MILD complaints returned from database through network stream */
@@ -254,7 +255,6 @@ public class ComplaintController {
 	
 //	*************************************************************************	
 
-	
 	
 	/*Method to assign a Technician to a Complaint*/
 	public Complaint assignTechnician(Complaint assignComplaint) throws CustomizedException {
