@@ -113,6 +113,7 @@ public class GetComplaintsPerUser extends javax.swing.JInternalFrame {
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
             	if (evt.getButton() == MouseEvent.BUTTON1 && evt.getClickCount() == 2) {
+            		
             		jTable1MouseClicked(evt);
             		
             	    } else if (evt.getButton() == MouseEvent.BUTTON3) {
@@ -133,10 +134,10 @@ public class GetComplaintsPerUser extends javax.swing.JInternalFrame {
 		private static final long serialVersionUID = 1L;
 
 		public  ResponsePopUp(JTable table) {
-			JMenuItem response1 = new JMenuItem("Latest response");
-			JMenuItem response2 = new JMenuItem("View all responses");
+			JMenuItem item1 = new JMenuItem("Latest response");
+			JMenuItem item2 = new JMenuItem("View all responses");
 			
-			response1.addActionListener(new ActionListener() {
+			item1.addActionListener(new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
@@ -147,7 +148,7 @@ public class GetComplaintsPerUser extends javax.swing.JInternalFrame {
 				
 			});
 			
-			response2.addActionListener(new ActionListener() {
+			item2.addActionListener(new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
@@ -158,9 +159,9 @@ public class GetComplaintsPerUser extends javax.swing.JInternalFrame {
 				
 			});
 			
-			add(response1);
+			add(item1);
 			add(new JSeparator());
-			add(response2);
+			add(item2);
 		}
     	
     }
@@ -177,30 +178,24 @@ public class GetComplaintsPerUser extends javax.swing.JInternalFrame {
     	System.out.println("Row clicked!\n");
     	DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
     	try {
-    	int index = jTable1.getSelectedRow();
+//    	int index = model.get
+//    	System.out.println("Index:"+index);
+//    	String click = (jTable1.getModel().getValueAt(index, 0).toString());
     	
-    	String click = (jTable1.getModel().getValueAt(index, 0).toString());
     	
-    	
-    	/*
-        String compId = model.getValueAt(index, index).toString();
-        
-        String custId = model.getValueAt(index,1).toString();
-        String empId = model.getValueAt(index,2).toString();
-        String compCategory = model.getValueAt(index,3).toString();
-        String compDetails = model.getValueAt(index,4).toString();
-        String compDate = model.getValueAt(index,5).toString();
-        String compType = model.getValueAt(index,6).toString();
-        String compStatus = model.getValueAt(index,7).toString();
-        */
-        
+        String compId = model.getValueAt(0, 1).toString();        
+        String custId = model.getValueAt(0,1).toString();
+        String empId = model.getValueAt(0,2).toString();
+        String compCategory = model.getValueAt(0,3).toString();
+        String compDetails = model.getValueAt(0,4).toString();
+        String compDate = model.getValueAt(0,5).toString();
+        String compType = model.getValueAt(0,6).toString();
+        String compStatus = model.getValueAt(0,7).toString();
+              
         cdv.setVisible(true);
         cdv.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         cdv.setLocationRelativeTo(null);
         
-        
-        
-        /*
         cdv.jTextField1.setText(compId);
         cdv.jTextField2.setText(custId);
         cdv.jTextField3.setText(empId);
@@ -209,7 +204,7 @@ public class GetComplaintsPerUser extends javax.swing.JInternalFrame {
         cdv.jTextField6.setText(compType);
         cdv.jTextField7.setText(compStatus);
         cdv.jTextArea1.setText(compDetails);
-        */
+        
     	} catch (Exception e) {
     		JOptionPane.showMessageDialog(null, e);
     	}

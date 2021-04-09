@@ -32,7 +32,7 @@ public class DisplayResponsesView extends javax.swing.JFrame {
 	    			  int complaintId = 36;
 	  				ArrayList <Response> displayList = rc.getResponsesPerUser(complaintId);
 	  				System.out.println("List successfully retrieved!");
-	  				 Object rowData[] = new Object[8];
+	  				 Object rowData[] = new Object[4];
 	  			        for (int i =0; i < displayList.size(); i++ ){
 	  			       
 	  			        	rowData[0] = displayList.get(i).getResponse_id();
@@ -65,7 +65,7 @@ public class DisplayResponsesView extends javax.swing.JFrame {
 	        jTable1 = new javax.swing.JTable();
 	        jButton1 = new javax.swing.JButton();
 
-	        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+	        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
 	        jTable1.setModel(new javax.swing.table.DefaultTableModel(
 	            new Object [][] {
@@ -74,33 +74,12 @@ public class DisplayResponsesView extends javax.swing.JFrame {
 	            new String [] {
 	                "Response Id", "Complaint Id", "Response Date", "Response"
 	            }
-	        ) {
-	            /**
-				 * 
-				 */
-				private static final long serialVersionUID = 1L;
-				boolean[] canEdit = new boolean [] {
-	                false, false, false, false
-	            };
-
-	            public boolean isCellEditable(int rowIndex, int columnIndex) {
-	                return canEdit [columnIndex];
-	            }
-	        });
+	   
+	        ));
 	        jScrollPane1.setViewportView(jTable1);
-	        if (jTable1.getColumnModel().getColumnCount() > 0) {
-	            jTable1.getColumnModel().getColumn(0).setResizable(false);
-	            jTable1.getColumnModel().getColumn(1).setResizable(false);
-	            jTable1.getColumnModel().getColumn(2).setResizable(false);
-	            jTable1.getColumnModel().getColumn(3).setResizable(false);
-	        }
 
 	        jButton1.setText("OK");
-	        jButton1.addActionListener(new java.awt.event.ActionListener() {
-	            public void actionPerformed(java.awt.event.ActionEvent evt) {
-	                jButton1ActionPerformed(evt);
-	            }
-	        });
+	        
 
 	        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
 	        getContentPane().setLayout(layout);
@@ -120,7 +99,13 @@ public class DisplayResponsesView extends javax.swing.JFrame {
 	                .addComponent(jButton1)
 	                .addGap(20, 20, 20))
 	        );
-
+	        
+	        jButton1.addActionListener(new java.awt.event.ActionListener() {
+	            public void actionPerformed(java.awt.event.ActionEvent evt) {
+	                jButton1ActionPerformed(evt);
+	            }
+	        });
+	        
 	        pack();
 	    }// </editor-fold>                        
 
@@ -128,6 +113,7 @@ public class DisplayResponsesView extends javax.swing.JFrame {
 	        this.dispose();
 	    }            
 
+	    
 	    /**
 	     * @param args the command line arguments
 	     */

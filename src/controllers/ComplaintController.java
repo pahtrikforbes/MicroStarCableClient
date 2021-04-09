@@ -201,6 +201,7 @@ public class ComplaintController {
 	    	client.initDataStreams();
 	    	client.getObjectOutStream().writeObject(client.getOperation());
 			client.getObjectOutStream().writeObject(client.getEndPoint());
+			client.getObjectOutStream().writeObject(complaintId);
 			
 			String success = (String)client.getObjectInStream().readObject();
 			
