@@ -67,7 +67,7 @@ public class MicroStarUser extends JFrame implements ActionListener{
 		menu2.setPreferredSize(new Dimension(200, menu2.getPreferredSize().height));
 		menu3 = new JMenu("Responses");
 		menu3.setPreferredSize(new Dimension(200, menu3.getPreferredSize().height));
-		menu4 = new JMenu("Accounts");
+		menu4 = new JMenu("Query Account");
 		menu4.setPreferredSize(new Dimension(200, menu4.getPreferredSize().height));
 		clock = new JMenu();
 		clock.setPreferredSize(new Dimension(200, menu1.getPreferredSize().height));
@@ -102,12 +102,12 @@ public class MicroStarUser extends JFrame implements ActionListener{
   		r6 = new JMenuItem("Delete Response");
   		
   	   //AccountView drop down menu
-  		a1 = new JMenuItem("Add Acoount");
+  		a1 = new JMenuItem("Payment Status");
   		a1.setPreferredSize(new Dimension(200, menu4.getPreferredSize().height));
-  		a2 = new JMenuItem("All Accounts");
-  		a3 = new JMenuItem("Find Account");
-  		a4 = new JMenuItem("Update Account");
-  		a5 = new JMenuItem("Delete Account");
+  		a2 = new JMenuItem("Amount Due");
+  		a3 = new JMenuItem("Payment Due date");
+  		a4 = new JMenuItem("Account History");
+  		
   		
   		desktopPane = new JDesktopPane(); 
   		leftTopPanel = new JPanel();
@@ -219,19 +219,15 @@ public class MicroStarUser extends JFrame implements ActionListener{
 		this.c4.addActionListener(this);
 		
 		//actionListerners for 
-		this.r1.addActionListener(this);
-		this.r2.addActionListener(this);
 		this.r3.addActionListener(this);
 		this.r4.addActionListener(this);
 		this.r5.addActionListener(this);
-		this.r6.addActionListener(this);
 		
 		//actionListerners for accounts
 		this.a1.addActionListener(this);
 		this.a2.addActionListener(this);
 		this.a3.addActionListener(this);
 		this.a4.addActionListener(this);
-		this.a5.addActionListener(this);
 
 		//actionListerners for logout button
 		this.logoutBtn.addActionListener(this);
@@ -246,7 +242,7 @@ public class MicroStarUser extends JFrame implements ActionListener{
 		menu1.add(i3);
 		menu1.add(i4);
 		menu1.add(i5);
-		menuBar.add(menu1);
+		//menuBar.add(menu1);
 		
 		// second menu bar for the complaint
 		menu2.add(c1);
@@ -256,12 +252,9 @@ public class MicroStarUser extends JFrame implements ActionListener{
 		menuBar.add(menu2);
 		  
 		//menu for response
-		menu3.add(r1);
-		menu3.add(r2);
 		menu3.add(r3);
 		menu3.add(r4);
 		menu3.add(r5);
-		menu3.add(r6);
 		menuBar.add(menu3);
 		 
 		//menu for accounts
@@ -269,7 +262,6 @@ public class MicroStarUser extends JFrame implements ActionListener{
 		menu4.add(a2);
 		menu4.add(a3);
 		menu4.add(a4);
-		menu4.add(a5);
 		menuBar.add(menu4);
 		  
 		menuBar.add(logoutBtn);
@@ -297,51 +289,6 @@ public class MicroStarUser extends JFrame implements ActionListener{
 			logOut = new JFrame();
 		    JOptionPane.showMessageDialog(logOut, "Logged out");
 		    new UserLogin();
-		}
-		else if (e.getSource() == i1) {
-			
-			  System.out.println("Create UserView"); desktopPane.removeAll(); CreateUser f1
-			  = new CreateUser(); desktopPane.add(f1).setVisible(true);
-			  desktopPane.moveToFront(f1); f1.setSize(desktopPane.getWidth(),
-			  desktopPane.getHeight()); f1.setLocation(0,0);
-			 
-		}
-		else if (e.getSource() == i2) {
-			System.out.println("View all user");
-			desktopPane.removeAll();
-			viewAllUsers f2 = new viewAllUsers();
-			desktopPane.add(f2).setVisible(true);
-			desktopPane.moveToFront(f2);
-			f2.setSize(desktopPane.getWidth(), desktopPane.getHeight());
-			f2.setLocation(0,0);
-		}
-		else if (e.getSource() == i3) {
-			System.out.println("Find user");
-			desktopPane.removeAll();
-			findByID f3 = new findByID();
-			desktopPane.add(f3).setVisible(true);
-			desktopPane.moveToFront(f3);
-			f3.setSize(desktopPane.getWidth(), desktopPane.getHeight());
-			f3.setLocation(0,0);
-		}
-		else if (e.getSource() == i4) {
-			System.out.println("Update UserView");
-			desktopPane.removeAll();
-			UpdateUser f4 = new UpdateUser();
-			desktopPane.add(f4).setVisible(true);
-			desktopPane.moveToFront(f4);
-			f4.setSize(desktopPane.getWidth(), desktopPane.getHeight());
-			f4.setLocation(0,0);
-		}
-		
-		else if (e.getSource() == i5) {
-			System.out.println("Delete UserView");
-			desktopPane.removeAll();
-			deleteUser f5 = new deleteUser();
-			desktopPane.add(f5).setVisible(true);
-			desktopPane.moveToFront(f5);
-			f5.setSize(desktopPane.getWidth(), desktopPane.getHeight());
-			f5.setLocation(0,0);
 		}
 		
 		//complaint section
@@ -383,24 +330,6 @@ public class MicroStarUser extends JFrame implements ActionListener{
 			} 
 //ResponseView section
 		
-		  else if (e.getSource() ==  this.r1) { 
-			 System.out.println("Add ResponseView");
-			 desktopPane.removeAll(); 
-			 addResponse fra1 = new addResponse();
-			 desktopPane.add(fra1).setVisible(true); 
-			 desktopPane.moveToFront(fra1);
-			 fra1.setSize(desktopPane.getWidth(), desktopPane.getHeight());
-			 fra1.setLocation(0,0); 
-		  	}
-		  else if (e.getSource() ==  this.r2) { 
-			 System.out.println("View all Complaints");
-			 desktopPane.removeAll(); 
-			 updateResponse fra2 = new updateResponse();
-			 desktopPane.add(fra2).setVisible(true); 
-			 desktopPane.moveToFront(fra2);
-			 fra2.setSize(desktopPane.getWidth(), desktopPane.getHeight());
-			 fra2.setLocation(0,0); 
-			} 
 		  else if (e.getSource() ==  this.r3) { 
 			 System.out.println("View all Complaints");
 			 desktopPane.removeAll(); 
@@ -428,19 +357,10 @@ public class MicroStarUser extends JFrame implements ActionListener{
 			 fra5.setSize(desktopPane.getWidth(), desktopPane.getHeight());
 			 fra5.setLocation(0,0); 
 			} 
-		  else if (e.getSource() ==  this.r6) { 
-			 System.out.println("Find complaint by ID");
-			 desktopPane.removeAll(); 
-			 deleteResponse fra6 = new  deleteResponse();
-			 desktopPane.add(fra6).setVisible(true); 
-			 desktopPane.moveToFront(fra6);
-			 fra6.setSize(desktopPane.getWidth(), desktopPane.getHeight());
-			 fra6.setLocation(0,0); 
-			} 
-		
+	
 		//AccountView
 		  else if (e.getSource() == a1) {
-				System.out.println("Create Account");
+				System.out.println("Payment Status");
 				desktopPane.removeAll();
 				CreateAccount AccFrame1 = new CreateAccount();
 				desktopPane.add(AccFrame1).setVisible(true);
@@ -449,7 +369,7 @@ public class MicroStarUser extends JFrame implements ActionListener{
 				AccFrame1.setLocation(0,0);
 			}
 			else if (e.getSource() == a2) {
-				System.out.println("View all Accounts");
+				System.out.println("Amount Due");
 				desktopPane.removeAll();
 				allAccount AccFrame2 = new allAccount();
 				desktopPane.add(AccFrame2).setVisible(true);
@@ -458,7 +378,7 @@ public class MicroStarUser extends JFrame implements ActionListener{
 				AccFrame2.setLocation(0,0);
 			}
 			else if (e.getSource() == a3) {
-				System.out.println("Find Account");
+				System.out.println("Payment Due Date");
 				desktopPane.removeAll();
 				findAccByID AccFrame3 = new findAccByID();
 				desktopPane.add(AccFrame3).setVisible(true);
@@ -467,7 +387,7 @@ public class MicroStarUser extends JFrame implements ActionListener{
 				AccFrame3.setLocation(0,0);
 			}
 			else if (e.getSource() == a4) {
-				System.out.println("Update Account");
+				System.out.println("Account History");
 				desktopPane.removeAll();
 				updateAccount AccFrame4 = new updateAccount();
 				desktopPane.add(AccFrame4).setVisible(true);
@@ -475,17 +395,7 @@ public class MicroStarUser extends JFrame implements ActionListener{
 				AccFrame4.setSize(desktopPane.getWidth(), desktopPane.getHeight());
 				AccFrame4.setLocation(0,0);
 			}
-			
-			else if (e.getSource() == a5) {
-				System.out.println("Delete Account");
-				desktopPane.removeAll();
-				deleteAccount AccFrame5 = new deleteAccount();
-				desktopPane.add(AccFrame5).setVisible(true);
-				desktopPane.moveToFront(AccFrame5);
-				AccFrame5.setSize(desktopPane.getWidth(), desktopPane.getHeight());
-				AccFrame5.setLocation(0,0);
-			}
-		
+
 			else if (e.getSource() == comboBoxbtn) {
 				System.out.println("Services Status");
 				desktopPane.removeAll();
