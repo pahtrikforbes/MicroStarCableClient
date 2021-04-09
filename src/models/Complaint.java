@@ -37,6 +37,7 @@ public class Complaint implements Serializable{
 	
 	private ComplaintStatus complaintStatus;
 
+	private String contactNum;
 	
 	public Complaint() {
 		this.custID = new User();
@@ -46,10 +47,11 @@ public class Complaint implements Serializable{
 		this.complaintDate =  new Date();
 		this.complaintType = null;
 		this.complaintStatus = ComplaintStatus.OUTSTANDING;
+		this.contactNum = "";
 	}
 	
 	public Complaint(User custID, User empID, ComplaintCategory category, String complaint, Date complaintDate,
-			ComplaintType complaintType, ComplaintStatus complaintStatus) {
+			ComplaintType complaintType, ComplaintStatus complaintStatus, String contactNum) {
 		this.custID = custID;
 		this.empID = empID;
 		this.category = category;
@@ -57,6 +59,7 @@ public class Complaint implements Serializable{
 		this.complaintDate = complaintDate;
 		this.complaintType = complaintType;
 		this.complaintStatus = complaintStatus;
+		this.contactNum = contactNum;
 	}
 	
 	
@@ -69,6 +72,7 @@ public class Complaint implements Serializable{
 		this.complaintDate = c.complaintDate;
 		this.complaintType = c.complaintType;
 		this.complaintStatus = c.complaintStatus;
+		this.contactNum = c.contactNum;
 	}
 
 	public int getComplaintID() {
@@ -135,6 +139,14 @@ public class Complaint implements Serializable{
 		this.complaintStatus = complaintStatus;
 	}
 	
+	public String getContactNum() {
+		return contactNum;
+	}
+
+	public void setContactNum(String contactNum) {
+		this.contactNum = contactNum;
+	}
+
 	@Override
 	public String toString() {
 		return "\nComplaints \ncomplaintID: " + complaintID + "\ncustID: " + custID +
@@ -142,7 +154,8 @@ public class Complaint implements Serializable{
 				+ category + "\ncomplaint: " + complaint + "\ncomplaintDate: " + complaintDate + 
 				"\ncomplaintType: "
 				+ complaintType + "\n"
-				+ complaintStatus + "\n";
+				+ complaintStatus + "\n"
+				+ contactNum + "\n";
 	}
 	
 	

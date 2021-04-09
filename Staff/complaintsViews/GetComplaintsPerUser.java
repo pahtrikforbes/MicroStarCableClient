@@ -1,5 +1,6 @@
 package complaintsViews;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -11,8 +12,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
+import client.Client;
 import controllers.ComplaintController;
 import models.Complaint;
 import utils.CustomizedException;
@@ -109,19 +114,42 @@ public class GetComplaintsPerUser extends javax.swing.JInternalFrame {
         );
 
         final ResponsePopUp pop = new ResponsePopUp(jTable1);
- 
+        jTable1.setSelectionBackground(Color.cyan);
+//        jTable1.setSelectionForeground(Color.cyan);
+        
+        
+        
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+        	
             public void mouseClicked(java.awt.event.MouseEvent evt) {
+            	 ArrayList<Object[]> tasks = new ArrayList<Object[]>();
+            	 
             	if (evt.getButton() == MouseEvent.BUTTON1 && evt.getClickCount() == 2) {
+            		int [] selectedRows = jTable1.getSelectedRows();
+            		 Object[] taskAsArray = new Object[jTable1.getColumnCount()];
+            		    for (int i = 0; i < selectedRows.length; i++) { // print all selected tasks
+            		        for (int j = 0; j < jTable1.getColumnCount(); j++) {
+            		            taskAsArray[j] = (jTable1.getValueAt(jTable1.convertRowIndexToModel(selectedRows[i]),jTable1.convertColumnIndexToModel(j)));
+            		        }
+            		        tasks.add(taskAsArray);
+            		        System.out.println("Selected: "+tasks);
+            		    }
             		
-            		jTable1MouseClicked(evt);
+            		/*
+            		int selectedRow = jTable1.getSelectedRow();
+            		System.out.println("Row selected: "+selectedRow);
+            		jTable1MouseClicked(selectedRow);
+            		*/
             		
             	    } else if (evt.getButton() == MouseEvent.BUTTON3) {
+            	
             		System.out.println("Right mouse click\n");
             			pop.show(evt.getComponent(), evt.getX(), evt.getY());
             	    }
             }
         });
+        
+        
         pack();
     }// </editor-fold>                        
 
@@ -174,8 +202,16 @@ public class GetComplaintsPerUser extends javax.swing.JInternalFrame {
 
     ComplaintDetailsView cdv = new ComplaintDetailsView();
     
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {                        
-    	System.out.println("Row clicked!\n");
+    private void jTable1MouseClicked(int selectedRow) {        
+    	int index = selectedRow;
+    	System.out.println("\nRow clicked!\nSelected Row:"+index);
+    	
+    	
+    	
+    	
+    	
+    	
+    	/*
     	DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
     	try {
 //    	int index = model.get
@@ -208,6 +244,21 @@ public class GetComplaintsPerUser extends javax.swing.JInternalFrame {
     	} catch (Exception e) {
     		JOptionPane.showMessageDialog(null, e);
     	}
+    	*/
+    	
+    	
+    	/*
+    	if (index == -1) {
+    		JOptionPane.showMessageDialog(GetComplaintsPerUser.this,
+    			  	"No row selected!",
+    			    "Invalid Click",
+    			    JOptionPane.WARNING_MESSAGE);
+    	} else {
+    		System.out.println("Selected row value: "+index);
+    	}
+    	*/
+    	
+    	
     }  
     
     

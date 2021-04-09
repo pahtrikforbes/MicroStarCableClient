@@ -185,7 +185,143 @@ public class ComplaintController {
 	    return complaintList;
 	}
 
+//	*************************************************************************	
 
+
+	/* Method to  READ all RESOLVED Cable complaints returned from database through network stream */
+	@SuppressWarnings("unchecked")
+	public ArrayList<Complaint> getAllResolvedCableComplaints() throws CustomizedException {
+		ArrayList<Complaint> complaintList = new ArrayList<>();
+
+		 client.setOperation("getAllResolvedCableComplaints");
+	    
+	    try {
+	    	client.initDataStreams();
+	    	client.getObjectOutStream().writeObject(client.getOperation());
+			client.getObjectOutStream().writeObject(client.getEndPoint());
+			
+			String success = (String)client.getObjectInStream().readObject();
+			
+			if(success.equalsIgnoreCase("success")) {
+				complaintList = (ArrayList<Complaint>)client.getObjectInStream().readObject();
+			}
+			else {
+				CustomizedException e = (CustomizedException)client.getObjectInStream().readObject();
+				throw new CustomizedException(e.getMessage());
+			}
+			
+		} catch (Exception e) {
+			// TODO manage and log exceptions
+			e.printStackTrace();
+			throw new CustomizedException(e.getMessage());
+		}
+	    
+	    return complaintList;
+	}
+	
+//	*************************************************************************	
+
+
+	/* Method to  READ all RESOLVED Cable complaints returned from database through network stream */
+	@SuppressWarnings("unchecked")
+	public ArrayList<Complaint> getAllResolvedBroadbandComplaints() throws CustomizedException {
+		ArrayList<Complaint> complaintList = new ArrayList<>();
+
+		 client.setOperation("getAllResolvedBroadbandComplaints");
+	    
+	    try {
+	    	client.initDataStreams();
+	    	client.getObjectOutStream().writeObject(client.getOperation());
+			client.getObjectOutStream().writeObject(client.getEndPoint());
+			
+			String success = (String)client.getObjectInStream().readObject();
+			
+			if(success.equalsIgnoreCase("success")) {
+				complaintList = (ArrayList<Complaint>)client.getObjectInStream().readObject();
+			}
+			else {
+				CustomizedException e = (CustomizedException)client.getObjectInStream().readObject();
+				throw new CustomizedException(e.getMessage());
+			}
+			
+		} catch (Exception e) {
+			// TODO manage and log exceptions
+			e.printStackTrace();
+			throw new CustomizedException(e.getMessage());
+		}
+	    
+	    return complaintList;
+	}	
+	
+	
+//	*************************************************************************	
+
+
+	/* Method to  READ all OUTSTANDING Cable complaints returned from database through network stream */
+	@SuppressWarnings("unchecked")
+	public ArrayList<Complaint> getAllOutstandingCableComplaints() throws CustomizedException {
+		ArrayList<Complaint> complaintList = new ArrayList<>();
+
+		 client.setOperation("getAllOutstandingCableComplaints");
+	    
+	    try {
+	    	client.initDataStreams();
+	    	client.getObjectOutStream().writeObject(client.getOperation());
+			client.getObjectOutStream().writeObject(client.getEndPoint());
+			
+			String success = (String)client.getObjectInStream().readObject();
+			
+			if(success.equalsIgnoreCase("success")) {
+				complaintList = (ArrayList<Complaint>)client.getObjectInStream().readObject();
+			}
+			else {
+				CustomizedException e = (CustomizedException)client.getObjectInStream().readObject();
+				throw new CustomizedException(e.getMessage());
+			}
+			
+		} catch (Exception e) {
+			// TODO manage and log exceptions
+			e.printStackTrace();
+			throw new CustomizedException(e.getMessage());
+		}
+	    
+	    return complaintList;
+	}
+	
+//	*************************************************************************	
+
+
+	/* Method to  READ all OUTSTANDING Cable complaints returned from database through network stream */
+	@SuppressWarnings("unchecked")
+	public ArrayList<Complaint> getAllOutstandingBroadbandComplaints() throws CustomizedException {
+		ArrayList<Complaint> complaintList = new ArrayList<>();
+
+		 client.setOperation("getAllOutstandingBroadbandComplaints");
+	    
+	    try {
+	    	client.initDataStreams();
+	    	client.getObjectOutStream().writeObject(client.getOperation());
+			client.getObjectOutStream().writeObject(client.getEndPoint());
+			
+			String success = (String)client.getObjectInStream().readObject();
+			
+			if(success.equalsIgnoreCase("success")) {
+				complaintList = (ArrayList<Complaint>)client.getObjectInStream().readObject();
+			}
+			else {
+				CustomizedException e = (CustomizedException)client.getObjectInStream().readObject();
+				throw new CustomizedException(e.getMessage());
+			}
+			
+		} catch (Exception e) {
+			// TODO manage and log exceptions
+			e.printStackTrace();
+			throw new CustomizedException(e.getMessage());
+		}
+	    
+	    return complaintList;
+	}	
+	
 	
 //	*************************************************************************	
 
@@ -193,7 +329,7 @@ public class ComplaintController {
 	/* Method to accept a user id and returns an ArrayList of complaints
 	that are tied to that specific User from database through network stream */
 	@SuppressWarnings("unchecked")
-	public ArrayList<Complaint> getComplaintsPerUser(int complaintId) throws CustomizedException {
+	public ArrayList<Complaint> getComplaintsPerUser(int userId) throws CustomizedException {
 		ArrayList<Complaint> userComplaintList = new ArrayList<>();
 		client.setOperation("getAllUserComplaints");	
 		
@@ -201,7 +337,7 @@ public class ComplaintController {
 	    	client.initDataStreams();
 	    	client.getObjectOutStream().writeObject(client.getOperation());
 			client.getObjectOutStream().writeObject(client.getEndPoint());
-			client.getObjectOutStream().writeObject(complaintId);
+			client.getObjectOutStream().writeObject(userId);
 			
 			String success = (String)client.getObjectInStream().readObject();
 			
