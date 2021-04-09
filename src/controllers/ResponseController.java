@@ -87,7 +87,7 @@ public class ResponseController {
 	public ArrayList<Response> getResponsesPerUser(int responseId) throws CustomizedException {
 		ArrayList<Response> userResponseList = new ArrayList<>();
 
-		 client.setOperation("getAllUserResponses");
+		 client.setOperation("getResponsesPerComplaint");
 	    
 	    try {
 	    	client.initDataStreams();

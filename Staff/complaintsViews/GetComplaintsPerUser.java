@@ -1,7 +1,16 @@
 package complaintsViews;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+import javax.swing.JFrame;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
+import javax.swing.JSeparator;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import controllers.ComplaintController;
@@ -25,9 +34,9 @@ public class GetComplaintsPerUser extends javax.swing.JInternalFrame {
         initComponents();
         addRowsToJTable();
     }
-
+    
     public void addRowsToJTable() {
-    	  DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+    	DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
 //        Grab the returned array list and put it into a variable of type Arraylist
     	  ComplaintController cc = new ComplaintController();
     	 
@@ -47,6 +56,8 @@ public class GetComplaintsPerUser extends javax.swing.JInternalFrame {
   			            rowData[7] = displayList.get(i).getComplaintStatus();
   			         
   			            model.addRow(rowData);
+  			            
+  			           		            
   			        }
   			} catch (CustomizedException e1) {
   				// TODO Auto-generated catch block
@@ -68,8 +79,7 @@ public class GetComplaintsPerUser extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jTable1.setEnabled(false);
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -98,12 +108,115 @@ public class GetComplaintsPerUser extends javax.swing.JInternalFrame {
                 .addGap(0, 25, Short.MAX_VALUE))
         );
 
+        final ResponsePopUp pop = new ResponsePopUp(jTable1);
+ 
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+            	if (evt.getButton() == MouseEvent.BUTTON1 && evt.getClickCount() == 2) {
+            		jTable1MouseClicked(evt);
+            		
+            	    } else if (evt.getButton() == MouseEvent.BUTTON3) {
+            		System.out.println("Right mouse click\n");
+            			pop.show(evt.getComponent(), evt.getX(), evt.getY());
+            	    }
+            }
+        });
         pack();
     }// </editor-fold>                        
 
+    
+    class ResponsePopUp extends JPopupMenu {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public  ResponsePopUp(JTable table) {
+			JMenuItem response1 = new JMenuItem("Latest response");
+			JMenuItem response2 = new JMenuItem("View all responses");
+			
+			response1.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					System.out.println("Latest response clicked!\n");
+					ResponseDetailsView rdv = new ResponseDetailsView();
+					rdv.setVisible(true);
+				}
+				
+			});
+			
+			response2.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					System.out.println("View all responses clicked!\n");
+					DisplayResponsesView drv = new DisplayResponsesView();
+					drv.setVisible(true);
+				}
+				
+			});
+			
+			add(response1);
+			add(new JSeparator());
+			add(response2);
+		}
+    	
+    }
+    
+    
+    
     /**
      * @param args the command line arguments
      */
+
+    ComplaintDetailsView cdv = new ComplaintDetailsView();
+    
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {                        
+    	System.out.println("Row clicked!\n");
+    	DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+    	try {
+    	int index = jTable1.getSelectedRow();
+    	
+    	String click = (jTable1.getModel().getValueAt(index, 0).toString());
+    	
+    	
+    	/*
+        String compId = model.getValueAt(index, index).toString();
+        
+        String custId = model.getValueAt(index,1).toString();
+        String empId = model.getValueAt(index,2).toString();
+        String compCategory = model.getValueAt(index,3).toString();
+        String compDetails = model.getValueAt(index,4).toString();
+        String compDate = model.getValueAt(index,5).toString();
+        String compType = model.getValueAt(index,6).toString();
+        String compStatus = model.getValueAt(index,7).toString();
+        */
+        
+        cdv.setVisible(true);
+        cdv.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        cdv.setLocationRelativeTo(null);
+        
+        
+        
+        /*
+        cdv.jTextField1.setText(compId);
+        cdv.jTextField2.setText(custId);
+        cdv.jTextField3.setText(empId);
+        cdv.jTextField4.setText(compCategory);
+        cdv.jTextField5.setText(compDate);
+        cdv.jTextField6.setText(compType);
+        cdv.jTextField7.setText(compStatus);
+        cdv.jTextArea1.setText(compDetails);
+        */
+    	} catch (Exception e) {
+    		JOptionPane.showMessageDialog(null, e);
+    	}
+    }  
+    
+    
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -131,7 +244,8 @@ public class GetComplaintsPerUser extends javax.swing.JInternalFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DisplayAllComplaintsView().setVisible(true);
+                new GetComplaintsPerUser().setVisible(true);
+              
             }
         });
     }

@@ -119,7 +119,7 @@ public class MainFrameTest extends JFrame implements ActionListener{
 			
 		}
 		else if (e.getSource() == i1) {
-			System.out.println("\nSubmit a Complaint clicked!");
+			System.out.println("\nSubmit Complaint clicked!");
 			desktopPane.removeAll();
 			ComplaintView cv = new ComplaintView();
 			desktopPane.add(cv).setVisible(true);
