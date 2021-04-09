@@ -10,8 +10,6 @@ import javax.swing.JLabel;
 public class servicesChoice extends JInternalFrame{
 
 	private static final long serialVersionUID = 1L;
-	private JLabel header, resolved_value,oustanding_value;
-	private JButton resolve, outstanding;
 	
 	public servicesChoice() {
 		showForm();

@@ -81,17 +81,18 @@ JFrame f;
 			                    possibilities,
 			                    "Staff");
 
-
 			//If a string was returned, say so.
 			if ((choice != null) && (choice.length() > 0)) {
 				if(choice == "Staff") {
 					dispose();
 					f = new JFrame();
+					f.setLocationRelativeTo(null);
 					JOptionPane.showMessageDialog(f,"Your choice was Staff");
 					//calls the staff login
 				}if(choice.equals("Customer")) {
 					dispose();
 					f = new JFrame();
+					f.setLocationRelativeTo(null);
 					JOptionPane.showMessageDialog(f,"Your choice was Customer");
 					//calls the customer login
 				}

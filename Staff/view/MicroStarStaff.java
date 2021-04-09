@@ -35,7 +35,7 @@ import ResponseView.*;
 import UserView.*;
 import login.*;
 
-public class MicroMainFrame extends JFrame implements ActionListener{
+public class MicroStarStaff extends JFrame implements ActionListener{
 	
 	private JMenu menu1, menu2, menu3, menu4, clock;
 	private JButton logoutBtn;
@@ -45,20 +45,20 @@ public class MicroMainFrame extends JFrame implements ActionListener{
 	private JMenuItem r1, r2, r3, r4, r5, r6;
 	private JMenuItem a1, a2, a3, a4, a5;
 	private JDesktopPane desktopPane;
-	private JDesktopPane leftTopPane;
-	private JDesktopPane leftBottomPane;
+	//private JDesktopPane leftTopPane;
+	//private JDesktopPane leftBottomPanel;
 	//private JComboBox comboBox;
 	private JFrame logOut;
-	private JButton outstanding, resolve, comboBoxbtn;
+	private JButton outstanding, resolve, comboBoxbtn, chatboxbtn;
 	private JLabel header, resolved_value, oustanding_value, label,lbl_clock, 
-					service_lblSub, service_lbl;
+					service_lblSub, service_lbl, title,title2,sub_title1,sub_title2,sub_title3;
 	private JComboBox <String> comboBox;
-	private ImageIcon ii;
+	private JPanel leftTopPanel, leftBottomPanel;
 
  
 	//internal JFrame to facilitate password pane and mainframe
 	
-	public MicroMainFrame() { 
+	public MicroStarStaff() { 
 		
 		menu1 = new JMenu("Users");
 		menu1.setPreferredSize(new Dimension(200, menu1.getPreferredSize().height));
@@ -101,7 +101,7 @@ public class MicroMainFrame extends JFrame implements ActionListener{
   		r5 = new JMenuItem("find Complaint by ID");
   		r6 = new JMenuItem("Delete Response");
   		
-  	//AccountView drop down menu
+  	   //AccountView drop down menu
   		a1 = new JMenuItem("Add Acoount");
   		a1.setPreferredSize(new Dimension(200, menu4.getPreferredSize().height));
   		a2 = new JMenuItem("All Accounts");
@@ -110,16 +110,16 @@ public class MicroMainFrame extends JFrame implements ActionListener{
   		a5 = new JMenuItem("Delete Account");
   		
   		desktopPane = new JDesktopPane(); 
-  		leftTopPane = new JDesktopPane();
-  		leftBottomPane = new JDesktopPane();
+  		leftTopPanel = new JPanel();
+  		leftBottomPanel = new JPanel();
 		
   	    showForm();
-	    
+	  
 	}
 	
 	public void createWindow() {
 		 this.setTitle("MicroStar Frame");
-		 this.setBounds(0,0,1500,800); //(40,45,1500,700)
+		 this.setBounds(0,0,1500,800); //(40,45,1500,700) (0,0,1500,800)
 		 this.getContentPane().setLayout(null);
 	     this.setVisible(true);
 	     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -127,21 +127,62 @@ public class MicroMainFrame extends JFrame implements ActionListener{
 	}
 	
 	public void setLocationAndSize() { 
-		this.desktopPane.setBounds(405,10,600,700); //(315,7,870,620)
+		this.desktopPane.setBounds(405,10,600,700); //(315,7,870,620) (405,10,600,700)
 		this.desktopPane.setBackground(Color.white);
 		
 		//window for the logo
-		leftTopPane.setBounds(5, 10, 400, 400);
-		leftTopPane.setBackground(Color.black);	
-		//leftTopPane = new microStarViews();
+		leftTopPanel.setBounds(5, 10, 400, 400);
+		leftTopPanel.setBackground(Color.black);	
+
+        title = new JLabel("Micro-Star CableVision");
+		title.setFont(new Font("Times New Roman", Font.BOLD, 30));
+		title.setForeground(Color.white);
+		title.setBounds(30,3,200,23);
 		
-		//ii = logo();
-        JLabel label = new JLabel(ii);
-        leftTopPane.add(label);
+        title2 = new JLabel("Company Limited");
+        title2.setFont(new Font("Times New Roman", Font.BOLD, 30));
+		title2.setForeground(Color.LIGHT_GRAY);
+		title2.setBounds(30,8,200,23);
+        
+        sub_title1 = new JLabel("'Aspiration is built");
+        sub_title1.setFont(new Font("Times New Roman", Font.ITALIC, 15));
+        sub_title1.setForeground(Color.white);
+        sub_title1.setBounds(30,120,300,23);
+        sub_title1.setHorizontalAlignment(JLabel.CENTER);
+
+        
+        sub_title2 = new JLabel("through Hardwork");
+        sub_title2.setFont(new Font("Times New Roman", Font.ITALIC, 15));
+        sub_title2.setForeground(Color.white);
+        sub_title2.setBounds(30,135,300,23);
+        sub_title2.setHorizontalAlignment(JLabel.CENTER);
+        
+        sub_title3 = new JLabel("and Dedication'");
+        sub_title3.setFont(new Font("Times New Roman", Font.ITALIC, 15));
+        sub_title3.setForeground(Color.white);
+        sub_title3.setBounds(30,140,300,23);
+        sub_title3.setHorizontalAlignment(JLabel.CENTER);
+
+	
+		
+		title.setVisible(true);
+		title2.setVisible(true);
+		sub_title1.setVisible(true);
+		sub_title2.setVisible(true);
+		sub_title3.setVisible(true);
+		
+        leftTopPanel.add(title);
+        leftTopPanel.add(title2);
+        leftTopPanel.add(sub_title1);
+        leftTopPanel.add(sub_title2);
+        leftTopPanel.add(sub_title3);
+
+        
+        //leftTopPane.add(image);
         
 		//Bottom pane 
-		leftBottomPane.setBounds(5, 410, 400, 400);
-		leftBottomPane.setBackground(Color.WHITE); 
+		leftBottomPanel.setBounds(5, 410, 400, 400);
+		leftBottomPanel.setBackground(Color.WHITE); 
 		
 	    //internet.setBounds(5, 12, 150, 20);
 	    //cable.setBounds(150, 12,150,20);
@@ -151,17 +192,17 @@ public class MicroMainFrame extends JFrame implements ActionListener{
 	    service_lblSub = new JLabel("Please specify the service you are requesting information on:");
         service_lbl.setFont(new Font("Impact", Font.PLAIN, 20));
         service_lbl.setHorizontalAlignment(JLabel.CENTER);
-        service_lblSub.setBounds(5,40,400,30);
+        service_lblSub.setBounds(30,40,400,30);
 
-	    service_lbl.setBounds(10,10,300,20);
+	    service_lbl.setBounds(35,10,300,20);
 	    //service_lbl.setVisible(true);
-	    leftBottomPane.add(service_lbl);
-	    leftBottomPane.add(service_lblSub);
+	    leftBottomPanel.add(service_lbl);
+	    leftBottomPanel.add(service_lblSub);
 	    
 	    //adding the ComboBox to the Bottom Pane
 		serviceBox();
-	    leftBottomPane.add(comboBox);
-	    leftBottomPane.add(comboBoxbtn);
+	    leftBottomPanel.add(comboBox);
+	    leftBottomPanel.add(comboBoxbtn);
 	    
 	
 		//actionListeners for the users
@@ -195,6 +236,8 @@ public class MicroMainFrame extends JFrame implements ActionListener{
 		//actionListerners for logout button
 		this.logoutBtn.addActionListener(this);
 		this.comboBoxbtn.addActionListener(this);
+		
+		
 	}
 	
 	public void addComponentsToFrame() {
@@ -229,16 +272,14 @@ public class MicroMainFrame extends JFrame implements ActionListener{
 		menu4.add(a5);
 		menuBar.add(menu4);
 		  
+		menuBar.add(logoutBtn);
 		//clock.add(clock); 
 		menuBar.add(clock);
-		  
-		menuBar.add(logoutBtn);
-		 
-		
+
 		this.setJMenuBar(menuBar);
 		this.add(desktopPane);
-		this.add(leftTopPane);
-		this.add(leftBottomPane);
+		this.add(leftTopPanel);
+		this.add(leftBottomPanel);
 	}
 	
 	public void showForm() {
@@ -503,21 +544,21 @@ public class MicroMainFrame extends JFrame implements ActionListener{
 			header = new JLabel(service);
 			header.setFont(new Font("Times New Roman", Font.PLAIN, 25));
 			header.setHorizontalAlignment(JLabel.CENTER);
-			header.setBounds(190, 30, 200, 40);
+			header.setBounds(210, 30, 200, 40);
 
 			
 			this.resolved_value = new JLabel("Unresolved Complaints: " + outstandingCount);
 			this.resolved_value.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-			this.resolved_value.setBounds(300,130, 200, 20);
+			this.resolved_value.setBounds(320,130, 200, 20);
 
 			this.oustanding_value = new JLabel("Resolved Complaints: " + resolvedCount);
 			this.oustanding_value.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-			this.oustanding_value.setBounds(110,130, 200, 20);
+			this.oustanding_value.setBounds(130,130, 200, 20);
 
 		    resolve =new JButton("Resolved");  
 		    outstanding = new JButton("Outstanding");
-		    outstanding.setBounds(100,100,150,30);
-		    resolve.setBounds(290,100,150,30);  
+		    outstanding.setBounds(120,100,150,30);
+		    resolve.setBounds(310,100,150,30);  
 		    
 		    ActionListener actionListioner = new ActionListener() {
 				@Override
@@ -556,20 +597,28 @@ public class MicroMainFrame extends JFrame implements ActionListener{
 	
 	public void serviceBox() {
 	    	
-		 //String defaultselect = "Service type...";
 	        String services[] = {"Cable","Broadband"};
-	        //String cable[] = {"fibre", "Cooper"};
+	        
 	        comboBox = new JComboBox<>(services);
 	        comboBox.setSelectedIndex(0);
 	        comboBox.setBounds(20, 80, 300, 40);
-	        this.add(comboBox);
-	        this.setLayout(null);
+	        leftBottomPanel.add(comboBox);
+	        //leftBottomPanel.setLayout(null);
 	        
 	        comboBoxbtn = new JButton("Submit Service");
-	        comboBoxbtn. setBounds(70,180,200,50);
-	        this.add(comboBoxbtn);
+	        comboBoxbtn. setBounds(70,160,200,50);
+	        leftBottomPanel.add(comboBoxbtn);
 	        comboBoxbtn.setVisible(true);
-	        this.setLayout(null);	        
+	        //leftBottomPanel.setLayout(null);	
+	        
+	        chatboxbtn = new JButton("ChatBox");
+	        chatboxbtn.setBounds(8,250,100,30);
+	        leftBottomPanel.add(chatboxbtn);
+	        chatboxbtn.setVisible(true);
+	        
+	        leftBottomPanel.setLayout(null);
+	        
+	        
 	        ActionListener actionListioner = new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -593,54 +642,34 @@ public class MicroMainFrame extends JFrame implements ActionListener{
 						System.out.println("RESOLVE TABLE.");
 					}else if(e.getSource()==outstanding) {
 						System.out.println("OUSTANDING TABLE.");
+					}else if(e.getSource()== chatboxbtn) {
+						System.out.println("let's chat");
 					}
-
 				}
 	        	
 	        };
 	       
 	        comboBoxbtn.addActionListener(actionListioner);
-    
+	        chatboxbtn.addActionListener(actionListioner);
 	        
 	    }
 
-	
-    private ImageIcon logo (JComponent... arg) {
+   /* private void logo() {
 
-        ImageIcon loadImage = new ImageIcon("src/logo/microImage.png");
+        ImageIcon loadImage = new ImageIcon("src/logo/MicroLogo.png");
         
-        Container pane = getRootPane();
-        GroupLayout gl = new GroupLayout(pane);
-        pane.setLayout(gl);
-        gl.setHorizontalGroup(gl.createSequentialGroup()
+        JLabel image = new JLabel(loadImage);
 
-                .addComponent(arg[0])
-
-        );
-        gl.setVerticalGroup(gl.createParallelGroup()
-
-                .addComponent(arg[0])
-
-        );
+        image.setBounds(0,70,350,200);
+        image.setVisible(true);
+        leftTopPanel.add(image);
         
-        return loadImage;
-    }
-
-    private void createLayout() {
-
-    }
-
-
-
+    }*/
 
 		public static void main(String[] args) {
-			new MicroMainFrame();
+			new MicroStarStaff();
 
 		}
 		
-	
-	
-	
-	
-	
+
 }//end of mainframe
