@@ -395,6 +395,7 @@ public class ComplaintController {
 	
 	/*Method to UPDATE a complaint*/
 	public Complaint updateComplaint(Complaint updatedComplaint) throws CustomizedException {
+		
 		Complaint complaint = null;
 		client.setOperation("updateComplaint");
 		try {

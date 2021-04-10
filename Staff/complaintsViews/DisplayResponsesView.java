@@ -86,7 +86,9 @@ public class DisplayResponsesView extends javax.swing.JFrame {
 	        jTable1 = new javax.swing.JTable();
 	        jButton1 = new javax.swing.JButton();
 	        jTable1.setDragEnabled(false);
-	        jTable1.setEnabled(false);
+	        jTable1.setEnabled(true);
+	        jTable1.getTableHeader().setReorderingAllowed(false);
+	        jTable1.getTableHeader().setResizingAllowed(false);
 	        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
 	        jTable1.setModel(new javax.swing.table.DefaultTableModel(
