@@ -57,8 +57,8 @@ public class ComplaintDetailsView extends JFrame {
         jTextField6.setEnabled(false);
         jTextField7.setEnabled(false);
         jTextArea1.setEnabled(false);
-		
 
+        this.setResizable(false);
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
 

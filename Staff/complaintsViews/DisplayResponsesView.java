@@ -2,6 +2,7 @@ package complaintsViews;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -20,31 +21,51 @@ public class DisplayResponsesView extends javax.swing.JFrame {
 	     */
 	    public DisplayResponsesView() {
 	        initComponents();
-	        addRowsToJTable();
 	    }
 
-	    public void addRowsToJTable() {
+	    public void addRowsToJTable(int complaintId) {
+	    	jTable1.setModel(new DefaultTableModel(null, new String [] {
+	                "Response Id","Complaint Id","Response", "Response"
+	       }));
 	    	DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
 //	        Grab the returned array list and put it into a variable of type Arraylist
 	    	  ResponseController rc = new ResponseController();
 	    	 
 	    		  try {
-	    			  int complaintId = 36;
-	  				ArrayList <Response> displayList = rc.getResponsesPerUser(complaintId);
+	    			  int complaintId1 = complaintId;
+	  				ArrayList <Response> displayList = rc.getResponsesPerUser(complaintId1);
 	  				System.out.println("List successfully retrieved!");
+	  				if (displayList.size()<=0) {
+	  					
+	  		  				JOptionPane.showMessageDialog(DisplayResponsesView.this,
+	  		         			  	"No response available!",
+	  		         			    "Complaint View Tip",
+	  		         			    JOptionPane.INFORMATION_MESSAGE);
+	  		  				
+	  				} else {
 	  				 Object rowData[] = new Object[4];
 	  			        for (int i =0; i < displayList.size(); i++ ){
 	  			       
 	  			        	rowData[0] = displayList.get(i).getResponse_id();
-	  			        	rowData[1] = displayList.get(i).getComplaint_id();
+	  			        	rowData[1] = displayList.get(i).getComplaint_id().getComplaintID();
 	  			        	rowData[2] = displayList.get(i).getResponse_date();
 	  			        	rowData[3] = displayList.get(i).getResponse();
 	  			        	
 	  			            model.addRow(rowData);    
+
 	  			           		            
 	  			        }
-	  			} catch (CustomizedException e1) {
+	  				} 
+	  			        
+	  			} catch (ArrayIndexOutOfBoundsException e2) {
+	  				JOptionPane.showMessageDialog(DisplayResponsesView.this,
+	         			  	"No response available!",
+	         			    "Complaint View Tip",
+	         			    JOptionPane.INFORMATION_MESSAGE);
+	    		  
+	    		} catch (CustomizedException e1) {
 	  				// TODO Auto-generated catch block
+	  				
 	  				e1.printStackTrace();
 	  			}
 	  			
@@ -60,11 +81,12 @@ public class DisplayResponsesView extends javax.swing.JFrame {
 	    @SuppressWarnings("unchecked")
 	    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
 	    private void initComponents() {
-
+	    	this.setTitle("View All Responses");
 	        jScrollPane1 = new javax.swing.JScrollPane();
 	        jTable1 = new javax.swing.JTable();
 	        jButton1 = new javax.swing.JButton();
-
+	        jTable1.setDragEnabled(false);
+	        jTable1.setEnabled(false);
 	        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
 	        jTable1.setModel(new javax.swing.table.DefaultTableModel(

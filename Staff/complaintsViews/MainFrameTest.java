@@ -101,12 +101,12 @@ public class MainFrameTest extends JFrame implements ActionListener{
 			cv.setLocation(0,0);
 			
 		}
+		
+		
 		else if (e.getSource() == i3) {
-			System.out.println("\nComplaints View clicked!");
+			System.out.println("\nRep Complaints View clicked!");
 			desktopPane.removeAll();
-			int num = 0;
 			RepresentativeComplaintsView rcv = new RepresentativeComplaintsView();
-//			rcv.addRowsToJTable(num);
 			desktopPane.add(rcv).setVisible(true);
 			desktopPane.moveToFront(rcv);
 			rcv.setSize(desktopPane.getWidth(), desktopPane.getHeight());
@@ -115,6 +115,32 @@ public class MainFrameTest extends JFrame implements ActionListener{
 		}
 		
 		
+		
+		/*
+		else if (e.getSource() == i3) {
+			System.out.println("\nTech Complaints View clicked!");
+			desktopPane.removeAll();
+			TechnicianComplaintView tcv = new TechnicianComplaintView();		
+			desktopPane.add(tcv).setVisible(true);
+			desktopPane.moveToFront(tcv);
+			tcv.setSize(desktopPane.getWidth(), desktopPane.getHeight());
+			tcv.setLocation(0,0);
+			
+		}
+		*/ 
+		
+		
+		/*
+		else if (e.getSource() == i3) {
+			System.out.println("\nCust Complaints View clicked!");
+			desktopPane.removeAll();
+			CustomerComplaintView ccv = new CustomerComplaintView();
+			desktopPane.add(ccv).setVisible(true);
+			desktopPane.moveToFront(ccv);
+			ccv.setSize(desktopPane.getWidth(), desktopPane.getHeight());
+			ccv.setLocation(0,0);
+		}
+		*/
 	}
 
 	public static void main(String[] args) {

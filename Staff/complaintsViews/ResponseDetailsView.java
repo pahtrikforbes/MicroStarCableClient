@@ -41,6 +41,12 @@ public class ResponseDetailsView extends JFrame{
         jTextArea1 = new javax.swing.JTextArea();
         jLabel6 = new javax.swing.JLabel();
         
+        jTextArea1.setEnabled(false);
+        jTextField1.setEnabled(false);
+        jTextField2.setEnabled(false);
+        jTextField3.setEnabled(false);
+        
+        
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
@@ -190,6 +196,7 @@ public class ResponseDetailsView extends JFrame{
         });
     }
 
+    
     // Variables declaration - do not modify                     
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
@@ -199,8 +206,10 @@ public class ResponseDetailsView extends JFrame{
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    public javax.swing.JTextArea jTextArea1;
+    public javax.swing.JTextField jTextField1;
+    public javax.swing.JTextField jTextField2;
+    public javax.swing.JTextField jTextField3;
+    
+    
 }

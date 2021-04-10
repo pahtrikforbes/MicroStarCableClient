@@ -133,6 +133,8 @@ public class DisplayAllComplaintsView extends javax.swing.JInternalFrame {
         jTable1 = new javax.swing.JTable();
         jTable1.setEnabled(false);
         jTable1.getTableHeader().setReorderingAllowed(false);
+        jTable1.getTableHeader().setResizingAllowed(false);
+        jTable1.getTableHeader().setReorderingAllowed(false);
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
