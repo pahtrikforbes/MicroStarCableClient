@@ -3,56 +3,50 @@
 import utils.CustomizedException;
 
 import utils.Role;
-
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
 import java.net.UnknownHostException;
-
+import client.Client;
 import models.User;
-import serverconnector.ServerConnector;
+
 /*This class will isolate the logic for authentication and updating password.*/
 public class AuthController {
 
+	private Client client;
 	private UserController userController;
-	private ObjectOutputStream objectOutStream;
-	private ObjectInputStream objectInStream;
-	private ServerConnector serverConnector;
-	private Socket socket;
-	private String operation;
-	
 	public AuthController() {
-		this.userController = new UserController(objectOutStream,objectInStream,socket);
-		this.serverConnector = new ServerConnector();
-		this.socket = null;
-		this.operation = "";
+		this.client = new Client();
+		this.client.setEndPoint("auth");
 	}
 	
 	public boolean login(int userId,String password, Role role) throws CustomizedException {
 		
 	    boolean loggedIn = false;
-	    
-	    operation = "login";
+	    client.setOperation("login");
 	    try {
-			socket = this.serverConnector.getSocket();
-			initializeStreams();
-			objectOutStream.writeObject(operation);
-			objectOutStream.writeObject(userId);
-			objectOutStream.writeObject(password);
-			objectOutStream.writeObject(role);
+	    	client.initDataStreams();
+	    	client.getObjectOutStream().writeObject(client.getOperation());
+			client.getObjectOutStream().writeObject(client.getEndPoint());
+			client.getObjectOutStream().writeObject(userId);
+			client.getObjectOutStream().writeObject(password);
+			client.getObjectOutStream().writeObject(role);
 			
-			try {
-				loggedIn = (boolean)objectInStream.readObject();
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				throw new CustomizedException(e.getMessage());
-			}
+			String success = (String)client.getObjectInStream().readObject();
+			
+			  if(success.equalsIgnoreCase("success")) { 
+				  loggedIn =  (boolean) client.getObjectInStream().readObject();
+			} else {
+			  CustomizedException e = (CustomizedException)client.getObjectInStream().readObject(); 
+			  loggedIn = false; 
+			  throw new CustomizedException(e.getMessage()); 
+			  }
+			 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new CustomizedException(e.getMessage());
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			throw new CustomizedException(e1.getMessage());
 		}
 		
 	    return loggedIn;
@@ -60,21 +54,24 @@ public class AuthController {
 	
 	public boolean updatePassword(int userId,String oldPassword,String newPassword) throws CustomizedException {
 		boolean passwordUpdated = false;
-		operation = "updatePassword";
+		 client.setOperation("updatePassword");
 
 		try {
-			socket = this.serverConnector.getSocket();
-			initializeStreams();
-			objectOutStream.writeObject(operation);
-			objectOutStream.writeObject(userId);
-			objectOutStream.writeObject(oldPassword);
-			objectOutStream.writeObject(newPassword);
+			client.initDataStreams();
+			client.getObjectOutStream().writeObject(client.getOperation());
+			client.getObjectOutStream().writeObject(client.getEndPoint());
+			client.getObjectOutStream().writeObject(userId);
+			client.getObjectOutStream().writeObject(oldPassword);
+			client.getObjectOutStream().writeObject(newPassword);
 			
-			try {
-				passwordUpdated = (boolean)objectInStream.readObject();
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			String success = (String)client.getObjectInStream().readObject();
+			
+			if(success.equalsIgnoreCase("success")) {
+				passwordUpdated = (boolean)client.getObjectInStream().readObject();
+			}
+			else {
+				CustomizedException e = (CustomizedException)client.getObjectInStream().readObject();
+				passwordUpdated = false;
 				throw new CustomizedException(e.getMessage());
 			}
 			
@@ -84,36 +81,25 @@ public class AuthController {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			throw new CustomizedException(e1.getMessage());
 		}
-		
-
 		return passwordUpdated;
 	}
 	
 	public int register(User user) throws CustomizedException {
 		
 		int userId = -1;
-		
 		try {
+			 userController = new UserController();
+			userId = userController.createUser(user);
 			
-			userId = this.userController.createUser(user);
 		} catch (CustomizedException e) {
 			// TODO Auto-generated catch block
 			throw new CustomizedException(e.getMessage());
 		}
-		
-		
 		return userId;
 	}
 	
-	private void initializeStreams()  throws CustomizedException  {
-		try {
-			this.objectOutStream = new ObjectOutputStream(socket.getOutputStream());
-			this.objectInStream = new ObjectInputStream(socket.getInputStream());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
 }

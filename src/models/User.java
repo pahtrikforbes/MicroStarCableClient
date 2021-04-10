@@ -15,7 +15,7 @@ public class User implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -1086585272235977871L;
+	private static final long serialVersionUID = 1L;
 
 	private int userId;
 	
@@ -27,22 +27,25 @@ public class User implements Serializable {
 	
 	private String password;
 	 
-	 private Role role;
+	private Role role;
 	
-	
+	private String contactNum;
+	 
 	//constructors
 	
 	public User() {
-		this("","","","",null); // initialize variables using primary constructor to promote code reuse 
+		this("","","","",null,""); // initialize variables using primary constructor to promote code reuse 
 	}
 
 
-	public User(String firstName, String lastName, String email, String password, Role role) {
+	public User(String firstName, String lastName, String email,
+			String password, Role role, String contactNum) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
 		this.role = role;
+		this.contactNum = contactNum;
 	}
 	
 	public User(final User user) {
@@ -52,6 +55,7 @@ public class User implements Serializable {
 		this.email = user.email;
 		this.role = user.role;
 		this.password = user.password;
+		this.contactNum = user.contactNum;
 	}
 
 //getters and setters
@@ -113,12 +117,24 @@ public class User implements Serializable {
 	public void setRole(Role role) {
 		this.role = role;
 	}
+<<<<<<< HEAD
+=======
+
+	public String getContactNum() {
+		return contactNum;
+	}
+
+
+	public void setContactNum(String contactNum) {
+		this.contactNum = contactNum;
+	}
+>>>>>>> branch 'complaints-controller-setup' of https://github.com/pahtrikforbes/MicroStarCableClient.git
 
 
 	@Override
 	public String toString() {
 		return "\nUser \nUser Id: " + userId + "\nfirstName: " + firstName + "\nlastName: " + lastName + "\nemail: " + email
-				+ "\npassword: " + password + "\nrole: " + role + "\n";
+				+ "\npassword: " + password + "\nrole: " + role + "\n"+ contactNum + "\n";
 	}
 	
 	
