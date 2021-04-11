@@ -3,7 +3,8 @@ package login;
 
 import javax.swing.*;
 
-import view.registrationForm;
+
+import views.RegistrationView;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -63,7 +64,7 @@ JFrame f;
 	registerArea.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent ae) {
 			dispose();
-			registrationForm register = new registrationForm();
+			RegistrationView register = new RegistrationView();
 			panel.add(register);
 			
 		}
