@@ -13,6 +13,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import ResponseView.addResponse;
+import UserView.viewAllUsers;
 import complaintsViews.ComplaintView;
 import controllers.ComplaintController;
 import models.Complaint;
@@ -27,7 +28,7 @@ public class MainFrameTest extends JFrame implements ActionListener{
 	private JMenu menu, menu2, menu3, menu4;
 	private JButton logoutBtn;
 	private JMenuBar menuBar;
-	private JMenuItem i1,i3,i2,i4;
+	private JMenuItem i1,i3,i2,i4,i5;
 	static private JDesktopPane desktopPane;
 	
 	
@@ -42,6 +43,7 @@ public class MainFrameTest extends JFrame implements ActionListener{
 		i2 = new JMenuItem("Submit a Response");
 		i3 = new JMenuItem("Complaint Action View");
 		i4=new JMenuItem("View all responses");
+		i5=new JMenuItem("View all users");
 		desktopPane = new JDesktopPane();
 	    showForm();
 	}
@@ -69,6 +71,7 @@ public class MainFrameTest extends JFrame implements ActionListener{
 		
 		
 		this.i4.addActionListener(this);
+		this.i5.addActionListener(this);
 		
 		
 		this.logoutBtn.addActionListener(this);
@@ -83,6 +86,7 @@ public class MainFrameTest extends JFrame implements ActionListener{
 		menu2.add(i3);
 		menu3.add(i2);
 		menu3.add(i4);
+		menu.add(i5);
 		menuBar.add(menu);
 		menuBar.add(menu2);	
 		menuBar.add(menu3);
@@ -151,6 +155,20 @@ public class MainFrameTest extends JFrame implements ActionListener{
 			dar.setLocation(0,0);
 			
 			dar.addRowsToJTable();
+			
+		}
+		
+		
+		else if (e.getSource() == i5) {
+			System.out.println("\nShow all users clicked!");
+			desktopPane.removeAll();
+			viewAllUsers var = new viewAllUsers();
+			desktopPane.add(var).setVisible(true);
+			desktopPane.moveToFront(var);
+			var.setSize(desktopPane.getWidth(), desktopPane.getHeight());
+			var.setLocation(0,0);
+			
+			var.addRowsToJTable();
 			
 		}
 		
