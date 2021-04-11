@@ -74,7 +74,7 @@ public class MainFrameTest extends JFrame implements ActionListener{
 		this.logoutBtn.addActionListener(this);
 		
 		
-		System.out.println("test");
+		
 	}
 	
 	public void addComponentsToFrame() {
@@ -89,7 +89,7 @@ public class MainFrameTest extends JFrame implements ActionListener{
 		menuBar.add(menu4);
 		
 		menuBar.add(logoutBtn);
-		
+		System.out.println("test");
 		this.setJMenuBar(menuBar);
 		this.add(desktopPane);
 	}

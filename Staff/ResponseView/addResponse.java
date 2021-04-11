@@ -171,28 +171,16 @@ public class addResponse extends JInternalFrame implements ActionListener{
 				ComplaintController cc = new ComplaintController();
 				int complaintId = Integer.parseInt(complaintIdText.trim());
 				
-				String myUrl = "jdbc:mysql://localhost/test";
-				 Connection conn;
+				Complaint complaint = null;
 				try {
-					conn = DriverManager.getConnection(myUrl, "root", "");
-				
-				 String query = "SELECT * FROM users WHERE user_id=123457";
-				 Statement st = conn.createStatement();
-				 ResultSet rs = st.executeQuery(query);
-				 
-				 
-			
-			//	User userId = null;
-			
-						int userId = rs.getInt("user_id");
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-			
+					complaint = cc.findById(complaintId);
+				} catch (CustomizedException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
 			
 				
-				response.setComplaint_id(complaintId);
+				response.setComplaint_id(complaint);
 				response.setResponse(this.responseTextArea.getText());
 				
 
