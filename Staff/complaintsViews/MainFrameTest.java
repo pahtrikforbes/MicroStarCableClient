@@ -12,6 +12,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import ResponseView.addResponse;
 import complaintsViews.ComplaintView;
 import controllers.ComplaintController;
 import models.Complaint;
@@ -26,7 +27,7 @@ public class MainFrameTest extends JFrame implements ActionListener{
 	private JMenu menu, menu2, menu3, menu4;
 	private JButton logoutBtn;
 	private JMenuBar menuBar;
-	private JMenuItem i1,i3;
+	private JMenuItem i1,i3,i2;
 	static private JDesktopPane desktopPane;
 	
 	
@@ -38,13 +39,15 @@ public class MainFrameTest extends JFrame implements ActionListener{
 		menuBar= new JMenuBar();
 		logoutBtn = new JButton("LOGOUT");
 		i1 = new JMenuItem("Submit a Complaint");
+		i2 = new JMenuItem("Submit a Response");
 		i3 = new JMenuItem("Complaint Action View");
 		desktopPane = new JDesktopPane();
 	    showForm();
 	}
 	
 	public void createWindow() {
-		 this.setTitle("MicroStar Frame");
+		
+		this.setTitle("MicroStar Frame");
 		 this.setBounds(45,40,1200,710);
 		 this.getContentPane().setLayout(null);
 	     this.setVisible(true);
@@ -57,7 +60,11 @@ public class MainFrameTest extends JFrame implements ActionListener{
 		desktopPane.setBackground(Color.white);
 		
 		this.i1.addActionListener(this);
+		this.i2.addActionListener(this);
+		
 		this.i3.addActionListener(this);
+		
+		System.out.println("test");
 		this.logoutBtn.addActionListener(this);
 		
 	}
@@ -66,6 +73,7 @@ public class MainFrameTest extends JFrame implements ActionListener{
 		
 		menu2.add(i1);
 		menu2.add(i3);
+		menu3.add(i2);
 
 		menuBar.add(menu);
 		menuBar.add(menu2);	
@@ -114,7 +122,17 @@ public class MainFrameTest extends JFrame implements ActionListener{
 			
 		}
 		
-		
+			
+		else if (e.getSource() == i2) {
+			System.out.println("\nSubmit Response clicked!");
+			desktopPane.removeAll();
+			addResponse cv = new addResponse();
+			desktopPane.add(cv).setVisible(true);
+			desktopPane.moveToFront(cv);
+			cv.setSize(desktopPane.getWidth(), desktopPane.getHeight());
+			cv.setLocation(0,0);
+			
+		}
 		
 		/*
 		else if (e.getSource() == i3) {
