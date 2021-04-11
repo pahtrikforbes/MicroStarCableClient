@@ -29,9 +29,9 @@ import javax.swing.border.EmptyBorder;
 import AccountView.*;
 //import complaintsView.*;
 import complaintsViews.ComplaintView;
+import loginregisterprompt.*;
 import ResponseView.*;
 import UserView.*;
-import login.*;
 
 public class MicroMainFrame extends JFrame implements ActionListener{
 	

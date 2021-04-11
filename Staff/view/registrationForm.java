@@ -10,7 +10,7 @@ import java.sql.Statement;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import login.UserLogin;
+import loginregisterprompt.LoginRegisterPrompt;
 
 public class registrationForm extends JFrame{
 	
