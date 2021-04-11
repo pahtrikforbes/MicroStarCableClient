@@ -183,7 +183,7 @@ public class addResponse extends JInternalFrame implements ActionListener{
 				response.setComplaint_id(complaint);
 				response.setResponse(this.responseTextArea.getText());
 				
-
+				
 				
 				java.sql.Date sqlDate = new java.sql.Date(new java.util.Date().getTime());
 				response.setResponse_date(sqlDate);
