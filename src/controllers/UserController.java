@@ -77,6 +77,36 @@ public class UserController {
 	}
 	
 	
+	/* Method to  READ all the users returned from database through network stream */
+	@SuppressWarnings("unchecked")
+	public ArrayList<User> getAllTechnicians() throws CustomizedException {
+		ArrayList<User> userList = new ArrayList<>();
+
+		 client.setOperation("getAllTechnicians");
+	    
+	    try {
+	    	client.initDataStreams();
+	    	client.getObjectOutStream().writeObject(client.getOperation());
+			client.getObjectOutStream().writeObject(client.getEndPoint());
+			
+			 String success = (String)client.getObjectInStream().readObject();
+				
+				if(success.equalsIgnoreCase("success")) {
+					userList = (ArrayList<User>)client.getObjectInStream().readObject();
+				}
+				else {
+					CustomizedException e = (CustomizedException)client.getObjectInStream().readObject();
+					throw new CustomizedException(e.getMessage());
+				}
+			} catch (Exception e) {
+			// TODO manage and log exceptions
+			e.printStackTrace();
+			throw new CustomizedException(e.getMessage());
+		}
+	    
+	    return userList;
+	}
+	
 	/* Method to  READ one user. Returns a single user. */
 	public User findById(int userId) throws CustomizedException {
 		

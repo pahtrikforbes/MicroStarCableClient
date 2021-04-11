@@ -739,54 +739,66 @@ public class RepresentativeComplaintsView extends javax.swing.JInternalFrame imp
 	                "Complaint Id", "Customer Id", "Employee Id",
 	                "Category", "Details", "Date", "Type", "Status"
           }));
-        
-        
-        /*
-        if (newStatus == "RESOLVED") {
-        	updateComplaint.setComplaintStatus(ComplaintStatus.RESOLVED);
-        	System.out.println("Update complaint info: \n"+updateComplaint);
-        	
-        	cc.updateComplaint(updateComplaint);
-        	
-        	jTable1.setModel(new DefaultTableModel(null, new String [] {
-  	                "Complaint Id", "Customer Id", "Employee Id",
-  	                "Category", "Details", "Date", "Type", "Status"
-              }));
-        	addRowsToJTable(0);     	
-        	JOptionPane.showMessageDialog(RepresentativeComplaintsView.this,
-     			  	"Update successful!",
-     			    "Complaint View Tip",
-     			    JOptionPane.INFORMATION_MESSAGE);
-        	
-        } else if (newStatus == "OUTSTANDING") {
-        	updateComplaint.setComplaintStatus(ComplaintStatus.OUTSTANDING);
-        	System.out.println("Update complaint info: \n"+updateComplaint);
-        	
-        	cc.updateComplaint(updateComplaint);
-        	
-        	jTable1.setModel(new DefaultTableModel(null, new String [] {
-  	                "Complaint Id", "Customer Id", "Employee Id",
-  	                "Category", "Details", "Date", "Type", "Status"
-              }));
-        	addRowsToJTable(0);     	
-        	JOptionPane.showMessageDialog(RepresentativeComplaintsView.this,
-     			  	"Update successful!",
-     			    "Complaint View Tip",
-     			    JOptionPane.INFORMATION_MESSAGE);
-     	
-        }
-		*/
-        
+  
     }  
     
 //    Delete Button
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {                                         
     	System.out.println("Delete button pressed!");
+    	int response = JOptionPane.showConfirmDialog(RepresentativeComplaintsView.this, "Do you want to continue action?",
+    			"Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+    	
+    	if (response == JOptionPane.YES_OPTION) {
+    		System.out.println("Yes selected\n");
+    		
+    		DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+
+            // get the selected row index
+        	int selectedRowIndex = jTable1.getSelectedRow();
+      
+        	System.out.println("Selected: "+selectedRowIndex);
+        	
+        	String compId = model.getValueAt(selectedRowIndex, 0).toString();        
+            int compIdInt = Integer.parseInt(compId);
+            
+            System.out.println("Complaint Id: "+compIdInt);
+            
+            ComplaintController cc = new ComplaintController();
+            JOptionPane.showMessageDialog(RepresentativeComplaintsView.this,
+     			  	"Delete successful!",
+     			    "Complaint View Tip",
+     			    JOptionPane.INFORMATION_MESSAGE);
+            try {
+				int status = cc.deleteComplaint(compIdInt);
+				
+				
+				System.out.println("Status: "+status);
+			} catch (CustomizedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();				
+			}
+    		
+    	} else if (response == JOptionPane.NO_OPTION) {
+    		System.out.println("No selected\n");
+    		
+    	} else if (response == JOptionPane.CLOSED_OPTION) {
+    		System.out.println("Close button selected\n");
+    		
+    	}
     }  
     
 //    Assign Technician Button
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {                                         
     	System.out.println("Assign Technician button pressed!");
+    	
+    	DisplayTechnicianView dtv = new DisplayTechnicianView();
+    	dtv.setLocationRelativeTo(null);
+    	dtv.setVisible(true);
+    	  	
+    	NewJFrame2 njf = new NewJFrame2();
+    	njf.setLocationRelativeTo(null);
+    	njf.setVisible(true);
+    	
     }  
     
     /**

@@ -121,8 +121,8 @@ public class NewJFrame extends javax.swing.JFrame {
 				oldComplaint.setComplaintStatus(ComplaintStatus.RESOLVED);
 				System.out.println("Status set completed\n");
 				
-				Complaint newComplaint = cc.updateComplaint(oldComplaint);
-				System.out.println("Updated Complaint details: \n"+newComplaint);
+				cc.updateComplaint(oldComplaint);
+//				System.out.println("Updated Complaint details: \n"+newComplaint);
 				JOptionPane.showMessageDialog(NewJFrame.this,
 	     			  	"Update successful!",
 	     			    "Complaint View Tip",
