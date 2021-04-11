@@ -183,7 +183,7 @@ public class MainFrameTest extends JFrame implements ActionListener{
 			tcv.setLocation(0,0);
 			
 		}
-		*/ 
+		*/
 		
 		
 		/*

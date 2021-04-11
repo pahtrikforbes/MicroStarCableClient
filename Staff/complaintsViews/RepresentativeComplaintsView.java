@@ -12,8 +12,13 @@ import javax.swing.table.DefaultTableModel;
 
 import controllers.ComplaintController;
 import controllers.ResponseController;
+import controllers.UserController;
 import models.Complaint;
 import models.Response;
+import models.User;
+import utils.ComplaintCategory;
+import utils.ComplaintStatus;
+import utils.ComplaintType;
 import utils.CustomizedException;
 
 /**
@@ -160,7 +165,11 @@ public class RepresentativeComplaintsView extends javax.swing.JInternalFrame imp
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         jLabel1.setText("Complaints ");
-
+        jTable1.setDragEnabled(false);
+        jTable1.setEnabled(true);
+        jTable1.getTableHeader().setReorderingAllowed(false);
+        jTable1.getTableHeader().setResizingAllowed(false);
+        
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -236,7 +245,12 @@ public class RepresentativeComplaintsView extends javax.swing.JInternalFrame imp
         jButton6.setText("Update ");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                try {
+					jButton6ActionPerformed(evt);
+				} catch (CustomizedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
 
@@ -449,6 +463,8 @@ public class RepresentativeComplaintsView extends javax.swing.JInternalFrame imp
        String compType = model.getValueAt(selectedRowIndex,6).toString();
        String compStatus = model.getValueAt(selectedRowIndex,7).toString();
             
+//       System.out.println("\nDate contents: "+compDate);
+//       System.out.println("Status contents: "+compStatus);
        
        cdv.jTextField7.setText(compId);
        cdv.jTextField1.setText(custId);                 
@@ -681,18 +697,107 @@ public class RepresentativeComplaintsView extends javax.swing.JInternalFrame imp
     }  
     
  
-    
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+//    Update Button
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) throws CustomizedException {                                         
+    	System.out.println("Update button pressed!");
     	
+    	DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+
+        // get the selected row index
+    	int selectedRowIndex = jTable1.getSelectedRow();
+  
+    	System.out.println("Selected: "+selectedRowIndex);
+    	
+    	String compId = model.getValueAt(selectedRowIndex, 0).toString();        
+        int compIdInt = Integer.parseInt(compId);
+    	
+    	
+        String custId = model.getValueAt(selectedRowIndex,1).toString();
+        int custIdInt = Integer.parseInt(custId);
+        
+        if (model.getValueAt(selectedRowIndex,2) == null) {
+        	System.out.println("Employee Id is null");
+        	
+        } else {
+        	String empId = model.getValueAt(selectedRowIndex,2).toString();
+        	 
+        }
+        
+        
+        String compCategory = model.getValueAt(selectedRowIndex,3).toString();
+        String compDetails = model.getValueAt(selectedRowIndex,4).toString();
+        String compDate = model.getValueAt(selectedRowIndex,5).toString();
+        String compType = model.getValueAt(selectedRowIndex,6).toString();
+        String compStatus = model.getValueAt(selectedRowIndex,7).toString();
+       
+        NewJFrame update = new NewJFrame();
+        update.jTextField1.setText(compStatus);
+        update.complaintIdInput(compIdInt);
+        update.setVisible(true);
+        update.setLocationRelativeTo(null);
+        jTable1.setModel(new DefaultTableModel(null, new String [] {
+	                "Complaint Id", "Customer Id", "Employee Id",
+	                "Category", "Details", "Date", "Type", "Status"
+          }));
+  
     }  
     
-    
+//    Delete Button
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    	System.out.println("Delete button pressed!");
+    	int response = JOptionPane.showConfirmDialog(RepresentativeComplaintsView.this, "Do you want to continue action?",
+    			"Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
     	
+    	if (response == JOptionPane.YES_OPTION) {
+    		System.out.println("Yes selected\n");
+    		
+    		DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+
+            // get the selected row index
+        	int selectedRowIndex = jTable1.getSelectedRow();
+      
+        	System.out.println("Selected: "+selectedRowIndex);
+        	
+        	String compId = model.getValueAt(selectedRowIndex, 0).toString();        
+            int compIdInt = Integer.parseInt(compId);
+            
+            System.out.println("Complaint Id: "+compIdInt);
+            
+            ComplaintController cc = new ComplaintController();
+            JOptionPane.showMessageDialog(RepresentativeComplaintsView.this,
+     			  	"Delete successful!",
+     			    "Complaint View Tip",
+     			    JOptionPane.INFORMATION_MESSAGE);
+            try {
+				int status = cc.deleteComplaint(compIdInt);
+				
+				
+				System.out.println("Status: "+status);
+			} catch (CustomizedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();				
+			}
+    		
+    	} else if (response == JOptionPane.NO_OPTION) {
+    		System.out.println("No selected\n");
+    		
+    	} else if (response == JOptionPane.CLOSED_OPTION) {
+    		System.out.println("Close button selected\n");
+    		
+    	}
     }  
     
-    
+//    Assign Technician Button
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    	System.out.println("Assign Technician button pressed!");
+    	
+    	DisplayTechnicianView dtv = new DisplayTechnicianView();
+    	dtv.setLocationRelativeTo(null);
+    	dtv.setVisible(true);
+    	  	
+    	NewJFrame2 njf = new NewJFrame2();
+    	njf.setLocationRelativeTo(null);
+    	njf.setVisible(true);
     	
     }  
     

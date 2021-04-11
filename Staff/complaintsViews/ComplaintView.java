@@ -243,13 +243,21 @@ public class ComplaintView extends JInternalFrame implements ActionListener{
 				          			    );
 					} else {
 						System.out.println("Complaint creation unsuccessful");
+						JOptionPane.showMessageDialog(ComplaintView.this,
+								"Complaint action failed!\n"
+								+ "Please enter a valid Customer Id\n"
+								+ "Submitted: "+sqlDate
+				          			    );		
 					}
 					
 					
 				} catch (CustomizedException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-					
+					JOptionPane.showMessageDialog(ComplaintView.this,
+							"Complaint action failed!\n"
+							+ "Submitted: "+sqlDate
+			          			    );				
 				} 
 				
 			} else {
