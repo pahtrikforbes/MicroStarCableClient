@@ -75,8 +75,7 @@ public class RegistrationView extends JInternalFrame implements InternalFrameLis
         this.setBounds(300,100,400,550);
         this.getContentPane().setBackground(Color.white);
         this.getContentPane().setLayout(null);
-        this.setVisible(true);
-        this.setDefaultCloseOperation(JInternalFrame.EXIT_ON_CLOSE);    
+        this.setVisible(true);   
     }
     
     
@@ -143,6 +142,8 @@ public class RegistrationView extends JInternalFrame implements InternalFrameLis
     	
     	this.registerButton.addActionListener(this);
     	this.resetButton.addActionListener(this);
+    	
+    	
     	
     }
 	
