@@ -27,7 +27,7 @@ JPasswordField passArea = new JPasswordField(15);
 protected Icon icon;
 JFrame f;
 
-	UserLogin(){
+	public UserLogin(){
 		//super("Login Autentification");
 		
 		setSize(420,300);

@@ -34,10 +34,11 @@ public class loading extends JFrame {
 		    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		    frame.setSize(400, 200);
 		    frame.setVisible(true);
+		    frame.setLocationRelativeTo(null);
 	}
 	   
 	    public static void main(String[] args) throws Exception {
-	    new loading();
+	    	new loading();
 	}
 }
 /*

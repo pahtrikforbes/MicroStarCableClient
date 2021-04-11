@@ -2,6 +2,7 @@ package view;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Point;
@@ -11,9 +12,11 @@ import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
@@ -27,14 +30,17 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import AccountView.*;
-//import complaintsView.*;
-import complaintsViews.ComplaintView;
+import complaintsViews.*;
 import ResponseView.*;
 import UserView.*;
 import login.*;
 
-public class MicroMainFrame extends JFrame implements ActionListener{
+public class MicroStarUser extends JFrame implements ActionListener{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JMenu menu1, menu2, menu3, menu4, clock;
 	private JButton logoutBtn;
 	private JMenuBar menuBar;
@@ -43,18 +49,20 @@ public class MicroMainFrame extends JFrame implements ActionListener{
 	private JMenuItem r1, r2, r3, r4, r5, r6;
 	private JMenuItem a1, a2, a3, a4, a5;
 	private JDesktopPane desktopPane;
-	private JDesktopPane leftTopPane;
-	private JDesktopPane leftBottomPane;
-	private JComboBox comboBox;
-	private JFrame frame, serviceFrame;
-	private JButton outstanding, resolve;
-	private JLabel header, resolved_value, oustanding_value, label;
+	//private JDesktopPane leftTopPane;
+	//private JDesktopPane leftBottomPanel;
+	//private JComboBox comboBox;
+	private JFrame logOut;
+	private JButton outstanding, resolve, comboBoxbtn, chatboxbtn;
+	private JLabel header, resolved_value, oustanding_value, label,lbl_clock, 
+					service_lblSub, service_lbl, title,title2,sub_title1,sub_title2,sub_title3;
+	private JComboBox <String> comboBox;
+	private JPanel leftTopPanel, leftBottomPanel;
 
-	private JPanel panel;
  
 	//internal JFrame to facilitate password pane and mainframe
 	
-	public MicroMainFrame() { 
+	public MicroStarUser() { 
 		
 		menu1 = new JMenu("Users");
 		menu1.setPreferredSize(new Dimension(200, menu1.getPreferredSize().height));
@@ -63,10 +71,10 @@ public class MicroMainFrame extends JFrame implements ActionListener{
 		menu2.setPreferredSize(new Dimension(200, menu2.getPreferredSize().height));
 		menu3 = new JMenu("Responses");
 		menu3.setPreferredSize(new Dimension(200, menu3.getPreferredSize().height));
-		menu4 = new JMenu("Accounts");
+		menu4 = new JMenu("Query Account");
 		menu4.setPreferredSize(new Dimension(200, menu4.getPreferredSize().height));
 		clock = new JMenu();
-		clock.setPreferredSize(new Dimension(370, menu1.getPreferredSize().height));
+		clock.setPreferredSize(new Dimension(200, menu1.getPreferredSize().height));
 		logoutBtn = new JButton("LOGOUT");
 		
 		menuBar= new JMenuBar();
@@ -97,26 +105,25 @@ public class MicroMainFrame extends JFrame implements ActionListener{
   		r5 = new JMenuItem("find Complaint by ID");
   		r6 = new JMenuItem("Delete Response");
   		
-  	//AccountView drop down menu
-  		a1 = new JMenuItem("Add Acoount");
+  	   //AccountView drop down menu
+  		a1 = new JMenuItem("Payment Status");
   		a1.setPreferredSize(new Dimension(200, menu4.getPreferredSize().height));
-  		a2 = new JMenuItem("All Accounts");
-  		a3 = new JMenuItem("Find Account");
-  		a4 = new JMenuItem("Update Account");
-  		a5 = new JMenuItem("Delete Account");
+  		a2 = new JMenuItem("Amount Due");
+  		a3 = new JMenuItem("Payment Due date");
+  		a4 = new JMenuItem("Account History");
   		
   		
   		desktopPane = new JDesktopPane(); 
-  		leftTopPane = new JDesktopPane();
-  		leftBottomPane = new JDesktopPane();
+  		leftTopPanel = new JPanel();
+  		leftBottomPanel = new JPanel();
 		
   	    showForm();
-	    
+	  
 	}
 	
 	public void createWindow() {
 		 this.setTitle("MicroStar Frame");
-		 this.setBounds(0,0,1500,800);
+		 this.setBounds(0,0,1500,800); //(40,45,1500,700) (0,0,1500,800)
 		 this.getContentPane().setLayout(null);
 	     this.setVisible(true);
 	     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -124,38 +131,83 @@ public class MicroMainFrame extends JFrame implements ActionListener{
 	}
 	
 	public void setLocationAndSize() { 
-		this.desktopPane.setBounds(360,10,900,700);
+		this.desktopPane.setBounds(405,10,600,700); //(315,7,870,620) (405,10,600,700)
 		this.desktopPane.setBackground(Color.white);
 		
 		//window for the logo
-		leftTopPane.setBounds(5, 10, 400, 400);
-		leftTopPane.setBackground(Color.gray);	
+		leftTopPanel.setBounds(5, 10, 400, 400);
+		leftTopPanel.setBackground(Color.black);	
+
+        title = new JLabel("Micro-Star CableVision");
+		title.setFont(new Font("Times New Roman", Font.BOLD, 30));
+		title.setForeground(Color.white);
+		title.setBounds(30,3,200,23);
 		
-		//Insert heading in the top-left pane
-		ImageIcon microImage = new ImageIcon("microImage.jpg");
-		label = new JLabel("Micro Star Cable Company",microImage, SwingConstants.CENTER);
-		label.setBounds(0, 40, 500, 400);
-		leftTopPane.add(label);
+        title2 = new JLabel("Company Limited");
+        title2.setFont(new Font("Times New Roman", Font.BOLD, 30));
+		title2.setForeground(Color.LIGHT_GRAY);
+		title2.setBounds(30,8,200,23);
+        
+        sub_title1 = new JLabel("'Aspiration is built");
+        sub_title1.setFont(new Font("Times New Roman", Font.ITALIC, 15));
+        sub_title1.setForeground(Color.white);
+        sub_title1.setBounds(30,120,300,23);
+        sub_title1.setHorizontalAlignment(JLabel.CENTER);
+
+        
+        sub_title2 = new JLabel("through Hardwork");
+        sub_title2.setFont(new Font("Times New Roman", Font.ITALIC, 15));
+        sub_title2.setForeground(Color.white);
+        sub_title2.setBounds(30,135,300,23);
+        sub_title2.setHorizontalAlignment(JLabel.CENTER);
+        
+        sub_title3 = new JLabel("and Dedication'");
+        sub_title3.setFont(new Font("Times New Roman", Font.ITALIC, 15));
+        sub_title3.setForeground(Color.white);
+        sub_title3.setBounds(30,140,300,23);
+        sub_title3.setHorizontalAlignment(JLabel.CENTER);
+
+	
 		
+		title.setVisible(true);
+		title2.setVisible(true);
+		sub_title1.setVisible(true);
+		sub_title2.setVisible(true);
+		sub_title3.setVisible(true);
+		
+        leftTopPanel.add(title);
+        leftTopPanel.add(title2);
+        leftTopPanel.add(sub_title1);
+        leftTopPanel.add(sub_title2);
+        leftTopPanel.add(sub_title3);
+
+        
+        //leftTopPane.add(image);
+        
 		//Bottom pane 
-		leftBottomPane.setBounds(5, 10, 400, 400);
-		leftBottomPane.setBackground(Color.gray); 
-		//final JComboBox internet = new JComboBox();
-	    //final JComboBox cable = new JComboBox();
-	    
+		leftBottomPanel.setBounds(5, 410, 400, 400);
+		leftBottomPanel.setBackground(Color.WHITE); 
+		
 	    //internet.setBounds(5, 12, 150, 20);
 	    //cable.setBounds(150, 12,150,20);
 	    
-
-		  servicesComboBox services = new servicesComboBox();
-		  leftBottomPane.add(services).setVisible(true);
-		  leftBottomPane.moveToFront(services);
-		  services.setSize(leftBottomPane.getWidth(), leftBottomPane.getHeight());
-		  services.setLocation(0,0);
-		  
-	    //this.leftBottomPane.add(new servicesComboBox());
-	    //this.leftBottomPane.add(cable);
 		
+	    service_lbl = new JLabel("Services");
+	    service_lblSub = new JLabel("Please specify the service you are requesting information on:");
+        service_lbl.setFont(new Font("Impact", Font.PLAIN, 20));
+        service_lbl.setHorizontalAlignment(JLabel.CENTER);
+        service_lblSub.setBounds(30,40,400,30);
+
+	    service_lbl.setBounds(35,10,300,20);
+	    //service_lbl.setVisible(true);
+	    leftBottomPanel.add(service_lbl);
+	    leftBottomPanel.add(service_lblSub);
+	    
+	    //adding the ComboBox to the Bottom Pane
+		serviceBox();
+	    leftBottomPanel.add(comboBox);
+	    leftBottomPanel.add(comboBoxbtn);
+	    
 	
 		//actionListeners for the users
 		this.i1.addActionListener(this);
@@ -171,22 +223,21 @@ public class MicroMainFrame extends JFrame implements ActionListener{
 		this.c4.addActionListener(this);
 		
 		//actionListerners for 
-		this.r1.addActionListener(this);
-		this.r2.addActionListener(this);
 		this.r3.addActionListener(this);
 		this.r4.addActionListener(this);
 		this.r5.addActionListener(this);
-		this.r6.addActionListener(this);
 		
 		//actionListerners for accounts
 		this.a1.addActionListener(this);
 		this.a2.addActionListener(this);
 		this.a3.addActionListener(this);
 		this.a4.addActionListener(this);
-		this.a5.addActionListener(this);
 
 		//actionListerners for logout button
 		this.logoutBtn.addActionListener(this);
+		this.comboBoxbtn.addActionListener(this);
+		
+		
 	}
 	
 	public void addComponentsToFrame() {
@@ -195,7 +246,7 @@ public class MicroMainFrame extends JFrame implements ActionListener{
 		menu1.add(i3);
 		menu1.add(i4);
 		menu1.add(i5);
-		menuBar.add(menu1);
+		//menuBar.add(menu1);
 		
 		// second menu bar for the complaint
 		menu2.add(c1);
@@ -205,12 +256,9 @@ public class MicroMainFrame extends JFrame implements ActionListener{
 		menuBar.add(menu2);
 		  
 		//menu for response
-		menu3.add(r1);
-		menu3.add(r2);
 		menu3.add(r3);
 		menu3.add(r4);
 		menu3.add(r5);
-		menu3.add(r6);
 		menuBar.add(menu3);
 		 
 		//menu for accounts
@@ -218,18 +266,16 @@ public class MicroMainFrame extends JFrame implements ActionListener{
 		menu4.add(a2);
 		menu4.add(a3);
 		menu4.add(a4);
-		menu4.add(a5);
 		menuBar.add(menu4);
 		  
+		menuBar.add(logoutBtn);
 		//clock.add(clock); 
 		menuBar.add(clock);
-		  
-		menuBar.add(logoutBtn);
-		 
-		
+
 		this.setJMenuBar(menuBar);
 		this.add(desktopPane);
-		this.add(leftTopPane);
+		this.add(leftTopPanel);
+		this.add(leftBottomPanel);
 	}
 	
 	public void showForm() {
@@ -243,65 +289,22 @@ public class MicroMainFrame extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		
 		if (e.getSource() == logoutBtn) {
-			System.out.println("go to the login screen");
-		}
-		else if (e.getSource() == i1) {
-			
-			  System.out.println("Create UserView"); desktopPane.removeAll(); CreateUser f1
-			  = new CreateUser(); desktopPane.add(f1).setVisible(true);
-			  desktopPane.moveToFront(f1); f1.setSize(desktopPane.getWidth(),
-			  desktopPane.getHeight()); f1.setLocation(0,0);
-			 
-		}
-		else if (e.getSource() == i2) {
-			System.out.println("View all user");
-			desktopPane.removeAll();
-			viewAllUsers f2 = new viewAllUsers();
-			desktopPane.add(f2).setVisible(true);
-			desktopPane.moveToFront(f2);
-			f2.setSize(desktopPane.getWidth(), desktopPane.getHeight());
-			f2.setLocation(0,0);
-		}
-		else if (e.getSource() == i3) {
-			System.out.println("Find user");
-			desktopPane.removeAll();
-			findByID f3 = new findByID();
-			desktopPane.add(f3).setVisible(true);
-			desktopPane.moveToFront(f3);
-			f3.setSize(desktopPane.getWidth(), desktopPane.getHeight());
-			f3.setLocation(0,0);
-		}
-		else if (e.getSource() == i4) {
-			System.out.println("Update UserView");
-			desktopPane.removeAll();
-			UpdateUser f4 = new UpdateUser();
-			desktopPane.add(f4).setVisible(true);
-			desktopPane.moveToFront(f4);
-			f4.setSize(desktopPane.getWidth(), desktopPane.getHeight());
-			f4.setLocation(0,0);
-		}
-		
-		else if (e.getSource() == i5) {
-			System.out.println("Delete UserView");
-			desktopPane.removeAll();
-			deleteUser f5 = new deleteUser();
-			desktopPane.add(f5).setVisible(true);
-			desktopPane.moveToFront(f5);
-			f5.setSize(desktopPane.getWidth(), desktopPane.getHeight());
-			f5.setLocation(0,0);
+			dispose();
+			logOut = new JFrame();
+		    JOptionPane.showMessageDialog(logOut, "Logged out");
+		    new UserLogin();
 		}
 		
 		//complaint section
 		/*
 		  else if (e.getSource() ==  this.c1) { 
-			  System.out.println("\nSubmit Complaint clicked!");
-				desktopPane.removeAll();
-				ComplaintView cv = new ComplaintView();
-				desktopPane.add(cv).setVisible(true);
-				desktopPane.moveToFront(cv);
-				cv.setSize(desktopPane.getWidth(), desktopPane.getHeight());
-				cv.setLocation(0,0);			 
-		  	}
+			 System.out.println("Add Complaint");
+			 desktopPane.removeAll(); 
+			 addComplaint fr1 = new addComplaint(); desktopPane.add(fr1).setVisible(true);
+			 desktopPane.moveToFront(fr1); fr1.setSize(desktopPane.getWidth(),
+			 desktopPane.getHeight()); fr1.setLocation(0,0);
+				 
+		  	}/*
 		  else if (e.getSource() ==  this.c2) { 
 			 System.out.println("View all Complaints");
 			 desktopPane.removeAll(); 
@@ -311,45 +314,10 @@ public class MicroMainFrame extends JFrame implements ActionListener{
 			 fr2.setSize(desktopPane.getWidth(), desktopPane.getHeight());
 			 fr2.setLocation(0,0); 
 			} 
-		  else if (e.getSource() ==  this.c3) { 
-			 System.out.println("Update Complaint");
-			 desktopPane.removeAll(); 
-			 updateComplaint fr3 = new updateComplaint();
-			 desktopPane.add(fr3).setVisible(true); 
-			 desktopPane.moveToFront(fr3);
-			 fr3.setSize(desktopPane.getWidth(), desktopPane.getHeight());
-			 fr3.setLocation(0,0); 
-			} 
-		  else if (e.getSource() ==  this.c4) { 
-			 System.out.println("Delete Complaint");
-			 desktopPane.removeAll(); 
-			 deleteComplaint fr4 = new deleteComplaint();
-			 desktopPane.add(fr4).setVisible(true); 
-			 desktopPane.moveToFront(fr4);
-			 fr4.setSize(desktopPane.getWidth(), desktopPane.getHeight());
-			 fr4.setLocation(0,0); 
-			} 
 			*/
+
 //ResponseView section
 		
-		  else if (e.getSource() ==  this.r1) { 
-			 System.out.println("Add ResponseView");
-			 desktopPane.removeAll(); 
-			 addResponse fra1 = new addResponse();
-			 desktopPane.add(fra1).setVisible(true); 
-			 desktopPane.moveToFront(fra1);
-			 fra1.setSize(desktopPane.getWidth(), desktopPane.getHeight());
-			 fra1.setLocation(0,0); 
-		  	}
-		  else if (e.getSource() ==  this.r2) { 
-			 System.out.println("View all Complaints");
-			 desktopPane.removeAll(); 
-			 updateResponse fra2 = new updateResponse();
-			 desktopPane.add(fra2).setVisible(true); 
-			 desktopPane.moveToFront(fra2);
-			 fra2.setSize(desktopPane.getWidth(), desktopPane.getHeight());
-			 fra2.setLocation(0,0); 
-			} 
 		  else if (e.getSource() ==  this.r3) { 
 			 System.out.println("View all Complaints");
 			 desktopPane.removeAll(); 
@@ -377,19 +345,10 @@ public class MicroMainFrame extends JFrame implements ActionListener{
 			 fra5.setSize(desktopPane.getWidth(), desktopPane.getHeight());
 			 fra5.setLocation(0,0); 
 			} 
-		  else if (e.getSource() ==  this.r6) { 
-			 System.out.println("Find complaint by ID");
-			 desktopPane.removeAll(); 
-			 deleteResponse fra6 = new  deleteResponse();
-			 desktopPane.add(fra6).setVisible(true); 
-			 desktopPane.moveToFront(fra6);
-			 fra6.setSize(desktopPane.getWidth(), desktopPane.getHeight());
-			 fra6.setLocation(0,0); 
-			} 
-		
+	
 		//AccountView
 		  else if (e.getSource() == a1) {
-				System.out.println("Create Account");
+				System.out.println("Payment Status");
 				desktopPane.removeAll();
 				CreateAccount AccFrame1 = new CreateAccount();
 				desktopPane.add(AccFrame1).setVisible(true);
@@ -398,7 +357,7 @@ public class MicroMainFrame extends JFrame implements ActionListener{
 				AccFrame1.setLocation(0,0);
 			}
 			else if (e.getSource() == a2) {
-				System.out.println("View all Accounts");
+				System.out.println("Amount Due");
 				desktopPane.removeAll();
 				allAccount AccFrame2 = new allAccount();
 				desktopPane.add(AccFrame2).setVisible(true);
@@ -407,7 +366,7 @@ public class MicroMainFrame extends JFrame implements ActionListener{
 				AccFrame2.setLocation(0,0);
 			}
 			else if (e.getSource() == a3) {
-				System.out.println("Find Account");
+				System.out.println("Payment Due Date");
 				desktopPane.removeAll();
 				findAccByID AccFrame3 = new findAccByID();
 				desktopPane.add(AccFrame3).setVisible(true);
@@ -416,7 +375,7 @@ public class MicroMainFrame extends JFrame implements ActionListener{
 				AccFrame3.setLocation(0,0);
 			}
 			else if (e.getSource() == a4) {
-				System.out.println("Update Account");
+				System.out.println("Account History");
 				desktopPane.removeAll();
 				updateAccount AccFrame4 = new updateAccount();
 				desktopPane.add(AccFrame4).setVisible(true);
@@ -424,15 +383,22 @@ public class MicroMainFrame extends JFrame implements ActionListener{
 				AccFrame4.setSize(desktopPane.getWidth(), desktopPane.getHeight());
 				AccFrame4.setLocation(0,0);
 			}
-			
-			else if (e.getSource() == a5) {
-				System.out.println("Delete Account");
+
+			else if (e.getSource() == comboBoxbtn) {
+				System.out.println("Services Status");
 				desktopPane.removeAll();
-				deleteAccount AccFrame5 = new deleteAccount();
-				desktopPane.add(AccFrame5).setVisible(true);
-				desktopPane.moveToFront(AccFrame5);
-				AccFrame5.setSize(desktopPane.getWidth(), desktopPane.getHeight());
-				AccFrame5.setLocation(0,0);
+				serviceForm(comboBox.getSelectedItem().toString());
+				/*
+				desktopPane.add(ServicesChoice).setVisible(true);
+				desktopPane.moveToFront(ServicesChoice);
+				ServicesChoice.setSize(desktopPane.getWidth(), desktopPane.getHeight());
+				ServicesChoice.setLocation(0,0);*/
+			}
+			else if (e.getSource() == comboBox) {
+				System.out.println("Services Status");
+				desktopPane.removeAll();
+				
+				
 			}
 		
 			 
@@ -468,53 +434,140 @@ public class MicroMainFrame extends JFrame implements ActionListener{
 		clock.start();
     }
 
-	public void serviceForm() {
-
+	public void serviceForm(String service) {
+			int outstandingCount = 0;
+			int resolvedCount = 0;
+			
 			//serviceFrame = new JFrame("Service Status"); 
-			header = new JLabel("Status of Services");
+			header = new JLabel(service);
 			header.setFont(new Font("Times New Roman", Font.PLAIN, 25));
 			header.setHorizontalAlignment(JLabel.CENTER);
-			header.setBounds(150, 30, 200, 40);
+			header.setBounds(210, 30, 200, 40);
 
 			
-
-			this.resolved_value = new JLabel("Unresolved Complaints: ");
+			this.resolved_value = new JLabel("Unresolved Complaints: " + outstandingCount);
 			this.resolved_value.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-			this.resolved_value.setBounds(260,130, 200, 20);
+			this.resolved_value.setBounds(320,130, 200, 20);
 
-			
-
-			this.oustanding_value = new JLabel("Resolved Complaints: ");
+			this.oustanding_value = new JLabel("Resolved Complaints: " + resolvedCount);
 			this.oustanding_value.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-			this.oustanding_value.setBounds(70,130, 200, 20);
+			this.oustanding_value.setBounds(130,130, 200, 20);
 
 		    resolve =new JButton("Resolved");  
 		    outstanding = new JButton("Outstanding");
-		    outstanding.setBounds(60,100,150,30);  
-
-		    resolve.setBounds(250,100,150,30);  
-
-		    desktopPane.add(header);
-		    desktopPane.add(outstanding);  
-		    desktopPane.add(resolve);
-		    desktopPane.add(resolved_value);
-		    desktopPane.add(oustanding_value);
-
-		    desktopPane.setBounds(0,0,490,580);
+		    outstanding.setBounds(120,100,150,30);
+		    resolve.setBounds(310,100,150,30);  
+		    
+		    ActionListener actionListioner = new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+						
+						if(e.getSource()==resolve) {
+							System.out.println("RESOLVE TABLE.");
+						}else if(e.getSource()==outstanding) {
+							System.out.println("OUSTANDING TABLE.");
+						}
+					}
+		    };
+	        
+	        resolve.addActionListener(actionListioner);
+	        outstanding.addActionListener(actionListioner);
+	        
+		    desktopPane.removeAll();
+		    desktopPane.add(header).setVisible(true);
+		    desktopPane.add(outstanding).setVisible(true);  
+		    desktopPane.add(resolve).setVisible(true);
+		    desktopPane.add(resolved_value).setVisible(true);
+		    desktopPane.add(oustanding_value).setVisible(true);
+		    desktopPane.moveToFront(header);
+		    desktopPane.moveToFront(outstanding);  
+		    desktopPane.moveToFront(resolve);
+		    desktopPane.moveToFront(resolved_value);
+		    desktopPane.moveToFront(oustanding_value);
+		    desktopPane.setBounds(405,10,600,700);
 
 		    desktopPane.setLayout(null);  
+		    //desktopPane.setVisible(true);
 
 		   // serviceFrame.setVisible(true);  
 
 		}  
+	
+	public void serviceBox() {
+	    	
+	        String services[] = {"Cable","Broadband"};
+	        
+	        comboBox = new JComboBox<>(services);
+	        comboBox.setSelectedIndex(0);
+	        comboBox.setBounds(20, 80, 300, 40);
+	        leftBottomPanel.add(comboBox);
+	        //leftBottomPanel.setLayout(null);
+	        
+	        comboBoxbtn = new JButton("Submit Service");
+	        comboBoxbtn. setBounds(70,160,200,50);
+	        leftBottomPanel.add(comboBoxbtn);
+	        comboBoxbtn.setVisible(true);
+	        //leftBottomPanel.setLayout(null);	
+	        
+	        chatboxbtn = new JButton("ChatBox");
+	        chatboxbtn.setBounds(8,250,100,30);
+	        leftBottomPanel.add(chatboxbtn);
+	        chatboxbtn.setVisible(true);
+	        
+	        leftBottomPanel.setLayout(null);
+	        
+	        
+	        ActionListener actionListioner = new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if(e.getSource()==comboBoxbtn) {
+						String choice = comboBox.getSelectedItem().toString();
+						System.out.println(choice);
+						switch (choice) {//check for a match
+						    case "Cable":
+						    	System.out.println("You're choice is Cable");
+						    		serviceForm("Cable");
+						        break;
+						    case "BroadBand":    
+						        System.out.println("You're choice is BroadBand");
+						        	serviceForm("BroadBand");
+						        break;
+						    default:
+						    	//removeAll();
+						        break;
+						}
+					}else if(e.getSource()==resolve) {
+						System.out.println("RESOLVE TABLE.");
+					}else if(e.getSource()==outstanding) {
+						System.out.println("OUSTANDING TABLE.");
+					}else if(e.getSource()== chatboxbtn) {
+						System.out.println("let's chat");
+					}
+				}
+	        	
+	        };
+	       
+	        comboBoxbtn.addActionListener(actionListioner);
+	        chatboxbtn.addActionListener(actionListioner);
+	        
+	    }
 
+   /* private void logo() {
 
-	public static void main(String[] args) {
-		new MicroMainFrame();
+        ImageIcon loadImage = new ImageIcon("src/logo/MicroLogo.png");
+        
+        JLabel image = new JLabel(loadImage);
 
-	}
-	
-	
-	
-	
+        image.setBounds(0,70,350,200);
+        image.setVisible(true);
+        leftTopPanel.add(image);
+        
+    }*/
+
+		public static void main(String[] args) {
+			new MicroStarUser();
+
+		}
+		
+
 }//end of mainframe
