@@ -1,5 +1,6 @@
 package models;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import utils.ComplaintCategory;
@@ -13,13 +14,18 @@ import utils.ComplaintType;
  * 
  * */
 
-public class Complaint {
+public class Complaint implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private int complaintID;
 	
-	private int custID;
+	private User custID;
 	
-	private int empID;
+	private User empID;
 	
 	private ComplaintCategory category;
 
@@ -32,18 +38,20 @@ public class Complaint {
 	private ComplaintStatus complaintStatus;
 
 	
+	
 	public Complaint() {
-		this.custID = 0;
-		this.empID = 0;
+		this.custID = new User();
+		this.empID = new User();
 		this.category = null;
 		this.complaint = "";
 		this.complaintDate =  new Date();
 		this.complaintType = null;
 		this.complaintStatus = ComplaintStatus.OUTSTANDING;
+		
 	}
 	
-	public Complaint(int custID, int empID, ComplaintCategory category, String complaint, Date complaintDate,
-			ComplaintType complaintType, ComplaintStatus complaintStatus) {
+	public Complaint(User custID, User empID, ComplaintCategory category, String complaint, Date complaintDate,
+			ComplaintType complaintType, ComplaintStatus complaintStatus, String contactNum) {
 		this.custID = custID;
 		this.empID = empID;
 		this.category = category;
@@ -51,6 +59,7 @@ public class Complaint {
 		this.complaintDate = complaintDate;
 		this.complaintType = complaintType;
 		this.complaintStatus = complaintStatus;
+		
 	}
 	
 	
@@ -63,6 +72,7 @@ public class Complaint {
 		this.complaintDate = c.complaintDate;
 		this.complaintType = c.complaintType;
 		this.complaintStatus = c.complaintStatus;
+
 	}
 
 	public int getComplaintID() {
@@ -73,19 +83,19 @@ public class Complaint {
 		this.complaintID = complaintID;
 	}
 
-	public int getCustID() {
+	public User getCustID() {
 		return custID;
 	}
 
-	public void setCustID(int custID) {
+	public void setCustID(User custID) {
 		this.custID = custID;
 	}
 
-	public int getEmpID() {
+	public User getEmpID() {
 		return empID;
 	}
 
-	public void setEmpID(int empID) {
+	public void setEmpID(User empID) {
 		this.empID = empID;
 	}
 
@@ -128,7 +138,8 @@ public class Complaint {
 	public void setComplaintStatus(ComplaintStatus complaintStatus) {
 		this.complaintStatus = complaintStatus;
 	}
-	
+
+
 	@Override
 	public String toString() {
 		return "\nComplaints \ncomplaintID: " + complaintID + "\ncustID: " + custID +

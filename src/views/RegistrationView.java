@@ -8,6 +8,7 @@ import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -17,11 +18,13 @@ import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 
 import controllers.UserController;
+import loginregisterprompt.LoginRegisterPrompt;
 import models.User;
 import utils.CustomizedException;
 import utils.Role;
+import view.loading;
 
-public class RegistrationView extends JInternalFrame implements InternalFrameListener, ActionListener {
+public class RegistrationView extends JFrame implements ActionListener {
 	
 	private static final long serialVersionUID = 1L;
 	//local variables
@@ -44,10 +47,7 @@ public class RegistrationView extends JInternalFrame implements InternalFrameLis
 	public RegistrationView()
 	    {
 		
-		super("Registration Form",false, //resizable
-		          true, //closable
-		          false, //maximizable
-		          true);//iconifiable
+		super("Registration Form");
 		//labels
 		this.roles = new String[] {"Customer","Representative","Technician"};
 		this.firstNameLabel=new JLabel("FIRST NAME");
@@ -66,7 +66,8 @@ public class RegistrationView extends JInternalFrame implements InternalFrameLis
 	    this.roleComboBox=new JComboBox<String>(this.roles);
 	    this.roleComboBox.setSelectedIndex(0);
 	    this.registerButton=new JButton("REGISTER");
-	    this.resetButton=new JButton("RESET");     
+	    this.resetButton=new JButton("RESET");
+	    showForm();
 	    }
 	
     public void createWindow()
@@ -76,6 +77,7 @@ public class RegistrationView extends JInternalFrame implements InternalFrameLis
         this.getContentPane().setBackground(Color.white);
         this.getContentPane().setLayout(null);
         this.setVisible(true);   
+        //this.setDefaultCloseOperation();
     }
     
     
@@ -185,6 +187,7 @@ public class RegistrationView extends JInternalFrame implements InternalFrameLis
 			if(Arrays.equals(this.passwordField.getPassword(), this.confirmPasswordField.getPassword())) {
 				try {
 					UserController uc = new UserController();
+					
 					int userId = uc.createUser(user);
 					
 					if(userId > 0) {
@@ -208,46 +211,5 @@ public class RegistrationView extends JInternalFrame implements InternalFrameLis
 		
 	}
 
-	@Override
-	public void internalFrameOpened(InternalFrameEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void internalFrameClosing(InternalFrameEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void internalFrameClosed(InternalFrameEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void internalFrameIconified(InternalFrameEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void internalFrameDeiconified(InternalFrameEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void internalFrameActivated(InternalFrameEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void internalFrameDeactivated(InternalFrameEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
 }

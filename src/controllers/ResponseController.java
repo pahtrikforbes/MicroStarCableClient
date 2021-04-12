@@ -84,15 +84,16 @@ public class ResponseController {
 	/* Method to accept a user id and returns an ArrayList of Responses
 	that are tied to that specific User from database through network stream */
 	@SuppressWarnings("unchecked")
-	public ArrayList<Response> getResponsesPerUser(int responseId) throws CustomizedException {
+	public ArrayList<Response> getResponsesPerUser(int complaintId) throws CustomizedException {
 		ArrayList<Response> userResponseList = new ArrayList<>();
 
-		 client.setOperation("getAllUserResponses");
+		 client.setOperation("getResponsesPerComplaint");
 	    
 	    try {
 	    	client.initDataStreams();
 	    	client.getObjectOutStream().writeObject(client.getOperation());
 			client.getObjectOutStream().writeObject(client.getEndPoint());
+			client.getObjectOutStream().writeObject(complaintId);
 			
 			String success = (String)client.getObjectInStream().readObject();
 			

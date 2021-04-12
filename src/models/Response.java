@@ -1,5 +1,7 @@
 package models;
 
+import java.io.Serializable;
+
 /*This class will serve as the user domain object.
  * it will map to the users table in the mysql database
  * 
@@ -8,11 +10,18 @@ package models;
 import java.util.Date;
 
 
-public class Response {
+public class Response implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private int response_id;
 	
 	private Complaint complaint_id;
+	
+	private int complaint_id_int;
 	
 	private Date response_date;
 	
@@ -30,6 +39,14 @@ public class Response {
 	public Response(Complaint complaint_id, Date response_date, String response) {
 		
 		this.complaint_id = complaint_id;
+		this.response_date = response_date;
+		this.response = response;
+		
+	}
+	
+	public Response(int complaint_id_int, Date response_date, String response) {
+		
+		this.complaint_id_int = complaint_id_int;
 		this.response_date = response_date;
 		this.response = response;
 		
@@ -65,6 +82,10 @@ public class Response {
 	}
 
 
+	public void setComplaint_id(int complaint_id_int) {
+		this.complaint_id_int = complaint_id_int;
+	}
+	
 	public Date getResponse_date() {
 		return response_date;
 	}

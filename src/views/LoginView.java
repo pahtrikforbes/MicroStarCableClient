@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -15,9 +16,11 @@ import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 
 import controllers.AuthController;
+import controllers.UserController;
+import models.User;
 import utils.Role;
 
-public class LoginView extends JInternalFrame implements InternalFrameListener, ActionListener {
+public class LoginView extends JFrame implements ActionListener {
 	
 	/**
 	 * 
@@ -36,10 +39,7 @@ public class LoginView extends JInternalFrame implements InternalFrameListener, 
 	
 	
 	public LoginView() {
-		super("Login Form",false, //resizable
-		          true, //closable
-		          false, //maximizable
-		          true);//iconifiable
+		super("Login Form");
 		this.staffIDLabel = new JLabel("STAFF ID");
 		this.custIDLabel = new JLabel("CUSTOMER ID");
 		this.passwordLabel = new JLabel("PASSWORD");
@@ -47,6 +47,7 @@ public class LoginView extends JInternalFrame implements InternalFrameListener, 
 		this.passwordField = new JPasswordField();
 		this.loginButton = new JButton("LOGIN");
 		this.role = null;
+		
 	}
 	
 	 public void createWindow()
@@ -56,7 +57,6 @@ public class LoginView extends JInternalFrame implements InternalFrameListener, 
 	        this.getContentPane().setBackground(Color.white);
 	        this.getContentPane().setLayout(null);
 	        this.setVisible(true);
-	        this.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE); 
 	    }
 	 public void setLocationAndSize() {
 		 this.staffIDLabel.setBounds(20,20,80,70);
@@ -102,51 +102,6 @@ public class LoginView extends JInternalFrame implements InternalFrameListener, 
 		 this.idTextField.setText("");
 		 this.passwordField.setText("");
 	 }
-
-	
-
-	@Override
-	public void internalFrameOpened(InternalFrameEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println(e);
-		
-	}
-
-	@Override
-	public void internalFrameClosing(InternalFrameEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println(e);
-	}
-
-	@Override
-	public void internalFrameClosed(InternalFrameEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println(e);
-	}
-
-	@Override
-	public void internalFrameIconified(InternalFrameEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println(e);
-	}
-
-	@Override
-	public void internalFrameDeiconified(InternalFrameEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println(e);
-	}
-
-	@Override
-	public void internalFrameActivated(InternalFrameEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println(e);
-	}
-
-	@Override
-	public void internalFrameDeactivated(InternalFrameEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println(e);
-	}
 	
 public void actionPerformed(ActionEvent e) {
 		
@@ -155,9 +110,11 @@ public void actionPerformed(ActionEvent e) {
 				int userId = Integer.parseInt(this.idTextField.getText());
 				char[] password = this.passwordField.getPassword();
 				 authController = new AuthController();
+				 UserController uc = new UserController();
 				 authController.login(userId, String.copyValueOf(password),this.role);
-				
+				 User loggedInUser = uc.findById(userId);
 				JOptionPane.showMessageDialog(null,"User logged in successfully.");
+				new ParentWindow(role, loggedInUser);
 				this.reset();
 				//this.dispose();
 			} catch (Exception e2) {
