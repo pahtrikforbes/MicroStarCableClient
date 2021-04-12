@@ -33,7 +33,7 @@ import AccountView.*;
 import complaintsViews.*;
 import ResponseView.*;
 import UserView.*;
-import login.*;
+import loginregisterprompt.*;
 
 public class MicroStarUser extends JFrame implements ActionListener{
 	
@@ -292,7 +292,7 @@ public class MicroStarUser extends JFrame implements ActionListener{
 			dispose();
 			logOut = new JFrame();
 		    JOptionPane.showMessageDialog(logOut, "Logged out");
-		    new UserLogin();
+		    new LoginRegisterPrompt();
 		}
 		
 		//complaint section

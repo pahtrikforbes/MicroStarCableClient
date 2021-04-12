@@ -21,6 +21,8 @@ public class Response implements Serializable {
 	
 	private Complaint complaint_id;
 	
+	private int complaint_id_int;
+	
 	private Date response_date;
 	
 	private String response;
@@ -37,6 +39,14 @@ public class Response implements Serializable {
 	public Response(Complaint complaint_id, Date response_date, String response) {
 		
 		this.complaint_id = complaint_id;
+		this.response_date = response_date;
+		this.response = response;
+		
+	}
+	
+	public Response(int complaint_id_int, Date response_date, String response) {
+		
+		this.complaint_id_int = complaint_id_int;
 		this.response_date = response_date;
 		this.response = response;
 		
@@ -72,6 +82,10 @@ public class Response implements Serializable {
 	}
 
 
+	public void setComplaint_id(int complaint_id_int) {
+		this.complaint_id_int = complaint_id_int;
+	}
+	
 	public Date getResponse_date() {
 		return response_date;
 	}

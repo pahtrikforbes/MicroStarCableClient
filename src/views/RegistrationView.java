@@ -18,10 +18,14 @@ import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 
 import controllers.UserController;
-import login.UserLogin;
+
+
+import loginregisterprompt.LoginRegisterPrompt;
+
 import models.User;
 import utils.CustomizedException;
 import utils.Role;
+import view.loading;
 
 public class RegistrationView extends JFrame implements ActionListener {
 	
@@ -45,8 +49,8 @@ public class RegistrationView extends JFrame implements ActionListener {
         
 	public RegistrationView()
 	    {
-		
-		super("Registration Form");//iconifiable
+		super("Registration Form");
+
 		//labels
 		this.roles = new String[] {"Customer","Representative","Technician"};
 		this.firstNameLabel=new JLabel("FIRST NAME");
@@ -65,7 +69,8 @@ public class RegistrationView extends JFrame implements ActionListener {
 	    this.roleComboBox=new JComboBox<String>(this.roles);
 	    this.roleComboBox.setSelectedIndex(0);
 	    this.registerButton=new JButton("REGISTER");
-	    this.resetButton=new JButton("RESET");     
+	    this.resetButton=new JButton("RESET");
+	    showForm();
 	    }
 	
     public void createWindow()
@@ -75,6 +80,7 @@ public class RegistrationView extends JFrame implements ActionListener {
         this.getContentPane().setBackground(Color.white);
         this.getContentPane().setLayout(null);
         this.setVisible(true);   
+        //this.setDefaultCloseOperation();
     }
     
     
@@ -184,13 +190,17 @@ public class RegistrationView extends JFrame implements ActionListener {
 			if(Arrays.equals(this.passwordField.getPassword(), this.confirmPasswordField.getPassword())) {
 				try {
 					UserController uc = new UserController();
+					
 					int userId = uc.createUser(user);
 					
 					if(userId > 0) {
 						this.reset();
 						 JOptionPane.showMessageDialog(null,"User Registered Successfully\nYour Login ID:"+userId);
 						 
-						 new UserLogin();
+//						 new UserLogin();
+//						 new LoginView();
+						 new LoginRegisterPrompt();
+
 						 this.dispose();
 					}
 				} catch (CustomizedException e1) {

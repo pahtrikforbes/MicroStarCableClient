@@ -43,7 +43,7 @@ public class LoginView extends JFrame implements ActionListener {
 	
 	
 	public LoginView() {
-		super("Login Form");//iconifiable
+		super("Login Form");
 		this.staffIDLabel = new JLabel("STAFF ID");
 		this.custIDLabel = new JLabel("CUSTOMER ID");
 		this.passwordLabel = new JLabel("PASSWORD");
@@ -51,6 +51,7 @@ public class LoginView extends JFrame implements ActionListener {
 		this.passwordField = new JPasswordField();
 		this.loginButton = new JButton("LOGIN");
 		this.role = null;
+		
 	}
 	
 	 public void createWindow()
@@ -61,7 +62,7 @@ public class LoginView extends JFrame implements ActionListener {
 	        this.getContentPane().setLayout(null);
 	        this.setVisible(true);
 	        this.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE); 
-	        
+
 	    }
 	 public void setLocationAndSize() {
 		 this.staffIDLabel.setBounds(20,20,80,70);
@@ -107,9 +108,6 @@ public class LoginView extends JFrame implements ActionListener {
 		 this.idTextField.setText("");
 		 this.passwordField.setText("");
 	 }
-
-	
-
 	
 
 public void actionPerformed(ActionEvent e) {
@@ -119,26 +117,29 @@ public void actionPerformed(ActionEvent e) {
 				int userId = Integer.parseInt(this.idTextField.getText());
 				char[] password = this.passwordField.getPassword();
 				 authController = new AuthController();
+				 UserController uc = new UserController();
 				 authController.login(userId, String.copyValueOf(password),this.role);
-				 User user = uc.findById(userId);
-				 
+
+				 User loggedInUser = uc.findById(userId);
+
 				JOptionPane.showMessageDialog(null,"User logged in successfully.");
+				new ParentWindow(role, loggedInUser);
 				this.reset();
 
 				if (this.role.equals(Role.CUSTOMER)) {
 					MicroStarCableCustomer microCust = new MicroStarCableCustomer();
-					microCust.setUser(user);
+					microCust.setUser(loggedInUser);
 					microCust.showForm();
 					
 				} else if (this.role.equals(Role.TECHNICIAN)) {
 					MicroStarCableTechnician microTech = new MicroStarCableTechnician();
-					microTech.setUser(user);
+					microTech.setUser(loggedInUser);
 					microTech.showForm();
 					
 				}
 				else if (this.role.equals(Role.REPRESENTATIVE)) {
 					MicroStarCableRepresentative microRep= new MicroStarCableRepresentative();
-					microRep.setUser(user);
+					microRep.setUser(loggedInUser);
 					microRep.showForm();
 				}
 				//this.dispose();

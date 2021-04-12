@@ -30,10 +30,12 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import AccountView.*;
-import complaintsViews.*;
+
+import complaintsViews.ComplaintView;
+import loginregisterprompt.*;
+
 import ResponseView.*;
 import UserView.*;
-import login.*;
 
 public class MicroStarStaff extends JFrame implements ActionListener{
 	
@@ -300,7 +302,7 @@ public class MicroStarStaff extends JFrame implements ActionListener{
 			dispose();
 			logOut = new JFrame();
 		    JOptionPane.showMessageDialog(logOut, "Logged out");
-		    new UserLogin();
+		    new LoginRegisterPrompt();
 		}
 		else if (e.getSource() == i1) {
 			

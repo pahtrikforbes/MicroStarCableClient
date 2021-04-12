@@ -1,18 +1,25 @@
 
-package login;
+package loginregisterprompt;
 
 import javax.swing.*;
 
 import utils.Role;
+
+import view.registrationForm;
+
 import views.LoginView;
 import views.RegistrationView;
 
 import java.awt.*;
 import java.awt.event.*;
 
-public class UserLogin extends JFrame {
+public class LoginRegisterPrompt extends JFrame {
 
-	/*
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+/*
 	 * JLabel userName = new JLabel("UserView Name"); JLabel userPassword = new
 	 * JLabel("UserView Password");
 	 */
@@ -29,7 +36,8 @@ JPasswordField passArea = new JPasswordField(15);
 protected Icon icon;
 JFrame f;
 
-	public UserLogin(){
+	public LoginRegisterPrompt(){
+
 		//super("Login Autentification");
 		
 		setSize(420,300);
@@ -45,7 +53,7 @@ JFrame f;
 		heading.setBounds(10,15,600,20);
 		loginArea.setBounds(150,40,120,80);
 		registerLabel.setBounds(140, 125, 200, 40);
-		registerArea.setBounds(150,160,120,80);
+		registerArea.setBounds(150,160,125,80);
 		//registerArea.setVisible(false);
 		
 		panel.add(heading);
@@ -64,19 +72,19 @@ JFrame f;
 	public void action(){
 	registerArea.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent ae) {
-			dispose();
-			RegistrationView register = new RegistrationView();
-			register.showForm();
+
+			new RegistrationView();
+
 			
 		}
 	});
 	
 	loginArea.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent ae) {
-			Object[] possibilities = {"Representative", "Customer","Technician"};
+		Object[] possibilities = {"Representative", "Customer", "Technician"};
+
 			Component frame = null;
 			setLocation(520,280);
-		//frame;
 			String choice = (String)JOptionPane.showInputDialog(
 			 frame, "Please specify the role youre registering as:\n"
 			                    + "\"I am a: \"",
@@ -86,33 +94,19 @@ JFrame f;
 			                    possibilities,
 			                    "Staff");
 
-
-			//If a string was returned, say so.
-			if ((choice != null) && (choice.length() > 0) ) {
+			if ((choice != null) && (choice.length() > 0)) {
 				if(choice == "Representative") {
-					dispose();
-					f = new JFrame();
-//					JOptionPane.showMessageDialog(f,"Your choice was Representative");
+					LoginView loginView = new LoginView();
+					loginView.showForm(Role.REPRESENTATIVE);
+					
 					//calls the staff login
-					LoginView lv = new LoginView();
-					lv.showForm(Role.REPRESENTATIVE);
-					
-				} else if(choice.equals("Customer")) {
-					dispose();
-					f = new JFrame();
-//					JOptionPane.showMessageDialog(f,"Your choice was Customer");
-					//calls the customer login
-					LoginView lv = new LoginView();
-					lv.showForm(Role.CUSTOMER);
-					
-				} else if(choice.equals("Technician")) {
-					dispose();
-					f = new JFrame();
-//					JOptionPane.showMessageDialog(f,"Your choice was Technician");
-					//calls the customer login
-					LoginView lv = new LoginView();
-					lv.showForm(Role.TECHNICIAN);
-					
+				}if(choice.equals("Customer")) {
+					LoginView loginView = new LoginView();
+					loginView.showForm(Role.CUSTOMER);
+				}if(choice.equals("Technician")) {
+					LoginView loginView = new LoginView();
+					loginView.showForm(Role.TECHNICIAN);
+
 				}
 			    return;
 			}
@@ -122,7 +116,7 @@ JFrame f;
 }
 
 		public static void main(String[] args) {
-			UserLogin userlogin = new UserLogin();
+			new LoginRegisterPrompt();
 
 }
 }
