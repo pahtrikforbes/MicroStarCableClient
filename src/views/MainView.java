@@ -1,46 +1,169 @@
 package views;
 
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+
 import javax.swing.*;
 
-public class MainView extends JFrame{
-	private JMenu menu, menu2, menu3, menu4;
-	private JButton logoutBtn;
+import models.User;
+import utils.Role;
+
+public class MainView extends JInternalFrame implements ActionListener {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel rightPanel;
+	private JPanel leftPanel;
+	private JMenu userMenu, complaintMenu, responseMenu, accountMenu;
+	private JLabel servicesLbl;
+	private JLabel logoLbl;
 	private JMenuBar menuBar;
-	private JMenuItem i1, i2, i3, i4, i5, i6, i7;
-	private JPanel panel;
-	private JInternalFrame iframe;
-	private JButton button1, button2;
-	private JDesktopPane desktopPane;
-  public static void main(String[] args) {
-  MainView d = new MainView();
-  }
-  public MainView(){
-	  super("Micro Star Cable");
-	    menu  = new JMenu("Users");
-		menu2 = new JMenu("Complaints");
-		menu3 = new JMenu("Responses");
-		menu4 = new JMenu("Accounts");
+	private JComboBox<String> serviceBox;
+	private String[] services;
+	private JButton selectServiceBtn;
+	private JButton logoutBtn;
+	private JLabel loggedInUser;
+	private Role role;
+	private User user;
+	private JMenuItem usrItem1, usrItem3, usrItem2,
+	                  usrItem4, usrItem5, compItem1,compItem2,compItem3, accItem1,accItem2;
+	JToggleButton togBtn;
+	private String availalbility;
+    public MainView(Role role,User user) {
+    	super("Micro Star");
+    	rightPanel = new JPanel();
+		leftPanel = new JPanel();
+		userMenu  = new JMenu("Users");
+		complaintMenu = new JMenu("Complaints");
+		responseMenu = new JMenu("Responses");
+		accountMenu = new JMenu("Account");
 		menuBar = new JMenuBar();
+		logoLbl  = new JLabel("Micro Star Cable Company");
+		servicesLbl= new JLabel("Services");
+		services = new String[] {"Cable","Broadband"};
+		serviceBox = new JComboBox<>(services);
+		selectServiceBtn = new JButton("Select");
+		loggedInUser = new JLabel("HI "+user.getFirstName().toUpperCase());
 		logoutBtn = new JButton("LOGOUT");
-        
-  this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-  iframe = new JInternalFrame("Internal frame");
-  iframe.setToolTipText("This is internal frame");
-  panel = new JPanel();
-  button1 = new JButton("Ok");
-  button1.setToolTipText("This is Ok button of internal frame");
-  panel.add(button1);
-  button2 = new JButton("Cancel");
-  button2.setToolTipText("This is cancel button of internal frame");
-  panel.add(button2);
-  iframe.add(panel);
-  iframe.setSize(250,300);
-  iframe.setVisible(true);
-  desktopPane = new JDesktopPane();
-  desktopPane.add(iframe);
-  this.add(desktopPane);
-  this.setSize(400,400);
-  this.setVisible(true);
-  }
+		this.role = role;
+		this.user = user;
+		usrItem1 = new JMenuItem("");
+		usrItem2 = new JMenuItem("");
+		compItem1 = new JMenuItem("");
+		compItem2 = new JMenuItem("");
+		compItem3 = new JMenuItem();
+		accItem1 = new JMenuItem("");
+		accItem2 = new JMenuItem("");
+		this.availalbility = "Go Online";
+		togBtn = new JToggleButton(this.availalbility);
+		showForm();
+	}
+    
+    private void showForm() {
+    	this.createWindow(); 
+    	setLocationAndSize();
+    	addComponentsToFrame() ;
+	}
+
+	public void createWindow()
+    {
+		this.getContentPane().setBackground(Color.white);
+        this.getContentPane().setLayout(new BorderLayout());
+        this.setVisible(true);
+        this.setSize(1400,800);
+    }
+	
+	 private void setLocationAndSize() {
+		 leftPanel.setBackground(Color.red);
+		 leftPanel.setLayout(null);
+		 leftPanel.setPreferredSize(new Dimension(300,100));
+		 
+		 rightPanel.setLayout(new BorderLayout());
+		 logoLbl.setBounds(0, 10,300, 20);
+		 servicesLbl.setBounds(0,100,150, 30);
+		 serviceBox.setBounds(0,130,200,30);
+		 selectServiceBtn.setBounds(0,160,100,30);
+		 rightPanel.setBackground(Color.green);
+		 
+	 }
+
+	 private void addComponentsToFrame() {
+		 
+		 this.add(rightPanel,BorderLayout.CENTER);
+		 this.add(leftPanel,BorderLayout.WEST);
+		 
+		 compItem1.setText("Submit a Complaint");
+		// compItem2.setText("View All Complaints");
+		 compItem3.setText("Assign Technician");
+		 accItem1.setText("Account Status");
+		 accItem2.setText("Past Payments");
+		 if(this.role.equals(Role.CUSTOMER)) {
+			 
+			 complaintMenu.add(compItem1);
+			 complaintMenu.add(compItem2);
+			 accountMenu.add(accItem1);
+			 accountMenu.add(accItem2);
+			 menuBar.add(complaintMenu);
+			 menuBar.add(accountMenu);
+		 }else if(this.role.equals(Role.REPRESENTATIVE)) {
+	
+			 complaintMenu.add(compItem1);
+			 complaintMenu.add(compItem3);
+			 accountMenu.add(accItem1);
+			 accountMenu.add(accItem2);
+			 menuBar.add(userMenu);
+			 menuBar.add(responseMenu);
+			 menuBar.add(complaintMenu);
+			 menuBar.add(accountMenu);
+			 leftPanel.add(servicesLbl);
+			 leftPanel.add(serviceBox);
+			 leftPanel.add(selectServiceBtn);
+			 
+		 }else if(this.role.equals(Role.TECHNICIAN)) {
+			 
+			 complaintMenu.add(compItem1);
+			// complaintMenu.add(compItem3);
+			 accountMenu.add(accItem1);
+			 accountMenu.add(accItem2);
+			 menuBar.add(userMenu);
+			 menuBar.add(responseMenu);
+			 menuBar.add(complaintMenu);
+			 menuBar.add(accountMenu);
+			 leftPanel.add(servicesLbl);
+			 leftPanel.add(serviceBox);
+			 leftPanel.add(selectServiceBtn);
+			 menuBar.add(togBtn);
+			 
+		 }
+		 menuBar.add(loggedInUser);
+		 menuBar.add(logoutBtn);
+		 leftPanel.add(logoLbl);
+		 
+		 this.setJMenuBar(menuBar);
+		 
+		
+		 selectServiceBtn.addActionListener(this);
+	 }
+	 
+			
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+		if(e.getSource() == selectServiceBtn) {
+			
+			String service = serviceBox.getSelectedItem().toString();
+			
+			rightPanel.removeAll();
+			rightPanel.add(new SelectedServiceView(service)) ;
+		}
+		
+	}
+	
+	
+	
 }

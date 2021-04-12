@@ -22,6 +22,7 @@ import loginregisterprompt.LoginRegisterPrompt;
 import models.User;
 import utils.CustomizedException;
 import utils.Role;
+import view.loading;
 
 public class RegistrationView extends JFrame implements ActionListener {
 	
@@ -65,7 +66,8 @@ public class RegistrationView extends JFrame implements ActionListener {
 	    this.roleComboBox=new JComboBox<String>(this.roles);
 	    this.roleComboBox.setSelectedIndex(0);
 	    this.registerButton=new JButton("REGISTER");
-	    this.resetButton=new JButton("RESET");     
+	    this.resetButton=new JButton("RESET");
+	    showForm();
 	    }
 	
     public void createWindow()
@@ -185,6 +187,7 @@ public class RegistrationView extends JFrame implements ActionListener {
 			if(Arrays.equals(this.passwordField.getPassword(), this.confirmPasswordField.getPassword())) {
 				try {
 					UserController uc = new UserController();
+					
 					int userId = uc.createUser(user);
 					
 					if(userId > 0) {

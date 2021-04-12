@@ -69,9 +69,8 @@ JFrame f;
 	public void action(){
 	registerArea.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent ae) {
-			dispose();
-			RegistrationView registrationView = new RegistrationView();
-			registrationView.showForm();
+			new RegistrationView();
+			
 		}
 	});
 	
@@ -92,16 +91,17 @@ JFrame f;
 
 			//If a string was returned, say so.
 			if ((choice != null) && (choice.length() > 0)) {
-				if(choice == "Representative" || choice.equals("Technician") ) {
-					dispose();
+				if(choice == "Representative") {
 					LoginView loginView = new LoginView();
 					loginView.showForm(Role.REPRESENTATIVE);
 					
 					//calls the staff login
 				}if(choice.equals("Customer")) {
-					dispose();
 					LoginView loginView = new LoginView();
 					loginView.showForm(Role.CUSTOMER);
+				}if(choice.equals("Technician")) {
+					LoginView loginView = new LoginView();
+					loginView.showForm(Role.TECHNICIAN);
 				}
 			    return;
 			}

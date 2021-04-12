@@ -16,6 +16,8 @@ import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 
 import controllers.AuthController;
+import controllers.UserController;
+import models.User;
 import utils.Role;
 
 public class LoginView extends JFrame implements ActionListener {
@@ -45,6 +47,7 @@ public class LoginView extends JFrame implements ActionListener {
 		this.passwordField = new JPasswordField();
 		this.loginButton = new JButton("LOGIN");
 		this.role = null;
+		
 	}
 	
 	 public void createWindow()
@@ -107,9 +110,11 @@ public void actionPerformed(ActionEvent e) {
 				int userId = Integer.parseInt(this.idTextField.getText());
 				char[] password = this.passwordField.getPassword();
 				 authController = new AuthController();
+				 UserController uc = new UserController();
 				 authController.login(userId, String.copyValueOf(password),this.role);
-				 
+				 User loggedInUser = uc.findById(userId);
 				JOptionPane.showMessageDialog(null,"User logged in successfully.");
+				new ParentWindow(role, loggedInUser);
 				this.reset();
 				//this.dispose();
 			} catch (Exception e2) {
