@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -15,9 +16,14 @@ import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 
 import controllers.AuthController;
+import controllers.UserController;
+import models.User;
 import utils.Role;
+import view.MicroStarCableCustomer;
+import view.MicroStarCableRepresentative;
+import view.MicroStarCableTechnician;
 
-public class LoginView extends JInternalFrame implements InternalFrameListener, ActionListener {
+public class LoginView extends JFrame implements ActionListener {
 	
 	/**
 	 * 
@@ -30,16 +36,14 @@ public class LoginView extends JInternalFrame implements InternalFrameListener, 
 	private JPasswordField passwordField;
 	private JButton loginButton;
 	private AuthController authController;
+	private UserController uc;
 	private Role role;
 	
 	
 	
 	
 	public LoginView() {
-		super("Login Form",false, //resizable
-		          true, //closable
-		          false, //maximizable
-		          true);//iconifiable
+		super("Login Form");//iconifiable
 		this.staffIDLabel = new JLabel("STAFF ID");
 		this.custIDLabel = new JLabel("CUSTOMER ID");
 		this.passwordLabel = new JLabel("PASSWORD");
@@ -57,6 +61,7 @@ public class LoginView extends JInternalFrame implements InternalFrameListener, 
 	        this.getContentPane().setLayout(null);
 	        this.setVisible(true);
 	        this.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE); 
+	        
 	    }
 	 public void setLocationAndSize() {
 		 this.staffIDLabel.setBounds(20,20,80,70);
@@ -105,49 +110,8 @@ public class LoginView extends JInternalFrame implements InternalFrameListener, 
 
 	
 
-	@Override
-	public void internalFrameOpened(InternalFrameEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println(e);
-		
-	}
-
-	@Override
-	public void internalFrameClosing(InternalFrameEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println(e);
-	}
-
-	@Override
-	public void internalFrameClosed(InternalFrameEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println(e);
-	}
-
-	@Override
-	public void internalFrameIconified(InternalFrameEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println(e);
-	}
-
-	@Override
-	public void internalFrameDeiconified(InternalFrameEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println(e);
-	}
-
-	@Override
-	public void internalFrameActivated(InternalFrameEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println(e);
-	}
-
-	@Override
-	public void internalFrameDeactivated(InternalFrameEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println(e);
-	}
 	
+
 public void actionPerformed(ActionEvent e) {
 		
 		if(e.getSource() == this.loginButton) {
@@ -156,9 +120,27 @@ public void actionPerformed(ActionEvent e) {
 				char[] password = this.passwordField.getPassword();
 				 authController = new AuthController();
 				 authController.login(userId, String.copyValueOf(password),this.role);
-				
+				 User user = uc.findById(userId);
+				 
 				JOptionPane.showMessageDialog(null,"User logged in successfully.");
 				this.reset();
+
+				if (this.role.equals(Role.CUSTOMER)) {
+					MicroStarCableCustomer microCust = new MicroStarCableCustomer();
+					microCust.setUser(user);
+					microCust.showForm();
+					
+				} else if (this.role.equals(Role.TECHNICIAN)) {
+					MicroStarCableTechnician microTech = new MicroStarCableTechnician();
+					microTech.setUser(user);
+					microTech.showForm();
+					
+				}
+				else if (this.role.equals(Role.REPRESENTATIVE)) {
+					MicroStarCableRepresentative microRep= new MicroStarCableRepresentative();
+					microRep.setUser(user);
+					microRep.showForm();
+				}
 				//this.dispose();
 			} catch (Exception e2) {
 				// TODO: handle exception
@@ -168,4 +150,13 @@ public void actionPerformed(ActionEvent e) {
 		}
 		
 	}
+
+
+
+
+
+
+
+
+
 }

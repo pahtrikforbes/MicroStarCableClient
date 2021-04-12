@@ -3,7 +3,8 @@ package login;
 
 import javax.swing.*;
 
-
+import utils.Role;
+import views.LoginView;
 import views.RegistrationView;
 
 import java.awt.*;
@@ -65,14 +66,14 @@ JFrame f;
 		public void actionPerformed(ActionEvent ae) {
 			dispose();
 			RegistrationView register = new RegistrationView();
-			panel.add(register);
+			register.showForm();
 			
 		}
 	});
 	
 	loginArea.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent ae) {
-			Object[] possibilities = {"Staff", "Customer"};
+			Object[] possibilities = {"Representative", "Customer","Technician"};
 			Component frame = null;
 			setLocation(520,280);
 		//frame;
@@ -87,17 +88,31 @@ JFrame f;
 
 
 			//If a string was returned, say so.
-			if ((choice != null) && (choice.length() > 0)) {
-				if(choice == "Staff") {
+			if ((choice != null) && (choice.length() > 0) ) {
+				if(choice == "Representative") {
 					dispose();
 					f = new JFrame();
-					JOptionPane.showMessageDialog(f,"Your choice was Staff");
+//					JOptionPane.showMessageDialog(f,"Your choice was Representative");
 					//calls the staff login
-				}if(choice.equals("Customer")) {
+					LoginView lv = new LoginView();
+					lv.showForm(Role.REPRESENTATIVE);
+					
+				} else if(choice.equals("Customer")) {
 					dispose();
 					f = new JFrame();
-					JOptionPane.showMessageDialog(f,"Your choice was Customer");
+//					JOptionPane.showMessageDialog(f,"Your choice was Customer");
 					//calls the customer login
+					LoginView lv = new LoginView();
+					lv.showForm(Role.CUSTOMER);
+					
+				} else if(choice.equals("Technician")) {
+					dispose();
+					f = new JFrame();
+//					JOptionPane.showMessageDialog(f,"Your choice was Technician");
+					//calls the customer login
+					LoginView lv = new LoginView();
+					lv.showForm(Role.TECHNICIAN);
+					
 				}
 			    return;
 			}
