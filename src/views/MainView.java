@@ -71,7 +71,7 @@ public class MainView extends JInternalFrame implements ActionListener, ItemList
 		accItem2 = new JMenuItem("Past Payments");
 		accItem3 = new JMenuItem("Update Account");
 		this.availalbility = "Go Online";
-//		togBtn = new JToggleButton(this.availalbility);
+		togBtn = new JToggleButton(this.availalbility);
 		this.setVisible(true);
 		
 		BasicInternalFrameUI basic = ((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI());
@@ -192,7 +192,7 @@ public class MainView extends JInternalFrame implements ActionListener, ItemList
 			 leftPanel.add(servicesLbl);
 			 leftPanel.add(serviceBox);
 			 leftPanel.add(selectServiceBtn);
-//			 menuBar.add(togBtn);
+			 menuBar.add(togBtn);
 			 
 
 			 menuBar.add(togBtn);
