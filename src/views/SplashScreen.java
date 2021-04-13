@@ -9,7 +9,7 @@ import java.awt.*;
 public class SplashScreen {
     JFrame frame;
     JLabel image=new JLabel(new ImageIcon("splashimage.jpeg"));
-    JLabel text=new JLabel("Micro Star Cable Company Ltd");
+    JLabel text=new JLabel("Micro-Star Cable Vision Company Ltd");
     JProgressBar progressBar=new JProgressBar();
     JLabel message=new JLabel();
     
@@ -39,7 +39,7 @@ public class SplashScreen {
     public void addText()
     {
         text.setFont(new Font("arial",Font.BOLD,30));
-        text.setBounds(70,220,600,40);
+        text.setBounds(25,220,600,40);
         text.setForeground(Color.WHITE);
         frame.add(text);
     }
