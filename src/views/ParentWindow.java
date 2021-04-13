@@ -6,7 +6,10 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
+
+import controllers.UserController;
 import models.User;
+import utils.CustomizedException;
 import utils.Role;
 
 public class ParentWindow extends JFrame implements ActionListener {
@@ -24,23 +27,31 @@ public class ParentWindow extends JFrame implements ActionListener {
 	 private void createWindow()
 	    {
 	       //Setting properties of JFrame; i.e this frame
-		    this.setSize(1400,800);
+		 this.setTitle("Micro-Star Main Window");
+		    this.setSize(1200,720);
 	        this.setLayout(null);
 	        this.setLocationRelativeTo(null);
 	        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	        this.setResizable(false);
 	        this.setVisible(true);
+	        
 	    }
 	 
 	 private void setLocationAndSize() {
-		 desktop.setBounds(0,0,1400,800);
-	     desktop.setBackground(Color.white);
+		 desktop.setBounds(0,0,1200,720);
+	     desktop.setBackground(Color.WHITE);
 	     
-	 }
+	 } 
 	 
 	 private void addComponentsToFrame() {
-		 desktop.add(mainView);
+		
 		 this.add(desktop);
+		 if(desktop.isShowing() == true) {
+			 desktop.add(mainView);
+			 desktop.moveToFront(mainView);
+			 mainView.setSize(desktop.getWidth(), desktop.getHeight());
+			 mainView.setLocation(0, 0);
+		 }
 	 }
 	 
 	 private void showForm() {
@@ -55,5 +66,35 @@ public class ParentWindow extends JFrame implements ActionListener {
 		// TODO Auto-generated method stub
 		
 	}
+	
 
+	public static void main(String[] args) {
+		
+		UserController uc = new UserController();
+		User loggedInUser;
+		try {
+			loggedInUser = uc.findById(1741);
+			new ParentWindow(Role.TECHNICIAN, loggedInUser);
+		} catch (CustomizedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

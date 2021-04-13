@@ -44,6 +44,7 @@ public class LoginView extends JFrame implements ActionListener {
 	
 	public LoginView() {
 		super("Login Form");
+		this.setTitle("Micro-Star Cable Vision Login");
 		this.staffIDLabel = new JLabel("STAFF ID");
 		this.custIDLabel = new JLabel("CUSTOMER ID");
 		this.passwordLabel = new JLabel("PASSWORD");
@@ -62,6 +63,7 @@ public class LoginView extends JFrame implements ActionListener {
 	        this.getContentPane().setLayout(null);
 	        this.setVisible(true);
 	        this.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE); 
+	        this.setLocationRelativeTo(null);
 
 	    }
 	 public void setLocationAndSize() {
@@ -126,22 +128,6 @@ public void actionPerformed(ActionEvent e) {
 				new ParentWindow(role, loggedInUser);
 				this.reset();
 
-				if (this.role.equals(Role.CUSTOMER)) {
-					MicroStarCableCustomer microCust = new MicroStarCableCustomer();
-					microCust.setUser(loggedInUser);
-					microCust.showForm();
-					
-				} else if (this.role.equals(Role.TECHNICIAN)) {
-					MicroStarCableTechnician microTech = new MicroStarCableTechnician();
-					microTech.setUser(loggedInUser);
-					microTech.showForm();
-					
-				}
-				else if (this.role.equals(Role.REPRESENTATIVE)) {
-					MicroStarCableRepresentative microRep= new MicroStarCableRepresentative();
-					microRep.setUser(loggedInUser);
-					microRep.showForm();
-				}
 				//this.dispose();
 			} catch (Exception e2) {
 				// TODO: handle exception
