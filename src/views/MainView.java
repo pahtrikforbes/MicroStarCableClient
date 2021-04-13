@@ -19,6 +19,10 @@ import java.io.IOException;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
+import complaintsViews.ComplaintView;
+import complaintsViews.CustomerComplaintView;
+import complaintsViews.RepresentativeComplaintsView;
+import complaintsViews.TechnicianComplaintView;
 import models.User;
 import utils.Role;
 
@@ -40,7 +44,8 @@ public class MainView extends JInternalFrame implements ActionListener, ItemList
 	private JLabel loggedInUser;
 	private Role role;
 	private User user;
-	private JMenuItem usrItem1, usrItem2, compItem1,compItem2,compItem3, accItem1,accItem2,accItem3;
+	private JMenuItem usrItem1, usrItem2, compItem1,compItem2,compItem3,
+						compItem4, accItem1,accItem2,accItem3;
 	JToggleButton togBtn;
 	private String availalbility;
 	
@@ -66,8 +71,9 @@ public class MainView extends JInternalFrame implements ActionListener, ItemList
 		usrItem1 = new JMenuItem("View Users");
 		usrItem2 = new JMenuItem("");
 		compItem1 = new JMenuItem("Add Complaint");
-		compItem2 = new JMenuItem("View Complaints");
-		compItem3 = new JMenuItem("Assign Technician");
+		compItem2 = new JMenuItem("Complaints Action View - Representative");
+		compItem3 = new JMenuItem("Complaints Action View - Customer");
+		compItem4 = new JMenuItem("Complaints Action View - Technician");
 		accItem1 = new JMenuItem("Account Status");
 		accItem2 = new JMenuItem("Past Payments");
 		accItem3 = new JMenuItem("Update Account");
@@ -99,14 +105,6 @@ public class MainView extends JInternalFrame implements ActionListener, ItemList
     }
 	
 	 private void setLocationAndSize() {
-		
-		 userMenu.setPreferredSize(new Dimension(250, userMenu.getPreferredSize().height));
-		 complaintMenu.setPreferredSize(new Dimension(250, userMenu.getPreferredSize().height));
-		 responseMenu.setPreferredSize(new Dimension(250, userMenu.getPreferredSize().height));
-		 accountMenu.setPreferredSize(new Dimension(250, userMenu.getPreferredSize().height));
-		 loggedInUser.setPreferredSize(new Dimension(250, userMenu.getPreferredSize().height));
-		 logoutBtn.setPreferredSize(new Dimension(250, userMenu.getPreferredSize().height));
-		 togBtn.setPreferredSize(new Dimension(250, userMenu.getPreferredSize().height));
 		 
 		 leftPanel.setBackground(Color.BLACK);
 		 leftPanel.setLayout(null);
@@ -160,19 +158,42 @@ public class MainView extends JInternalFrame implements ActionListener, ItemList
 		 this.add(leftPanel,BorderLayout.WEST);
 		
 		 if(this.role.equals(Role.CUSTOMER)) {
+			
+			 
+			 complaintMenu.setPreferredSize(new Dimension(300, userMenu.getPreferredSize().height));
+			 responseMenu.setPreferredSize(new Dimension(300, userMenu.getPreferredSize().height));
+			 accountMenu.setPreferredSize(new Dimension(300, userMenu.getPreferredSize().height));
+			 loggedInUser.setPreferredSize(new Dimension(300, userMenu.getPreferredSize().height));
+			 logoutBtn.setPreferredSize(new Dimension(300, userMenu.getPreferredSize().height));
+
 			 
 			 complaintMenu.add(compItem1);
-			 complaintMenu.add(compItem2);
+			 complaintMenu.add(compItem3);
+			 
 			 accountMenu.add(accItem1);
 			 accountMenu.add(accItem2);
 			 menuBar.add(complaintMenu);
 			 menuBar.add(accountMenu);
 		 }else if(this.role.equals(Role.REPRESENTATIVE)) {
+			 
+			 // Custom set sizes for the menuBar items 
+			 
+			 userMenu.setPreferredSize(new Dimension(250, userMenu.getPreferredSize().height));
+			 complaintMenu.setPreferredSize(new Dimension(250, userMenu.getPreferredSize().height));
+			 responseMenu.setPreferredSize(new Dimension(250, userMenu.getPreferredSize().height));
+			 accountMenu.setPreferredSize(new Dimension(250, userMenu.getPreferredSize().height));
+			 loggedInUser.setPreferredSize(new Dimension(250, userMenu.getPreferredSize().height));
+			 logoutBtn.setPreferredSize(new Dimension(250, userMenu.getPreferredSize().height));
+			 togBtn.setPreferredSize(new Dimension(250, userMenu.getPreferredSize().height));
+
+			 
 			 complaintMenu.add(compItem1);
-			 complaintMenu.add(compItem3);
+			 complaintMenu.add(compItem2);
+			 
 			 accountMenu.add(accItem1);
 			 accountMenu.add(accItem2);
 			 accountMenu.add(accItem3);
+			 
 			 userMenu.add(usrItem1);
 			 
 			 menuBar.add(userMenu);
@@ -184,10 +205,19 @@ public class MainView extends JInternalFrame implements ActionListener, ItemList
 			 
 		 }else if(this.role.equals(Role.TECHNICIAN)) {
 			 
-			 complaintMenu.add(compItem1);
-			 complaintMenu.add(compItem2);
-			 accountMenu.add(accItem1);
-			 accountMenu.add(accItem2);
+			 userMenu.setPreferredSize(new Dimension(300, userMenu.getPreferredSize().height));
+			 complaintMenu.setPreferredSize(new Dimension(300, userMenu.getPreferredSize().height));
+			 responseMenu.setPreferredSize(new Dimension(300, userMenu.getPreferredSize().height));
+			 loggedInUser.setPreferredSize(new Dimension(300, userMenu.getPreferredSize().height));
+			 logoutBtn.setPreferredSize(new Dimension(300, userMenu.getPreferredSize().height));
+			 togBtn.setPreferredSize(new Dimension(300, userMenu.getPreferredSize().height));
+
+
+			 complaintMenu.add(compItem4);
+			 
+//			 accountMenu.add(accItem1);
+//			 accountMenu.add(accItem2);
+			 
 			 menuBar.add(complaintMenu);
 			 menuBar.add(accountMenu);
 
@@ -225,6 +255,7 @@ public class MainView extends JInternalFrame implements ActionListener, ItemList
 		 this.compItem1.addActionListener(this);
 		 this.compItem2.addActionListener(this);
 		 this.compItem3.addActionListener(this);
+		 this.compItem4.addActionListener(this);
 		 this.accItem1.addActionListener(this);
 		 this.accItem2.addActionListener(this);
 		 this.accItem3.addActionListener(this);
@@ -245,31 +276,85 @@ public class MainView extends JInternalFrame implements ActionListener, ItemList
 			
 			rightPanel.removeAll();
 			rightPanel.add(new SelectedServiceView(service));
+			
 		}else if(e.getSource() == compItem1) {
 			rightPanel.removeAll();
-			rightPanel.add(new SelectedMenuOptionView(compItem1.getText()));	
+			
+			if (user.getRole().equals(Role.REPRESENTATIVE)) {
+				ComplaintView cv = new ComplaintView();
+				rightPanel.add(cv).setVisible(true);
+				cv.setSize(rightPanel.getWidth(), rightPanel.getHeight());
+				cv.setLocation(0,0);
+				int custId = 0;
+				int choice = 1;			
+				cv.userMap(choice, custId);
+				
+			} else if (user.getRole().equals(Role.CUSTOMER)) {
+				ComplaintView cv = new ComplaintView();
+				rightPanel.add(cv).setVisible(true);
+				cv.setSize(rightPanel.getWidth(), rightPanel.getHeight());
+				cv.setLocation(0,0);
+				int custId = user.getUserId();
+				int choice = 2;			
+				cv.userMap(choice, custId);
+				
+			}
+			
+
+			/*
+			
+			 */
+			 
+			
 		}else if(e.getSource() == compItem2) {
 			rightPanel.removeAll();
-			rightPanel.add(new SelectedMenuOptionView(compItem2.getText()));
+			RepresentativeComplaintsView rcv = new RepresentativeComplaintsView();
+			rightPanel.add(rcv).setVisible(true);
+			rcv.setSize(rightPanel.getWidth(), rightPanel.getHeight());
+			rcv.setLocation(0,0);
+
+			
 		}else if(e.getSource() == compItem3) {
 			rightPanel.removeAll();
 			rightPanel.add(new SelectedMenuOptionView(compItem3.getText()));
-		}else if(e.getSource() == accItem1) {
+			CustomerComplaintView ccv = new CustomerComplaintView();
+			rightPanel.add(ccv).setVisible(true);
+			ccv.setSize(rightPanel.getWidth(), rightPanel.getHeight());
+			ccv.setLocation(0,0);
+			
+		}
+		
+		else if(e.getSource() == compItem4) {
+			rightPanel.removeAll();
+			rightPanel.add(new SelectedMenuOptionView(compItem3.getText()));
+			TechnicianComplaintView tcv = new TechnicianComplaintView();		
+			rightPanel.add(tcv).setVisible(true);
+			tcv.setSize(rightPanel.getWidth(), rightPanel.getHeight());
+			tcv.setLocation(0,0);
+			
+		}
+		
+		else if(e.getSource() == accItem1) {
 			rightPanel.removeAll();
 			rightPanel.repaint();
 			rightPanel.add(new SelectedMenuOptionView(accItem1.getText()));	
+			
 		}else if(e.getSource() == accItem2) {
 			rightPanel.removeAll();
 			rightPanel.add(new SelectedMenuOptionView(accItem2.getText()));
+			
 		}else if(e.getSource() == accItem3) {
 			rightPanel.removeAll();
 			rightPanel.add(new SelectedMenuOptionView(accItem3.getText()));
+			
 		}else if(e.getSource() == usrItem1) {
 			rightPanel.removeAll();
 			rightPanel.add(new SelectedMenuOptionView(usrItem1.getText()));
+			
 		}else if(e.getSource() == usrItem2) {
 			rightPanel.removeAll();
 			rightPanel.add(new SelectedMenuOptionView(usrItem2.getText()));
+			
 		}
 		
 	}

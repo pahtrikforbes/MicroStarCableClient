@@ -162,11 +162,25 @@ public class ComplaintView extends JInternalFrame implements ActionListener{
 	
 //	Shows the JFrame 
     public void showForm() {
-    	 this.createWindow(); 
-    	 this.setLocationAndSize(); 
-    	 this.addComponentsToFrame();
+    	 this.createWindow(); 	 
     }
     
+    
+    public int userMap (int i, int id) {
+    	if (i == 1) {
+    	 this.setLocationAndSize(); 
+       	 this.addComponentsToFrame();
+       	 
+    	} else if (i == 2) {
+    		String userId = String.valueOf(id);
+    		this.custIdTextField.setEditable(false);
+    		this.custIdTextField.setText(userId);
+    		this.setLocationAndSize(); 
+          	this.addComponentsToFrame();
+    	}
+    	
+    	return i;
+    }
     
 
 	@Override
