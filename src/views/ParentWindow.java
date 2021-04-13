@@ -67,7 +67,7 @@ public class ParentWindow extends JFrame implements ActionListener {
 		
 	}
 	
-	/*
+	
 	public static void main(String[] args) {
 		
 		UserController uc = new UserController();
@@ -80,7 +80,7 @@ public class ParentWindow extends JFrame implements ActionListener {
 			e.printStackTrace();
 		}
 	}
-	*/
+	
 	
 }
 

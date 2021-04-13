@@ -59,6 +59,7 @@ public class MainView extends JInternalFrame implements ActionListener, ItemList
 		serviceBox = new JComboBox<>(services);
 		selectServiceBtn = new JButton("Select");
 		loggedInUser = new JLabel("HI "+user.getFirstName().toUpperCase());
+		loggedInUser.setHorizontalAlignment(SwingConstants.CENTER);
 		logoutBtn = new JButton("LOGOUT");
 		this.role = role;
 		this.user = user;
@@ -99,12 +100,13 @@ public class MainView extends JInternalFrame implements ActionListener, ItemList
 	
 	 private void setLocationAndSize() {
 		
-		 userMenu.setPreferredSize(new Dimension(200, userMenu.getPreferredSize().height));
-		 complaintMenu.setPreferredSize(new Dimension(200, userMenu.getPreferredSize().height));
-		 responseMenu.setPreferredSize(new Dimension(200, userMenu.getPreferredSize().height));
-		 accountMenu.setPreferredSize(new Dimension(200, userMenu.getPreferredSize().height));
-		 loggedInUser.setPreferredSize(new Dimension(200, userMenu.getPreferredSize().height));
-		 logoutBtn.setPreferredSize(new Dimension(200, userMenu.getPreferredSize().height));
+		 userMenu.setPreferredSize(new Dimension(250, userMenu.getPreferredSize().height));
+		 complaintMenu.setPreferredSize(new Dimension(250, userMenu.getPreferredSize().height));
+		 responseMenu.setPreferredSize(new Dimension(250, userMenu.getPreferredSize().height));
+		 accountMenu.setPreferredSize(new Dimension(250, userMenu.getPreferredSize().height));
+		 loggedInUser.setPreferredSize(new Dimension(250, userMenu.getPreferredSize().height));
+		 logoutBtn.setPreferredSize(new Dimension(250, userMenu.getPreferredSize().height));
+		 togBtn.setPreferredSize(new Dimension(250, userMenu.getPreferredSize().height));
 		 
 		 leftPanel.setBackground(Color.BLACK);
 		 leftPanel.setLayout(null);
