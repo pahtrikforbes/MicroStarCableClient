@@ -119,10 +119,11 @@ public class NewJFrame extends javax.swing.JFrame {
 			if(newStatus.equals(r1)) {
 				System.out.println("Updating complaint status to RESOLVED");
 				oldComplaint.setComplaintStatus(ComplaintStatus.RESOLVED);
+				System.out.println(oldComplaint);
 				System.out.println("Status set completed\n");
 				
-				cc.updateComplaint(oldComplaint);
-//				System.out.println("Updated Complaint details: \n"+newComplaint);
+				Complaint newComplaint = cc.updateComplaint(oldComplaint);
+				System.out.println("Updated Complaint details: \n"+newComplaint);
 				JOptionPane.showMessageDialog(NewJFrame.this,
 	     			  	"Update successful!",
 	     			    "Complaint View Tip",

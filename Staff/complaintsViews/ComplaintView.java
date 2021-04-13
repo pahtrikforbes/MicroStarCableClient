@@ -205,7 +205,7 @@ public class ComplaintView extends JInternalFrame implements ActionListener{
 				} catch (CustomizedException e2) {
 					// TODO Auto-generated catch block
 					e2.printStackTrace();
-				}
+				} 
 				
 				complaint.setCustID(userId);
 				complaint.setComplaint(this.complaintTextArea.getText());
@@ -274,8 +274,17 @@ public class ComplaintView extends JInternalFrame implements ActionListener{
 			          			    );				
 				} 
 				
-			} else {
-				 JOptionPane.showMessageDialog(ComplaintView.this,
+			}else if (!custIdText.equals("")) {
+				try {
+					int i = Integer.parseInt(custIdText);
+				}catch (NumberFormatException e3) {
+					JOptionPane.showMessageDialog(ComplaintView.this,
+							"Letters are not allowed!\nPlease try again.",
+			          			    "Invalid Submission",
+			          			    JOptionPane.ERROR_MESSAGE);
+				}
+			}
+			else { JOptionPane.showMessageDialog(ComplaintView.this,
 				"Empty inputs are not allowed. Please try again!",
           			    "Invalid Submission",
           			    JOptionPane.ERROR_MESSAGE);
