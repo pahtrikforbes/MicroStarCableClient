@@ -301,10 +301,6 @@ public class MainView extends JInternalFrame implements ActionListener, ItemList
 			}
 			
 
-			/*
-			
-			 */
-			 
 			
 		}else if(e.getSource() == compItem2) {
 			rightPanel.removeAll();
@@ -321,6 +317,8 @@ public class MainView extends JInternalFrame implements ActionListener, ItemList
 			rightPanel.add(ccv).setVisible(true);
 			ccv.setSize(rightPanel.getWidth(), rightPanel.getHeight());
 			ccv.setLocation(0,0);
+			int custId = user.getUserId();
+			ccv.setCustomerId(custId);
 			
 		}
 		

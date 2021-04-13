@@ -349,13 +349,24 @@ public class CustomerComplaintView extends javax.swing.JInternalFrame {
     }                              
 //    
 
-    public void addRowsToJTableCust() {
+    
+    public int customerId; 
+    
+    public int getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
+	}
+
+	public void addRowsToJTableCust() {
     	DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
 //        Grab the returned array list and put it into a variable of type Arraylist
     	  ComplaintController cc = new ComplaintController();
     	  
     		  try {
-    			  int user = 1736;
+    			  int user = customerId;
   				ArrayList <Complaint> displayList = cc.getComplaintsPerUser(user);
   				System.out.println("List successfully retrieved!");
   				 Object rowData[] = new Object[8];
@@ -380,6 +391,7 @@ public class CustomerComplaintView extends javax.swing.JInternalFrame {
   			
     	 
     }
+
    
     /**
      * @param args the command line arguments
