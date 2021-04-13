@@ -6,6 +6,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.IOException;
 
 import javax.swing.*;
@@ -13,7 +15,7 @@ import javax.swing.*;
 import models.User;
 import utils.Role;
 
-public class MainView extends JInternalFrame implements ActionListener {
+public class MainView extends JInternalFrame implements ActionListener, ItemListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel rightPanel;
@@ -29,10 +31,10 @@ public class MainView extends JInternalFrame implements ActionListener {
 	private JLabel loggedInUser;
 	private Role role;
 	private User user;
-	private JMenuItem usrItem1, usrItem3, usrItem2,
-	                  usrItem4, usrItem5, compItem1,compItem2,compItem3, accItem1,accItem2;
+	private JMenuItem usrItem1, usrItem2, compItem1,compItem2,compItem3, accItem1,accItem2,accItem3;
 	JToggleButton togBtn;
 	private String availalbility;
+	
     public MainView(Role role,User user) {
     	super("Micro Star");
     	rightPanel = new JPanel();
@@ -51,13 +53,14 @@ public class MainView extends JInternalFrame implements ActionListener {
 		logoutBtn = new JButton("LOGOUT");
 		this.role = role;
 		this.user = user;
-		usrItem1 = new JMenuItem("");
+		usrItem1 = new JMenuItem("View Users");
 		usrItem2 = new JMenuItem("");
-		compItem1 = new JMenuItem("");
-		compItem2 = new JMenuItem("");
-		compItem3 = new JMenuItem();
-		accItem1 = new JMenuItem("");
-		accItem2 = new JMenuItem("");
+		compItem1 = new JMenuItem("Add Complaint");
+		compItem2 = new JMenuItem("View Complaints");
+		compItem3 = new JMenuItem("Assign Technician");
+		accItem1 = new JMenuItem("Account Status");
+		accItem2 = new JMenuItem("Past Payments");
+		accItem3 = new JMenuItem("Update Account");
 		this.availalbility = "Go Online";
 		togBtn = new JToggleButton(this.availalbility);
 		showForm();
@@ -95,12 +98,7 @@ public class MainView extends JInternalFrame implements ActionListener {
 		 
 		 this.add(rightPanel,BorderLayout.CENTER);
 		 this.add(leftPanel,BorderLayout.WEST);
-		 
-		 compItem1.setText("Submit a Complaint");
-		// compItem2.setText("View All Complaints");
-		 compItem3.setText("Assign Technician");
-		 accItem1.setText("Account Status");
-		 accItem2.setText("Past Payments");
+		
 		 if(this.role.equals(Role.CUSTOMER)) {
 			 
 			 complaintMenu.add(compItem1);
@@ -110,13 +108,14 @@ public class MainView extends JInternalFrame implements ActionListener {
 			 menuBar.add(complaintMenu);
 			 menuBar.add(accountMenu);
 		 }else if(this.role.equals(Role.REPRESENTATIVE)) {
-	
 			 complaintMenu.add(compItem1);
 			 complaintMenu.add(compItem3);
 			 accountMenu.add(accItem1);
 			 accountMenu.add(accItem2);
+			 accountMenu.add(accItem3);
+			 userMenu.add(usrItem1);
+			 
 			 menuBar.add(userMenu);
-			 menuBar.add(responseMenu);
 			 menuBar.add(complaintMenu);
 			 menuBar.add(accountMenu);
 			 leftPanel.add(servicesLbl);
@@ -126,18 +125,12 @@ public class MainView extends JInternalFrame implements ActionListener {
 		 }else if(this.role.equals(Role.TECHNICIAN)) {
 			 
 			 complaintMenu.add(compItem1);
-			// complaintMenu.add(compItem3);
+			 complaintMenu.add(compItem2);
 			 accountMenu.add(accItem1);
 			 accountMenu.add(accItem2);
-			 menuBar.add(userMenu);
-			 menuBar.add(responseMenu);
 			 menuBar.add(complaintMenu);
 			 menuBar.add(accountMenu);
-			 leftPanel.add(servicesLbl);
-			 leftPanel.add(serviceBox);
-			 leftPanel.add(selectServiceBtn);
 			 menuBar.add(togBtn);
-			 
 		 }
 		 menuBar.add(loggedInUser);
 		 menuBar.add(logoutBtn);
@@ -145,8 +138,23 @@ public class MainView extends JInternalFrame implements ActionListener {
 		 
 		 this.setJMenuBar(menuBar);
 		 
-		
-		 selectServiceBtn.addActionListener(this);
+		 this.registerListeners();
+		 
+	 }
+	 
+	 private void registerListeners() {
+		 
+		 this.usrItem1.addActionListener(this);
+		 this.usrItem2.addActionListener(this);
+		 this.compItem1.addActionListener(this);
+		 this.compItem2.addActionListener(this);
+		 this.compItem3.addActionListener(this);
+		 this.accItem1.addActionListener(this);
+		 this.accItem2.addActionListener(this);
+		 this.accItem3.addActionListener(this);
+		 this.logoutBtn.addActionListener(this);
+		 this.togBtn.addItemListener(this);
+		 this.selectServiceBtn.addActionListener(this);
 	 }
 	 
 			
@@ -159,11 +167,46 @@ public class MainView extends JInternalFrame implements ActionListener {
 			String service = serviceBox.getSelectedItem().toString();
 			
 			rightPanel.removeAll();
-			rightPanel.add(new SelectedServiceView(service)) ;
+			rightPanel.add(new SelectedServiceView(service));
+		}else if(e.getSource() == compItem1) {
+			rightPanel.removeAll();
+			rightPanel.add(new SelectedMenuOptionView(compItem1.getText()));	
+		}else if(e.getSource() == compItem2) {
+			rightPanel.removeAll();
+			rightPanel.add(new SelectedMenuOptionView(compItem2.getText()));
+		}else if(e.getSource() == compItem3) {
+			rightPanel.removeAll();
+			rightPanel.add(new SelectedMenuOptionView(compItem3.getText()));
+		}else if(e.getSource() == accItem1) {
+			rightPanel.removeAll();
+			rightPanel.repaint();
+			rightPanel.add(new SelectedMenuOptionView(accItem1.getText()));	
+		}else if(e.getSource() == accItem2) {
+			rightPanel.removeAll();
+			rightPanel.add(new SelectedMenuOptionView(accItem2.getText()));
+		}else if(e.getSource() == accItem3) {
+			rightPanel.removeAll();
+			rightPanel.add(new SelectedMenuOptionView(accItem3.getText()));
+		}else if(e.getSource() == usrItem1) {
+			rightPanel.removeAll();
+			rightPanel.add(new SelectedMenuOptionView(usrItem1.getText()));
+		}else if(e.getSource() == usrItem2) {
+			rightPanel.removeAll();
+			rightPanel.add(new SelectedMenuOptionView(usrItem2.getText()));
 		}
 		
 	}
-	
-	
-	
+
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+		
+		if(togBtn.isSelected()){
+			togBtn.setText("GO OFFLINE"); 
+		}else {
+			togBtn.setText("GO ONLINE");
+		} 
+	        	  
+	 }  
+		
 }
+		
