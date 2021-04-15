@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
 import controllers.ResponseController;
-
 import models.Response;
 import utils.CustomizedException;
+
 
 /**
  *
