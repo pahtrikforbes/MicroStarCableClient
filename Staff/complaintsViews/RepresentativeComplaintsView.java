@@ -3,11 +3,13 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
 import controllers.ComplaintController;
@@ -161,6 +163,11 @@ public class RepresentativeComplaintsView extends javax.swing.JInternalFrame imp
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
 
+        BasicInternalFrameUI basic = ((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI());
+		for (MouseListener li : basic.getNorthPane().getMouseListeners()) {
+			basic.getNorthPane().removeMouseListener(li);
+		}
+        
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N

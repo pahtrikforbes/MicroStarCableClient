@@ -8,6 +8,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
@@ -17,6 +18,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
+
 import client.Client;
 import models.User;
 import utils.CustomizedException;
@@ -54,7 +57,9 @@ public class ChatView extends JInternalFrame implements InternalFrameListener, A
         this.getContentPane().setBackground(Color.white);
         this.getContentPane().setLayout(null);
         this.setVisible(true);
-        //this.setDefaultCloseOperation(JInternalFrame.EXIT_ON_CLOSE);    
+        //this.setDefaultCloseOperation(JInternalFrame.EXIT_ON_CLOSE); 
+        
+		
     }
     
     public void setLocationAndSize() {

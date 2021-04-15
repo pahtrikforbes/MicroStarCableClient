@@ -395,16 +395,22 @@ public class ComplaintController {
 	
 	/*Method to UPDATE a complaint*/
 	public Complaint updateComplaint(Complaint updatedComplaint) throws CustomizedException {
+		System.out.println("Entering client side update");
+		System.out.println("updatedComplaint:\n"+updatedComplaint);
 		
 		Complaint complaint = null;
 		client.setOperation("updateComplaint");
 		try {
+			
 			client.initDataStreams();
+			System.out.println("\nEntering try block");
 			client.getObjectOutStream().writeObject(client.getOperation());
 			client.getObjectOutStream().writeObject(client.getEndPoint());
 			client.getObjectOutStream().writeObject(updatedComplaint);
+			System.out.println("Writing complaint to server");
 			
 			String success = (String)client.getObjectInStream().readObject();
+			System.out.println(success);
 			
 			if(success.equalsIgnoreCase("success")) {
 				complaint = (Complaint)client.getObjectInStream().readObject();
