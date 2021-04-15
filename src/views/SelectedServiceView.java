@@ -149,7 +149,7 @@ public class SelectedServiceView extends JInternalFrame implements ActionListene
 					
 					if (numRecords == 0) {
 						JOptionPane.showMessageDialog(SelectedServiceView.this,
-								"Zero records of type: Cable Oustanding!\n"
+								"Zero records of type: Cable Resolved!\n"
 				          			    );	
 						String numRecordsStr = String.valueOf(numRecords);				
 						resolvedCountLbl.setText(numRecordsStr);
@@ -205,7 +205,7 @@ public class SelectedServiceView extends JInternalFrame implements ActionListene
 					
 					if (numRecords == 0) {
 						JOptionPane.showMessageDialog(SelectedServiceView.this,
-								"Zero records of type: Cable Oustanding!\n"
+								"Zero records of type: Broadband Resolved!\n"
 				          			    );	
 						String numRecordsStr = String.valueOf(numRecords);				
 						resolvedCountLbl.setText(numRecordsStr);
@@ -232,7 +232,7 @@ public class SelectedServiceView extends JInternalFrame implements ActionListene
 					
 					if (numRecords == 0) {
 						JOptionPane.showMessageDialog(SelectedServiceView.this,
-								"Zero records of type: Cable Oustanding!\n"
+								"Zero records of type: Broadband Outstanding!\n"
 				          			    );	
 						String numRecordsStr = String.valueOf(numRecords);				
 						outstandingCountLbl.setText(numRecordsStr);
