@@ -70,18 +70,12 @@ public class ParentWindow extends JFrame implements ActionListener {
 	
 	public static void main(String[] args) {
 		
-		UserController uc = new UserController();
-		User loggedInUser;
-		try {
-			loggedInUser = uc.findById(1744);
-			new ParentWindow(Role.REPRESENTATIVE, loggedInUser);
-		} catch (CustomizedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		User user = new User("Jill", "Jack", "", "", Role.TECHNICIAN, "");
+		new ParentWindow(user.getRole(), user);
+		
+		
 	}
-
-	
+		
 }
 
 

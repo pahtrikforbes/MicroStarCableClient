@@ -4,11 +4,13 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
 import controllers.ComplaintController;
@@ -162,6 +164,11 @@ public class TechnicianComplaintView extends javax.swing.JInternalFrame implemen
         jTable1.setEnabled(true);
         jTable1.getTableHeader().setReorderingAllowed(false);
         jTable1.getTableHeader().setResizingAllowed(false);
+        
+        BasicInternalFrameUI basic = ((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI());
+		for (MouseListener li : basic.getNorthPane().getMouseListeners()) {
+			basic.getNorthPane().removeMouseListener(li);
+		}
         
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

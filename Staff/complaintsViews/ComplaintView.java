@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -15,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 import controllers.ComplaintController;
 import controllers.UserController;
@@ -76,7 +78,11 @@ public class ComplaintView extends JInternalFrame implements ActionListener{
 	    this.custIdEmptyLabel = new JLabel("Error message");
 		this.complaintEmptyLabel = new JLabel("Error message");
 		
-	    
+		BasicInternalFrameUI basic = ((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI());
+		for (MouseListener li : basic.getNorthPane().getMouseListeners()) {
+			basic.getNorthPane().removeMouseListener(li);
+		}
+		
 	    showForm();
 	}
 

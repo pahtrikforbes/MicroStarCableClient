@@ -41,6 +41,7 @@ public class MainView extends JInternalFrame implements ActionListener, ItemList
 	private String[] services;
 	private JButton selectServiceBtn;
 	private JButton logoutBtn;
+	private JButton liveChatBtn;
 	private JLabel loggedInUser;
 	private Role role;
 	private User user;
@@ -50,7 +51,7 @@ public class MainView extends JInternalFrame implements ActionListener, ItemList
 	private String availalbility;
 	
     public MainView(Role role,User user) {
-    	super("Micro Star");
+    	super();
     	rightPanel = new JPanel();
 		leftPanel = new JPanel();
 		userMenu  = new JMenu("Users");
@@ -66,20 +67,24 @@ public class MainView extends JInternalFrame implements ActionListener, ItemList
 		loggedInUser = new JLabel("HI "+user.getFirstName().toUpperCase());
 		loggedInUser.setHorizontalAlignment(SwingConstants.CENTER);
 		logoutBtn = new JButton("LOGOUT");
+		liveChatBtn = new JButton("Live Chat");
 		this.role = role;
 		this.user = user;
 		usrItem1 = new JMenuItem("View Users");
 		usrItem2 = new JMenuItem("");
 		compItem1 = new JMenuItem("Add Complaint");
-		compItem2 = new JMenuItem("Complaints Action View - Representative");
-		compItem3 = new JMenuItem("Complaints Action View - Customer");
-		compItem4 = new JMenuItem("Complaints Action View - Technician");
+		compItem2 = new JMenuItem("Complaints Action View");
+		compItem3 = new JMenuItem("Complaints Action View");
+		compItem4 = new JMenuItem("Complaints Action View");
 		accItem1 = new JMenuItem("Account Status");
 		accItem2 = new JMenuItem("Past Payments");
 		accItem3 = new JMenuItem("Update Account");
 		this.availalbility = "Go Online";
 		togBtn = new JToggleButton(this.availalbility);
 		this.setVisible(true);
+		
+		Color c1 = new Color(51,255,0);
+		togBtn.setBackground(c1);
 		
 		BasicInternalFrameUI basic = ((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI());
 		for (MouseListener li : basic.getNorthPane().getMouseListeners()) {
@@ -105,14 +110,16 @@ public class MainView extends JInternalFrame implements ActionListener, ItemList
     }
 	
 	 private void setLocationAndSize() {
+		 Color c1 = new Color(0,115,153);
+		 Color c2 = new Color(0,179,179);
 		 
-		 leftPanel.setBackground(Color.BLACK);
+		 leftPanel.setBackground(c1);
 		 leftPanel.setLayout(null);
 		 leftPanel.setPreferredSize(new Dimension(300,100));
 		 
 		 rightPanel.setLayout(new BorderLayout());
-		 logoLbl.setBounds(29, 17,300, 40);
-		 logoLbl.setFont(new Font("Times New Roman", Font.BOLD, 24));
+		 logoLbl.setBounds(16, 17,300, 40);
+		 logoLbl.setFont(new Font("Times New Roman", Font.BOLD, 26));
 		 logoLbl.setForeground(Color.white);
 		 
 		 servicesLbl.setBounds(108,240,150, 30);
@@ -148,7 +155,10 @@ public class MainView extends JInternalFrame implements ActionListener, ItemList
 
 		 serviceBox.setBounds(50,280,200,30);
 		 selectServiceBtn.setBounds(100,320,100,30);
+		 liveChatBtn.setBounds(97,250,100,30);
+		 
 		 rightPanel.setBackground(Color.LIGHT_GRAY);
+		 
 		 
 	 }
 
@@ -158,7 +168,7 @@ public class MainView extends JInternalFrame implements ActionListener, ItemList
 		 this.add(leftPanel,BorderLayout.WEST);
 		
 		 if(this.role.equals(Role.CUSTOMER)) {
-			
+			 this.setTitle("Micro-Star Customer");
 			 
 			 complaintMenu.setPreferredSize(new Dimension(300, userMenu.getPreferredSize().height));
 			 responseMenu.setPreferredSize(new Dimension(300, userMenu.getPreferredSize().height));
@@ -174,9 +184,16 @@ public class MainView extends JInternalFrame implements ActionListener, ItemList
 			 accountMenu.add(accItem2);
 			 menuBar.add(complaintMenu);
 			 menuBar.add(accountMenu);
+			 
+			 leftPanel.add(liveChatBtn);
+			 liveChatBtn.addActionListener(this);
+			 
+			 
+			 
 		 }else if(this.role.equals(Role.REPRESENTATIVE)) {
 			 
 			 // Custom set sizes for the menuBar items 
+			 this.setTitle("Micro-Star Representaive");
 			 
 			 userMenu.setPreferredSize(new Dimension(250, userMenu.getPreferredSize().height));
 			 complaintMenu.setPreferredSize(new Dimension(250, userMenu.getPreferredSize().height));
@@ -204,19 +221,22 @@ public class MainView extends JInternalFrame implements ActionListener, ItemList
 			 leftPanel.add(selectServiceBtn);
 			 
 		 }else if(this.role.equals(Role.TECHNICIAN)) {
+			 this.setTitle("Micro-Star Technician");
 			 
-			 userMenu.setPreferredSize(new Dimension(300, userMenu.getPreferredSize().height));
-			 complaintMenu.setPreferredSize(new Dimension(300, userMenu.getPreferredSize().height));
-			 responseMenu.setPreferredSize(new Dimension(300, userMenu.getPreferredSize().height));
-			 loggedInUser.setPreferredSize(new Dimension(300, userMenu.getPreferredSize().height));
-			 logoutBtn.setPreferredSize(new Dimension(300, userMenu.getPreferredSize().height));
-			 togBtn.setPreferredSize(new Dimension(300, userMenu.getPreferredSize().height));
+			 userMenu.setPreferredSize(new Dimension(250, userMenu.getPreferredSize().height));
+			 complaintMenu.setPreferredSize(new Dimension(250, userMenu.getPreferredSize().height));
+			 responseMenu.setPreferredSize(new Dimension(250, userMenu.getPreferredSize().height));
+			 accountMenu.setPreferredSize(new Dimension(250, userMenu.getPreferredSize().height));
+			 loggedInUser.setPreferredSize(new Dimension(250, userMenu.getPreferredSize().height));
+			 logoutBtn.setPreferredSize(new Dimension(250, userMenu.getPreferredSize().height));
+			 togBtn.setPreferredSize(new Dimension(250, userMenu.getPreferredSize().height));
+
 
 
 			 complaintMenu.add(compItem4);
 			 
-//			 accountMenu.add(accItem1);
-//			 accountMenu.add(accItem2);
+			 accountMenu.add(accItem1);
+			 accountMenu.add(accItem2);
 			 
 			 menuBar.add(complaintMenu);
 			 menuBar.add(accountMenu);
@@ -276,6 +296,20 @@ public class MainView extends JInternalFrame implements ActionListener, ItemList
 			
 			rightPanel.removeAll();
 			rightPanel.add(new SelectedServiceView(service));
+			
+		} else if (e.getSource() == liveChatBtn) {
+			System.out.println("Live Chat Button clicked!");
+			try {
+				ChatView cv = new ChatView();
+				rightPanel.removeAll();
+				rightPanel.add(cv);
+				cv.setVisible(true);
+				
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
 			
 		}else if(e.getSource() == compItem1) {
 			rightPanel.removeAll();
@@ -361,9 +395,16 @@ public class MainView extends JInternalFrame implements ActionListener, ItemList
 	public void itemStateChanged(ItemEvent e) {
 		
 		if(togBtn.isSelected()){
+			togBtn.repaint();
+			Color c2 = new Color(255,51,0);
 			togBtn.setText("GO OFFLINE"); 
+			togBtn.setBackground(c2);	
+			
 		}else {
+			Color c1 = new Color(51,255,0);
 			togBtn.setText("GO ONLINE");
+			togBtn.setBackground(c1);
+			
 		} 
 	        	  
 	 }  

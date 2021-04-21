@@ -33,6 +33,7 @@ public class User implements Serializable {
 	//constructors
 	
 	public User() {
+
 		this("","","","",null,""); // initialize variables using primary constructor to promote code reuse 
 	}
 
