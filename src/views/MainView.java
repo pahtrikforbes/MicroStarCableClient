@@ -19,10 +19,12 @@ import java.io.IOException;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
+import UserView.viewAllUsers;
 import complaintsViews.ComplaintView;
 import complaintsViews.CustomerComplaintView;
 import complaintsViews.RepresentativeComplaintsView;
 import complaintsViews.TechnicianComplaintView;
+import loginregisterprompt.LoginRegisterPrompt;
 import models.User;
 import utils.Role;
 
@@ -48,11 +50,13 @@ public class MainView extends JInternalFrame implements ActionListener, ItemList
 	private JMenuItem usrItem1, usrItem2, compItem1,compItem2,compItem3,
 						compItem4, accItem1,accItem2,accItem3;
 	JToggleButton togBtn;
+	private JFrame logFrame;
 	private String availalbility;
 	
-    public MainView(Role role,User user) {
+    public MainView(Role role,User user, JFrame frame) {
     	super();
     	rightPanel = new JPanel();
+    	logFrame = frame;
 		leftPanel = new JPanel();
 		userMenu  = new JMenu("Users");
 		complaintMenu = new JMenu("Complaints");
@@ -71,7 +75,6 @@ public class MainView extends JInternalFrame implements ActionListener, ItemList
 		this.role = role;
 		this.user = user;
 		usrItem1 = new JMenuItem("View Users");
-		usrItem2 = new JMenuItem("");
 		compItem1 = new JMenuItem("Add Complaint");
 		compItem2 = new JMenuItem("Complaints Action View");
 		compItem3 = new JMenuItem("Complaints Action View");
@@ -92,6 +95,8 @@ public class MainView extends JInternalFrame implements ActionListener, ItemList
 		}
 		
 		showForm();
+		
+		
 	}
     
     private void showForm() {
@@ -195,13 +200,13 @@ public class MainView extends JInternalFrame implements ActionListener, ItemList
 			 // Custom set sizes for the menuBar items 
 			 this.setTitle("Micro-Star Representaive");
 			 
-			 userMenu.setPreferredSize(new Dimension(250, userMenu.getPreferredSize().height));
-			 complaintMenu.setPreferredSize(new Dimension(250, userMenu.getPreferredSize().height));
-			 responseMenu.setPreferredSize(new Dimension(250, userMenu.getPreferredSize().height));
+			 userMenu.setPreferredSize(new Dimension(220, userMenu.getPreferredSize().height));
+			 complaintMenu.setPreferredSize(new Dimension(220, userMenu.getPreferredSize().height));
+			 responseMenu.setPreferredSize(new Dimension(220, userMenu.getPreferredSize().height));
 			 accountMenu.setPreferredSize(new Dimension(250, userMenu.getPreferredSize().height));
-			 loggedInUser.setPreferredSize(new Dimension(250, userMenu.getPreferredSize().height));
-			 logoutBtn.setPreferredSize(new Dimension(250, userMenu.getPreferredSize().height));
-			 togBtn.setPreferredSize(new Dimension(250, userMenu.getPreferredSize().height));
+			 loggedInUser.setPreferredSize(new Dimension(220, userMenu.getPreferredSize().height));
+			 logoutBtn.setPreferredSize(new Dimension(220, userMenu.getPreferredSize().height));
+			 togBtn.setPreferredSize(new Dimension(220, userMenu.getPreferredSize().height));
 
 			 
 			 complaintMenu.add(compItem1);
@@ -241,12 +246,14 @@ public class MainView extends JInternalFrame implements ActionListener, ItemList
 			 menuBar.add(complaintMenu);
 			 menuBar.add(accountMenu);
 
+			 userMenu.add(usrItem1);
+			 
 			 leftPanel.add(servicesLbl);
 			 leftPanel.add(serviceBox);
 			 leftPanel.add(selectServiceBtn);
 			 menuBar.add(togBtn);
 			 
-
+			 menuBar.add(userMenu);
 			 menuBar.add(togBtn);
 
 		 }
@@ -271,7 +278,6 @@ public class MainView extends JInternalFrame implements ActionListener, ItemList
 	 private void registerListeners() {
 		 
 		 this.usrItem1.addActionListener(this);
-		 this.usrItem2.addActionListener(this);
 		 this.compItem1.addActionListener(this);
 		 this.compItem2.addActionListener(this);
 		 this.compItem3.addActionListener(this);
@@ -381,12 +387,15 @@ public class MainView extends JInternalFrame implements ActionListener, ItemList
 			
 		}else if(e.getSource() == usrItem1) {
 			rightPanel.removeAll();
-			rightPanel.add(new SelectedMenuOptionView(usrItem1.getText()));
-			
-		}else if(e.getSource() == usrItem2) {
-			rightPanel.removeAll();
-			rightPanel.add(new SelectedMenuOptionView(usrItem2.getText()));
-			
+			//rightPanel.add(new SelectedMenuOptionView(usrItem1.getText()));
+			viewAllUsers userAll = new viewAllUsers();
+			rightPanel.add(userAll).setVisible(true);
+			userAll.setSize(rightPanel.getWidth(), rightPanel.getHeight());
+			userAll.setLocation(0,0);
+		}else if (e.getSource()==logoutBtn) {
+			logFrame.dispose();
+			System.out.println("Logged out");
+			new LoginRegisterPrompt();
 		}
 		
 	}
