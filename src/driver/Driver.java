@@ -1,34 +1,20 @@
 package driver;
 
-import javax.swing.JFrame;
-
-import ResponseView.addResponse;
-import ResponseView.viewAllResponse;
-import complaintsViews.ComplaintView;
-import complaintsViews.DisplayAllResponses;
-import controllers.ComplaintController;
-import controllers.UserController;
-import models.Complaint;
-import models.User;
-import utils.ComplaintCategory;
-import utils.ComplaintStatus;
-import utils.CustomizedException;
-import utils.Role;
-import views.*;
+import views.SplashScreen;
 
 public class Driver {
 
 	public static void main(String[] args) {
 
-		 //new SplashScreen();
-		
+		 new SplashScreen();
+		/*
 		JFrame test=  new JFrame();
 		test.setSize(900,580);
 		addResponse ar= new addResponse();
 		DisplayAllResponses var = new DisplayAllResponses();
 		test.add(ar);
 		test.setVisible(true);
-		
+		*/
 		//new ParentWindow(Role.REPRESENTATIVE, new User("Patrick","", null, null, null, null));
 
 		/*

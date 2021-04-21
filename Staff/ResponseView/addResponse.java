@@ -30,7 +30,7 @@ import java.util.*;
 import java.sql.*;
 
 
-public class addResponse extends JInternalFrame implements ActionListener{
+public class addResponse extends JFrame implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
 
@@ -40,9 +40,8 @@ public class addResponse extends JInternalFrame implements ActionListener{
 	private JLabel responseLabel;
 	
 	
-	private JTextField complaintIdTextField;
+	public JTextField complaintIdTextField;
 	private JTextArea responseTextArea;
-	
 	
 	
 	private JLabel responseEmptyLabel;
@@ -77,7 +76,7 @@ public class addResponse extends JInternalFrame implements ActionListener{
 	
 	public void createWindow() {
 		this.setTitle("Add Response");
-		this.setBounds(0,0,490,580);
+		this.setSize(490,580);
 		this.getContentPane().setLayout(null);
 	    this.setVisible(true);
 	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -117,6 +116,7 @@ public class addResponse extends JInternalFrame implements ActionListener{
         this.submitButton.setBounds(300,395,100,35);
         this.resetButton.setBounds(440,395,100,35);     
         
+        this.complaintIdTextField.setEnabled(false);
     }
 	
 //    Adds components to the JFrame
@@ -182,7 +182,7 @@ public class addResponse extends JInternalFrame implements ActionListener{
 					e2.printStackTrace();
 				}
 			
-System.out.println("now setting response complaint id");
+				System.out.println("now setting response complaint id");
 				response.setComplaint_id(complaint);
 				response.setResponse(this.responseTextArea.getText());
 				System.out.println("Test2");

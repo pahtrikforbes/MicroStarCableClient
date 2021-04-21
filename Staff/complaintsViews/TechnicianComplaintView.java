@@ -13,6 +13,7 @@ import javax.swing.JTable;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
+import ResponseView.addResponse;
 import controllers.ComplaintController;
 import controllers.ResponseController;
 import models.Complaint;
@@ -593,11 +594,8 @@ public class TechnicianComplaintView extends javax.swing.JInternalFrame implemen
     
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {                                         
     	System.out.println("Add response clicked!");
-    	
-    	
-    	
-    	/*
-    	 * DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+   
+    	DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
 
         // get the selected row index
        int selectedRowIndex = jTable1.getSelectedRow();
@@ -617,7 +615,12 @@ public class TechnicianComplaintView extends javax.swing.JInternalFrame implemen
        	cdv.jTextField2.setText(empId); 
        }
        
+       addResponse ar = new addResponse();
+       ar.complaintIdTextField.setText(compId);
+       ar.setLocationRelativeTo(null);
        
+       /*
+        * 
        String compCategory = model.getValueAt(selectedRowIndex,3).toString();
        String compDetails = model.getValueAt(selectedRowIndex,4).toString();
        String compDate = model.getValueAt(selectedRowIndex,5).toString();
