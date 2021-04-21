@@ -187,6 +187,74 @@ public class ComplaintController {
 
 //	*************************************************************************	
 
+	
+	/* Method to  READ all MILD complaints returned from database through network stream */
+	@SuppressWarnings("unchecked")
+	public ArrayList<Complaint> getAllBroadbandComplaints() throws CustomizedException {
+		ArrayList<Complaint> complaintList = new ArrayList<>();
+
+		 client.setOperation("getAllBroadbandComplaints");
+	    
+	    try {
+	    	client.initDataStreams();
+	    	client.getObjectOutStream().writeObject(client.getOperation());
+			client.getObjectOutStream().writeObject(client.getEndPoint());
+			
+			String success = (String)client.getObjectInStream().readObject();
+			
+			if(success.equalsIgnoreCase("success")) {
+				complaintList = (ArrayList<Complaint>)client.getObjectInStream().readObject();
+			}
+			else {
+				CustomizedException e = (CustomizedException)client.getObjectInStream().readObject();
+				throw new CustomizedException(e.getMessage());
+			}
+			
+		} catch (Exception e) {
+			// TODO manage and log exceptions
+			e.printStackTrace();
+			throw new CustomizedException(e.getMessage());
+		}
+	    
+	    return complaintList;
+	}
+
+//	*************************************************************************	
+	
+	
+	/* Method to  READ all MILD complaints returned from database through network stream */
+	@SuppressWarnings("unchecked")
+	public ArrayList<Complaint> getAllCableComplaints() throws CustomizedException {
+		ArrayList<Complaint> complaintList = new ArrayList<>();
+
+		 client.setOperation("getAllCableComplaints");
+	    
+	    try {
+	    	client.initDataStreams();
+	    	client.getObjectOutStream().writeObject(client.getOperation());
+			client.getObjectOutStream().writeObject(client.getEndPoint());
+			
+			String success = (String)client.getObjectInStream().readObject();
+			
+			if(success.equalsIgnoreCase("success")) {
+				complaintList = (ArrayList<Complaint>)client.getObjectInStream().readObject();
+			}
+			else {
+				CustomizedException e = (CustomizedException)client.getObjectInStream().readObject();
+				throw new CustomizedException(e.getMessage());
+			}
+			
+		} catch (Exception e) {
+			// TODO manage and log exceptions
+			e.printStackTrace();
+			throw new CustomizedException(e.getMessage());
+		}
+	    
+	    return complaintList;
+	}
+
+//	*************************************************************************	
+	
 
 	/* Method to  READ all RESOLVED Cable complaints returned from database through network stream */
 	@SuppressWarnings("unchecked")
@@ -359,8 +427,40 @@ public class ComplaintController {
 	
 	
 //	*************************************************************************	
-
 	
+	/* Method to accept a user id and returns an ArrayList of complaints
+	that are tied to that specific User from database through network stream  */
+	@SuppressWarnings("unchecked")
+	public ArrayList<Complaint> getComplaintsPerTechnician(int userId) throws CustomizedException {
+		ArrayList<Complaint> userComplaintList = new ArrayList<>();
+		client.setOperation("getAllTechnicianAssignedComplaints");	
+		
+	    try {
+	    	client.initDataStreams();
+	    	client.getObjectOutStream().writeObject(client.getOperation());
+			client.getObjectOutStream().writeObject(client.getEndPoint());
+			client.getObjectOutStream().writeObject(userId);
+			
+			String success = (String)client.getObjectInStream().readObject();
+			
+			if(success.equalsIgnoreCase("success")) {
+				userComplaintList = (ArrayList<Complaint>)client.getObjectInStream().readObject();
+			}
+			else {
+				CustomizedException e = (CustomizedException)client.getObjectInStream().readObject();
+				throw new CustomizedException(e.getMessage());
+			}
+		} catch (Exception e) {
+			// TODO manage and log exceptions
+			e.printStackTrace();
+			throw new CustomizedException(e.getMessage());
+		}
+	    
+	    return userComplaintList;
+	}
+	
+//	*************************************************************************	
+
 	/* Method to READ one complaint. Returns a single complaint. */
 	public Complaint findById(int complaintId) throws CustomizedException {
 		

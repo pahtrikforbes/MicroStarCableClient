@@ -363,6 +363,8 @@ public class MainView extends JInternalFrame implements ActionListener, ItemList
 			rightPanel.add(tcv).setVisible(true);
 			tcv.setSize(rightPanel.getWidth(), rightPanel.getHeight());
 			tcv.setLocation(0,0);
+			int techId = user.getUserId();
+			tcv.setTechId(techId);
 			
 		}
 		

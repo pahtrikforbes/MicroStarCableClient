@@ -131,8 +131,49 @@ public class RepresentativeComplaintsView extends javax.swing.JInternalFrame imp
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-  	  }
-			
+  	  }else if (num == 4) {
+  		  try {
+				ArrayList <Complaint> displayList = cc.getAllBroadbandComplaints();
+				System.out.println("List successfully retrieved!");
+				 Object rowData[] = new Object[8];
+			        for (int i =0; i < displayList.size(); i++ ){
+			            rowData[0] = displayList.get(i).getComplaintID();
+			            rowData[1] = displayList.get(i).getCustID().getUserId();
+			            rowData[2] = displayList.get(i).getEmpID() != null?displayList.get(i).getEmpID().getUserId():null;
+			            rowData[3] = displayList.get(i).getCategory();
+			            rowData[4] = displayList.get(i).getComplaint();
+			            rowData[5] = displayList.get(i).getComplaintDate();
+			            rowData[6] = displayList.get(i).getComplaintType();
+			            rowData[7] = displayList.get(i).getComplaintStatus();
+			         
+			            model.addRow(rowData);
+			        }
+			} catch (CustomizedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+  	  }else if (num == 5) {
+    		  try {
+  				ArrayList <Complaint> displayList = cc.getAllCableComplaints();
+  				System.out.println("List successfully retrieved!");
+  				 Object rowData[] = new Object[8];
+  			        for (int i =0; i < displayList.size(); i++ ){
+  			            rowData[0] = displayList.get(i).getComplaintID();
+  			            rowData[1] = displayList.get(i).getCustID().getUserId();
+  			            rowData[2] = displayList.get(i).getEmpID() != null?displayList.get(i).getEmpID().getUserId():null;
+  			            rowData[3] = displayList.get(i).getCategory();
+  			            rowData[4] = displayList.get(i).getComplaint();
+  			            rowData[5] = displayList.get(i).getComplaintDate();
+  			            rowData[6] = displayList.get(i).getComplaintType();
+  			            rowData[7] = displayList.get(i).getComplaintStatus();
+  			         
+  			            model.addRow(rowData);
+  			        }
+  			} catch (CustomizedException e1) {
+  				// TODO Auto-generated catch block
+  				e1.printStackTrace();
+  			}
+  	  }	
   	 
   }
     
@@ -191,7 +232,8 @@ public class RepresentativeComplaintsView extends javax.swing.JInternalFrame imp
         jLabel2.setText("View By Category");
 
         jComboBox1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All Complaints", "Mild Complaints", "Moderate Complaints", "Severe Complaints" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All Complaints", "Mild Complaints", 
+        		"Moderate Complaints", "Severe Complaints","Broadband Complaints", "Cable Complaints"}));
 
         jButton1.setText("GO");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -435,6 +477,26 @@ public class RepresentativeComplaintsView extends javax.swing.JInternalFrame imp
 				System.out.println("Severe Complaints");
 				int num3 = 3;
 				addRowsToJTable(num3);
+				
+			break;
+			case "Broadband Complaints":
+				jTable1.setModel(new DefaultTableModel(null, new String [] {
+	  	                "Complaint Id", "Customer Id", "Employee Id",
+	  	                "Category", "Details", "Date", "Type", "Status"
+	              }));
+				System.out.println("Broadband Complaints");
+				int num4 = 4;
+				addRowsToJTable(num4);
+				
+			break;
+			case "Cable Complaints":
+				jTable1.setModel(new DefaultTableModel(null, new String [] {
+	  	                "Complaint Id", "Customer Id", "Employee Id",
+	  	                "Category", "Details", "Date", "Type", "Status"
+	              }));
+				System.out.println("Cable Complaints");
+				int num5 = 5;
+				addRowsToJTable(num5);
 				
 			break;
 		}

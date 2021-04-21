@@ -128,7 +128,7 @@ public void actionPerformed(ActionEvent e) {
 				new ParentWindow(role, loggedInUser);
 				this.reset();
 
-				//this.dispose();
+				this.dispose();
 			} catch (Exception e2) {
 				// TODO: handle exception
 				JOptionPane.showMessageDialog(null,e2.getMessage());
