@@ -161,6 +161,7 @@ public class addResponse extends JInternalFrame implements ActionListener{
 			
 			System.out.println("\nSubmit button clicked!");
 			String complaintIdText = complaintIdTextField.getText();
+			System.out.println("Test1");
 			String responseText = responseTextArea.getText();
 			
 			
@@ -173,24 +174,29 @@ public class addResponse extends JInternalFrame implements ActionListener{
 				
 				Complaint complaint = null;
 				try {
+					System.out.println("now in try block");
 					complaint = cc.findById(complaintId);
+					System.out.println(complaint);
 				} catch (CustomizedException e2) {
 					// TODO Auto-generated catch block
 					e2.printStackTrace();
 				}
 			
-				
+System.out.println("now setting response complaint id");
 				response.setComplaint_id(complaint);
 				response.setResponse(this.responseTextArea.getText());
-				
+				System.out.println("Test2");
 				
 				
 				java.sql.Date sqlDate = new java.sql.Date(new java.util.Date().getTime());
 				response.setResponse_date(sqlDate);
 				
+				System.out.println("Test3");
 				
 				try {
+					System.out.println("Test6");
 					int responseId = uc.createResponse(response);
+					System.out.println("Test4");
 					
 					if(responseId  > 0) {
 						JOptionPane.showMessageDialog(addResponse.this,
