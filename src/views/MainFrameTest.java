@@ -22,7 +22,7 @@ public class MainFrameTest extends JFrame implements ActionListener{
 	private JMenu menu, menu2, menu3, menu4;
 	private JButton logoutBtn;
 	private JMenuBar menuBar;
-	private JMenuItem i1, i2, i3, i4, i5, i6, i7;
+	private JMenuItem i1, i2, i3, i4, i5, i6, i7, i8;
 	private JDesktopPane desktopPane;
 	
 	
@@ -39,6 +39,7 @@ public class MainFrameTest extends JFrame implements ActionListener{
 		i4 = new JMenuItem("Find Complaint By Id ");
 		i5 = new JMenuItem("Update a Complaint");
 		i6 = new JMenuItem("Assign Technician");
+		i8 = new JMenuItem("Add a Response");
 		i7 = new JMenuItem("Delete a Complaint");
 		desktopPane = new JDesktopPane();
 	    showForm();
@@ -64,6 +65,7 @@ public class MainFrameTest extends JFrame implements ActionListener{
 		this.i5.addActionListener(this);
 		this.i6.addActionListener(this);
 		this.i7.addActionListener(this);
+		this.i8.addActionListener(this);
 		this.logoutBtn.addActionListener(this);
 		
 	}
@@ -77,6 +79,7 @@ public class MainFrameTest extends JFrame implements ActionListener{
 		menu2.add(i5);
 		menu2.add(i6);
 		menu2.add(i7);
+		menu3.add(i8);
 		
 		menuBar.add(menu);
 		menuBar.add(menu2);	

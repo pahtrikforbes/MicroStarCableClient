@@ -20,12 +20,15 @@ public class ResponseController {
 
 
 	public int createResponse(Response response) throws CustomizedException{
-		 int responseId = -1;
+		 
+		System.out.println("Test7");
+		int responseId = -1;
 		 client.setOperation("createResponse");
 		
 		try {
 			client.initDataStreams();
 			client.getObjectOutStream().writeObject(client.getOperation());
+			System.out.println("Test5");
 			client.getObjectOutStream().writeObject(client.getEndPoint());
 			client.getObjectOutStream().writeObject(response);
 			

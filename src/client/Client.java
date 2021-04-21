@@ -74,9 +74,11 @@ public class Client {
 
 	public void initDataStreams() throws IOException {
 		try {
+			System.out.println("1");
 			this.objectOutStream = new ObjectOutputStream(this.socket.getOutputStream());
+			System.out.println("2");
 			this.objectInStream = new ObjectInputStream(this.socket.getInputStream());
-
+			System.out.println("3");
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
