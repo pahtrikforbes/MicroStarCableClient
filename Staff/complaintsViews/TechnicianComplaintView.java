@@ -607,27 +607,40 @@ public class TechnicianComplaintView extends javax.swing.JInternalFrame implemen
        
        String custId = model.getValueAt(selectedRowIndex,1).toString();      
        
-       if (model.getValueAt(selectedRowIndex,2) == null) {
-       	System.out.println("Employee Id is null");
-       	cdv.jTextField2.setText("Not assigned");
-       } else {
-       	String empId = model.getValueAt(selectedRowIndex,2).toString();
-       	cdv.jTextField2.setText(empId); 
-       }
+       String empId = model.getValueAt(selectedRowIndex,2).toString();
        
-       addResponse ar = new addResponse();
-       ar.complaintIdTextField.setText(compId);
-       ar.setLocationRelativeTo(null);
        
        /*
-        * 
        String compCategory = model.getValueAt(selectedRowIndex,3).toString();
        String compDetails = model.getValueAt(selectedRowIndex,4).toString();
        String compDate = model.getValueAt(selectedRowIndex,5).toString();
        String compType = model.getValueAt(selectedRowIndex,6).toString();
        String compStatus = model.getValueAt(selectedRowIndex,7).toString();
-            
+         */
        
+       int compIdInt = Integer.parseInt(compId);
+       ComplaintController cc1 = new ComplaintController();
+       try {
+		Complaint selectedComplaint = cc1.findById(compIdInt);
+		
+			addResponse ar = new addResponse();
+	       ar.complaintIdTextField.setText(compId);
+	       ar.setInputComplaint(selectedComplaint);
+	       ar.setLocationRelativeTo(null);
+	       
+	} catch (CustomizedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+       
+       /*
+       Complaint selectedComplaint = new Complaint (
+    		   compIdInt,
+    		   
+    		   );
+       */
+       
+       /*
        cdv.jTextField7.setText(compId);
        cdv.jTextField1.setText(custId);                 
        cdv.jTextField3.setText(compCategory);

@@ -79,7 +79,7 @@ public class addResponse extends JFrame implements ActionListener{
 		this.setSize(490,580);
 		this.getContentPane().setLayout(null);
 	    this.setVisible(true);
-	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 //	    this.setResizable(false);
 	}
 	 
@@ -152,7 +152,16 @@ public class addResponse extends JFrame implements ActionListener{
     	 this.addComponentsToFrame();
     }
     
+   public Complaint inputComplaint;
     
+
+	public Complaint getInputComplaint() {
+	return inputComplaint;
+}
+
+public void setInputComplaint(Complaint inputComplaint) {
+	this.inputComplaint = inputComplaint;
+}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -165,25 +174,22 @@ public class addResponse extends JFrame implements ActionListener{
 			String responseText = responseTextArea.getText();
 			
 			
-			if (!responseText.equals("") && !complaintIdText.equals("")) {
+			if (!responseText.equals("") ) {
 //				System.out.println("Both are not Empty");
-				Response response = new Response();
 				ResponseController uc = new ResponseController();
 				ComplaintController cc = new ComplaintController();
-				int complaintId = Integer.parseInt(complaintIdText.trim());
+				int complaintId = Integer.parseInt(complaintIdText);
 				
-				Complaint complaint = null;
-				try {
-					System.out.println("now in try block");
-					complaint = cc.findById(complaintId);
-					System.out.println(complaint);
-				} catch (CustomizedException e2) {
-					// TODO Auto-generated catch block
-					e2.printStackTrace();
-				}
+				System.out.println("Now inside if Statement in adResponse\n"
+						+ "Details of selected complaint: "+inputComplaint);
 			
+				
+//				Complaint complaint = null;
+			
+				
+				Response response = new Response();
 				System.out.println("now setting response complaint id");
-				response.setComplaint_id(complaint);
+				response.setComplaint_id(inputComplaint);
 				response.setResponse(this.responseTextArea.getText());
 				System.out.println("Test2");
 				

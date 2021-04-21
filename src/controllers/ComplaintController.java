@@ -463,20 +463,27 @@ public class ComplaintController {
 
 	/* Method to READ one complaint. Returns a single complaint. */
 	public Complaint findById(int complaintId) throws CustomizedException {
-		System.out.println("now in find by id");
+		System.out.println("Now in ComplaintController find by id (client)");
+		
 		Complaint complaint = null;
-		System.out.println("now past  Complaint");
+		System.out.println("Complaint complaint = null");
+		
 		client.setOperation("findById");
 		System.out.println("now past  client.setOperation(\"findById\"");
+		
 		try {
 			client.initDataStreams();
 			System.out.println("DataStreams int");
+			
 			client.getObjectOutStream().writeObject(client.getOperation());
 			System.out.println("getOperation");
+			
 			client.getObjectOutStream().writeObject(client.getEndPoint());
 			System.out.println("EndPoint");
+			
 			client.getObjectOutStream().writeObject(complaintId);
 			System.out.println("now past get object out streem");
+			
 			String success = (String)client.getObjectInStream().readObject();
 			
 			if(success.equalsIgnoreCase("success")) {

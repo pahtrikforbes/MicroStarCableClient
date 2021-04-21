@@ -74,11 +74,14 @@ public class Client {
 
 	public void initDataStreams() throws IOException {
 		try {
-			System.out.println("1");
+			System.out.println("Enter initDataStreams");
 			this.objectOutStream = new ObjectOutputStream(this.socket.getOutputStream());
-			System.out.println("2");
+			
+			System.out.println("Initialized output stream");
 			this.objectInStream = new ObjectInputStream(this.socket.getInputStream());
-			System.out.println("3");
+			
+			System.out.println("Initialized input stream");
+			
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
