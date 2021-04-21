@@ -76,11 +76,11 @@ public class addResponse extends JFrame implements ActionListener{
 	
 	public void createWindow() {
 		this.setTitle("Add Response");
-		this.setSize(490,580);
+		this.setSize(470,580);
 		this.getContentPane().setLayout(null);
 	    this.setVisible(true);
 	    this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-//	    this.setResizable(false);
+	    this.setResizable(false);
 	}
 	 
 

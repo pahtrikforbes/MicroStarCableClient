@@ -610,14 +610,6 @@ public class TechnicianComplaintView extends javax.swing.JInternalFrame implemen
        String empId = model.getValueAt(selectedRowIndex,2).toString();
        
        
-       /*
-       String compCategory = model.getValueAt(selectedRowIndex,3).toString();
-       String compDetails = model.getValueAt(selectedRowIndex,4).toString();
-       String compDate = model.getValueAt(selectedRowIndex,5).toString();
-       String compType = model.getValueAt(selectedRowIndex,6).toString();
-       String compStatus = model.getValueAt(selectedRowIndex,7).toString();
-         */
-       
        int compIdInt = Integer.parseInt(compId);
        ComplaintController cc1 = new ComplaintController();
        try {
@@ -632,30 +624,7 @@ public class TechnicianComplaintView extends javax.swing.JInternalFrame implemen
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
-       
-       /*
-       Complaint selectedComplaint = new Complaint (
-    		   compIdInt,
-    		   
-    		   );
-       */
-       
-       /*
-       cdv.jTextField7.setText(compId);
-       cdv.jTextField1.setText(custId);                 
-       cdv.jTextField3.setText(compCategory);
-       cdv.jTextField4.setText(compDate);
-       cdv.jTextField5.setText(compType);
-       cdv.jTextField6.setText(compStatus);
-       cdv.jTextArea1.setText(compDetails);
-       
-       
-       cdv.setVisible(true);
-       cdv.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-       cdv.setLocationRelativeTo(null);
-    
-    	 * 
-    	 */
+      
     }  
     
                   
