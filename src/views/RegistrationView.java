@@ -9,14 +9,10 @@ import java.util.Arrays;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.event.InternalFrameEvent;
-import javax.swing.event.InternalFrameListener;
-
 import controllers.UserController;
 
 
@@ -25,7 +21,6 @@ import loginregisterprompt.LoginRegisterPrompt;
 import models.User;
 import utils.CustomizedException;
 import utils.Role;
-import view.loading;
 
 public class RegistrationView extends JFrame implements ActionListener {
 	
@@ -38,14 +33,17 @@ public class RegistrationView extends JFrame implements ActionListener {
     private JLabel passwordLabel;
     private JLabel confirmPasswordLabel;
     private JLabel roleLabel;
+    private JLabel phoneLabel;
     private JTextField firstNameTextField;
     private JTextField lastNameTextField;
+    private JTextField phoneTextField;
     private JComboBox<String> roleComboBox;
     private JPasswordField passwordField;
     private JPasswordField confirmPasswordField;
     private JTextField emailTextField;
     private JButton registerButton;
     private JButton resetButton;
+    
         
 	public RegistrationView()
 	    {
@@ -58,12 +56,14 @@ public class RegistrationView extends JFrame implements ActionListener {
 	    this.emailLabel=new JLabel("EMAIL");
 	    this.passwordLabel=new JLabel("PASSWORD");
 	    this.confirmPasswordLabel=new JLabel("CONFIRM PASSWORD");
-	    this.roleLabel = new JLabel("Role");
+	    this.roleLabel = new JLabel("ROLE");
+	    this.phoneLabel = new JLabel("PHONE");
 	    
 	    //input fields
 	    this.firstNameTextField=new JTextField();
 	    this.lastNameTextField=new JTextField();
 	    this.emailTextField=new JTextField();
+	    this.phoneTextField = new JTextField(); 
 	    this.passwordField=new JPasswordField();
 	    this.confirmPasswordField=new JPasswordField();
 	    this.roleComboBox=new JComboBox<String>(this.roles);
@@ -93,6 +93,7 @@ public class RegistrationView extends JFrame implements ActionListener {
         this.passwordLabel.setBounds(20,170,100,70);
         this.confirmPasswordLabel.setBounds(20,220,140,70);
         this.roleLabel.setBounds(20,270,100,70);
+        this.phoneLabel.setBounds(20,320,140,70);
         
         //set label fonts
         this.firstNameLabel.setFont(new Font("Times New Roman", Font.BOLD,12));
@@ -101,6 +102,7 @@ public class RegistrationView extends JFrame implements ActionListener {
         this.passwordLabel.setFont(new Font("Times New Roman", Font.BOLD,12));
         this.confirmPasswordLabel.setFont(new Font("Times New Roman", Font.BOLD,12));
         this.roleLabel.setFont(new Font("Times New Roman", Font.BOLD,12));
+        this.phoneLabel.setFont(new Font("Times New Roman", Font.BOLD,12));
         
         //set field fonts
         this.firstNameTextField.setFont(new Font("Times New Roman", Font.BOLD,12));
@@ -109,6 +111,7 @@ public class RegistrationView extends JFrame implements ActionListener {
         this.passwordField.setFont(new Font("Times New Roman", Font.BOLD,12));
         this.confirmPasswordField.setFont(new Font("Times New Roman", Font.BOLD,12));
         this.roleComboBox.setFont(new Font("Times New Roman", Font.BOLD,12));
+        this.phoneTextField.setFont(new Font("Times New Roman", Font.BOLD,12));
         
         this.firstNameTextField.setBounds(180,43,165,23);
         this.lastNameTextField.setBounds(180,93,165,23);
@@ -116,6 +119,7 @@ public class RegistrationView extends JFrame implements ActionListener {
         this.passwordField.setBounds(180,193,165,23);
         this.confirmPasswordField.setBounds(180,243,165,23);
         this.roleComboBox.setBounds(180,293,165,23);
+        this.phoneTextField.setBounds(180,343,165,23);
         this.registerButton.setBounds(70,400,100,35);
         this.resetButton.setBounds(220,400,100,35);     
         
@@ -134,6 +138,7 @@ public class RegistrationView extends JFrame implements ActionListener {
     	this.add(this.passwordLabel);
     	this.add(this.confirmPasswordLabel);
     	this.add(this.roleLabel);
+    	this.add(this.phoneLabel);
     	
     	this.add(this.firstNameTextField);
     	this.add(this.lastNameTextField);
@@ -141,6 +146,7 @@ public class RegistrationView extends JFrame implements ActionListener {
     	this.add(this.passwordField);
     	this.add(this.confirmPasswordField);
     	this.add(this.roleComboBox);
+    	this.add(this.phoneTextField);
     	
     	this.add(this.registerButton);
     	this.add(this.resetButton);
@@ -172,6 +178,7 @@ public class RegistrationView extends JFrame implements ActionListener {
 			user.setLastName(this.lastNameTextField.getText());
 			user.setEmail(this.emailTextField.getText());
 			user.setPassword(String.copyValueOf(this.passwordField.getPassword()));
+			user.setContactNum(this.phoneTextField.getText());
 			switch (((String) this.roleComboBox.getSelectedItem()).toLowerCase()) {
 		    case "customer": 
 			user.setRole(Role.CUSTOMER);

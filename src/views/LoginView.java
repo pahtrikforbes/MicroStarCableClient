@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,6 +21,7 @@ import javax.swing.event.InternalFrameListener;
 import controllers.AuthController;
 import controllers.UserController;
 import models.User;
+import utils.CustomizedException;
 import utils.Role;
 import view.MicroStarCableCustomer;
 import view.MicroStarCableRepresentative;
@@ -62,7 +66,7 @@ public class LoginView extends JFrame implements ActionListener {
 	        this.getContentPane().setBackground(Color.white);
 	        this.getContentPane().setLayout(null);
 	        this.setVisible(true);
-	        this.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE); 
+	        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 	        this.setLocationRelativeTo(null);
 
 	    }
@@ -118,31 +122,32 @@ public void actionPerformed(ActionEvent e) {
 			try {
 				int userId = Integer.parseInt(this.idTextField.getText());
 				char[] password = this.passwordField.getPassword();
+				
 				 authController = new AuthController();
 				 UserController uc = new UserController();
 				 authController.login(userId, String.copyValueOf(password),this.role);
-
+				 System.out.println("here");
 				 User loggedInUser = uc.findById(userId);
 
 				JOptionPane.showMessageDialog(null,"User logged in successfully.");
-				new ParentWindow(role, loggedInUser);
 				this.reset();
 
+
 				this.dispose();
+				
+				new ParentWindow(role, loggedInUser);
+				
+
 			} catch (Exception e2) {
 				// TODO: handle exception
 				JOptionPane.showMessageDialog(null,e2.getMessage());
+				this.dispose();
+				new LoginView();
 			}
 			
 		}
 		
 	}
-
-
-
-
-
-
 
 
 

@@ -156,7 +156,15 @@ public class ChatView extends JInternalFrame implements InternalFrameListener, A
 				client.getObjectOutStream().writeObject(client.getOperation());
 				client.getObjectOutStream().writeObject(client.getEndPoint());
 				client.getObjectOutStream().writeObject(message);
-			} catch (IOException e1) {
+				
+				String success = (String)client.getObjectInStream().readObject();
+				
+				if(success.equalsIgnoreCase("success")) {
+					String responseMessage = (String)client.getObjectInStream().readObject();
+					// messageBox.setText(responseMessage);
+					 System.out.println(responseMessage);
+				}
+			} catch (IOException | ClassNotFoundException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}

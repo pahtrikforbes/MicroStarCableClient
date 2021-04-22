@@ -28,6 +28,7 @@ public class UserController {
 			
 			if(success.equalsIgnoreCase("success")) {
 				userId = (int)client.getObjectInStream().readObject();
+			
 			}
 			else {
 				CustomizedException e = (CustomizedException)client.getObjectInStream().readObject();
@@ -122,6 +123,7 @@ public class UserController {
 			
 			if(success.equalsIgnoreCase("success")) {
 			    user = (User)client.getObjectInStream().readObject();
+				client.getObjectOutStream().flush();
 			}
 			else {
 				CustomizedException e = (CustomizedException)client.getObjectInStream().readObject();
