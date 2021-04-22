@@ -7,6 +7,12 @@ package complaintsViews;
 
 import javax.swing.JOptionPane;
 
+import controllers.ComplaintController;
+import controllers.UserController;
+import models.Complaint;
+import models.User;
+import utils.CustomizedException;
+
 /**
 *
 * @author Steen
@@ -75,7 +81,18 @@ public class NewJFrame2 extends javax.swing.JFrame {
    }// </editor-fold>                        
 
    
-   private void jTextField1ActionPerformed(java.awt.event.ActionEvent e) {                                            
+public Complaint oldComplaint;
+   
+   public Complaint getOldComplaint() {
+	return oldComplaint;
+}
+
+
+public void setOldComplaint(Complaint oldComplaint) {
+	this.oldComplaint = oldComplaint;
+}
+
+private void jTextField1ActionPerformed(java.awt.event.ActionEvent e) {                                            
    	if(e.getSource() == jTextField1) {
 
 			if (jTextField1.getText().equals("")){
@@ -86,8 +103,21 @@ public class NewJFrame2 extends javax.swing.JFrame {
            } else {
            	try {
 					if (Integer.parseInt(jTextField1.getText()) > 0) {
-			           	int input = Integer.parseInt(jTextField1.getText()); 
-						System.out.println("Search Complaint Input: "+input);
+			           	int techId = Integer.parseInt(jTextField1.getText());
+			           	UserController uc = new UserController();
+			           	ComplaintController cc = new ComplaintController();
+			           
+			           	try {
+							User assignTech = uc.findById(techId);
+							oldComplaint.setEmpID(assignTech);
+							Complaint newComplaint = cc.assignTechnician(oldComplaint);
+							System.out.println("New complaint: "+newComplaint);
+							
+						} catch (CustomizedException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+		           	
 						try {
 							JOptionPane.showMessageDialog(NewJFrame2.this,
 								  	"Technician was added successfully",
@@ -166,6 +196,6 @@ public class NewJFrame2 extends javax.swing.JFrame {
    // Variables declaration - do not modify                     
    private javax.swing.JButton jButton1;
    private javax.swing.JLabel jLabel1;
-   private javax.swing.JTextField jTextField1;
+   public javax.swing.JTextField jTextField1;
    // End of variables declaration                                     
 }

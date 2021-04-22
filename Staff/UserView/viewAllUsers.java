@@ -23,6 +23,7 @@ public class viewAllUsers extends JInternalFrame {
 	 */
 	public viewAllUsers() {
 		initComponents();
+		addRowsToJTable();
 	}
 
 	public void addRowsToJTable() {
@@ -33,13 +34,12 @@ public class viewAllUsers extends JInternalFrame {
 		try {
 			ArrayList<User> displayList = cc.getAllUsers();
 			System.out.println("List successfully retrieved!");
-			Object rowData[] = new Object[8];
+			Object rowData[] = new Object[7];
 			for (int i = 0; i < displayList.size(); i++) {
 				rowData[0] = displayList.get(i).getUserId();
 				rowData[1] = displayList.get(i).getFirstName();
 				rowData[2] = displayList.get(i).getLastName();
 				rowData[3] = displayList.get(i).getPassword();
-
 				rowData[4] = displayList.get(i).getContactNum();
 				rowData[5] = displayList.get(i).getEmail();
 				rowData[6] = displayList.get(i).getRole();
