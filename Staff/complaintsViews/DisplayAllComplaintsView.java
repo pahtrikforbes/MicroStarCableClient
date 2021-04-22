@@ -1,7 +1,6 @@
 package complaintsViews;
 
 import java.util.ArrayList;
-
 import javax.swing.table.DefaultTableModel;
 
 import controllers.ComplaintController;

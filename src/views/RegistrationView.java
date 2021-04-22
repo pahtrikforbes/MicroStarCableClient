@@ -13,13 +13,16 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import controllers.AccountController;
 import controllers.UserController;
 
 
 import loginregisterprompt.LoginRegisterPrompt;
-
+import models.Account;
 import models.User;
 import utils.CustomizedException;
+import utils.PaymentStatus;
 import utils.Role;
 
 public class RegistrationView extends JFrame implements ActionListener {
@@ -197,12 +200,16 @@ public class RegistrationView extends JFrame implements ActionListener {
 			if(Arrays.equals(this.passwordField.getPassword(), this.confirmPasswordField.getPassword())) {
 				try {
 					UserController uc = new UserController();
-					
-					int userId = uc.createUser(user);
-					
-					if(userId > 0) {
+					AccountController ac = new AccountController();
+					//int userId = uc.createUser(user);
+					//user = uc.findById(userId);
+					Account account = new Account(null,0, user);
+					int acId = ac.createAccount(account);
+					 
+					if(acId> 0) {
 						this.reset();
-						 JOptionPane.showMessageDialog(null,"User Registered Successfully\nYour Login ID:"+userId);
+						
+						 JOptionPane.showMessageDialog(null,"User Registered Successfully\nYour Login ID:"+user.getUserId());
 						 
 //						 new UserLogin();
 //						 new LoginView();

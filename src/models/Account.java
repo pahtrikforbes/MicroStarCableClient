@@ -2,9 +2,17 @@ package models;
 
 
 
+import java.io.Serializable;
+
 import utils.PaymentStatus;
 
-public class Account {
+public class Account implements Serializable {
+
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private int acct_id;
 	
