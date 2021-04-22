@@ -1,12 +1,11 @@
  package controllers;
 
-import utils.CustomizedException;
-
-import utils.Role;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import client.Client;
 import models.User;
+import utils.CustomizedException;
+import utils.Role;
 
 /*This class will isolate the logic for authentication and updating password.*/
 public class AuthController {
