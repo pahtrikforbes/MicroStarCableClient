@@ -294,7 +294,7 @@ public class RepresentativeComplaintsView extends javax.swing.JInternalFrame imp
         });
         
         jButton6.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jButton6.setText("Update ");
+        jButton6.setText("Status");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
@@ -822,9 +822,14 @@ public class RepresentativeComplaintsView extends javax.swing.JInternalFrame imp
         String compType = model.getValueAt(selectedRowIndex,6).toString();
         String compStatus = model.getValueAt(selectedRowIndex,7).toString();
        
+        ComplaintController cc = new ComplaintController();
+        Complaint oldComplaint = cc.findById(compIdInt);
+           
+        
         NewJFrame update = new NewJFrame();
         update.jTextField1.setText(compStatus);
-        update.complaintIdInput(compIdInt);
+        update.setOldComplaint(oldComplaint);
+        
         update.setVisible(true);
         update.setLocationRelativeTo(null);
         jTable1.setModel(new DefaultTableModel(null, new String [] {
@@ -883,13 +888,70 @@ public class RepresentativeComplaintsView extends javax.swing.JInternalFrame imp
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {                                         
     	System.out.println("Assign Technician button pressed!");
     	
-    	DisplayTechnicianView dtv = new DisplayTechnicianView();
-    	dtv.setLocationRelativeTo(null);
-    	dtv.setVisible(true);
-    	  	
-    	NewJFrame2 njf = new NewJFrame2();
-    	njf.setLocationRelativeTo(null);
-    	njf.setVisible(true);
+    	DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+
+        // get the selected row index
+    	int selectedRowIndex = jTable1.getSelectedRow();
+  
+    	System.out.println("Selected: "+selectedRowIndex);
+    	
+    	String compId = model.getValueAt(selectedRowIndex, 0).toString(); 
+    	 if (model.getValueAt(selectedRowIndex,2) == null) {
+         	System.out.println("Employee Id is null");
+         	String empId = "Not assigned";
+         	
+         	 int compIdInt = Integer.parseInt(compId);
+         	
+             ComplaintController cc = new ComplaintController();
+             try {
+     			Complaint oldComplaint = cc.findById(compIdInt);
+     			
+
+     	    	DisplayTechnicianView dtv = new DisplayTechnicianView();
+     	    	dtv.setLocationRelativeTo(null);
+     	    	dtv.setVisible(true);
+     	    	  	
+     	    	NewJFrame2 njf = new NewJFrame2();
+     	    	
+     	    	njf.jTextField1.setText(empId);
+     	    	njf.setOldComplaint(oldComplaint);
+     	    	njf.setLocationRelativeTo(null);
+     	    	njf.setVisible(true);
+     	    	
+             } catch (CustomizedException e) {
+     			// TODO Auto-generated catch block
+     			e.printStackTrace();
+     		}
+         } else {
+         	String empId = model.getValueAt(selectedRowIndex,2).toString();
+         	 int compIdInt = Integer.parseInt(compId);
+         	
+             ComplaintController cc = new ComplaintController();
+             try {
+     			Complaint oldComplaint = cc.findById(compIdInt);
+     			
+
+     	    	DisplayTechnicianView dtv = new DisplayTechnicianView();
+     	    	dtv.setLocationRelativeTo(null);
+     	    	dtv.setVisible(true);
+     	    	  	
+     	    	NewJFrame2 njf = new NewJFrame2();
+     	    	
+     	    	njf.jTextField1.setText(empId);
+     	    	njf.setOldComplaint(oldComplaint);
+     	    	njf.setLocationRelativeTo(null);
+     	    	njf.setVisible(true); 
+             } catch (CustomizedException e) {
+     			// TODO Auto-generated catch block
+     			e.printStackTrace();
+     		}
+         }
+    	 
+       
+	    	
+		
+           
+        
     	
     }  
     

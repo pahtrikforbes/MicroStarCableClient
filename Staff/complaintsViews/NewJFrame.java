@@ -29,13 +29,8 @@ public class NewJFrame extends javax.swing.JFrame {
        initComponents();
    }
    
-   int compIdGlobal;
    String newStatus;
    
-   public void complaintIdInput(int complaintId) {
-	   System.out.println("Complaint Id received: "+complaintId);
-	   compIdGlobal = complaintId;
-   }
    
    /**
     * This method is called from within the constructor to initialize the form.
@@ -102,17 +97,27 @@ public class NewJFrame extends javax.swing.JFrame {
        pack();
    }// </editor-fold>                        
 
+   public Complaint oldComplaint;
    
-   private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) throws StreamCorruptedException {  
+   public Complaint getOldComplaint() {
+	return oldComplaint;
+}
+
+
+public void setOldComplaint(Complaint oldComplaint) {
+	this.oldComplaint = oldComplaint;
+}
+
+
+private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) throws StreamCorruptedException {  
    		String newStatus = jTextField1.getText();
-   		System.out.println("\nComplaint Id: "+compIdGlobal);
+   		
    		System.out.println("New Status: "+newStatus);
    		String r1 = "RESOLVED";
    		String o1 = "OUTSTANDING";
    		
    		ComplaintController cc = new ComplaintController();
    		try {
-			Complaint oldComplaint = cc.findById(compIdGlobal);
 			System.out.println("Complaint found:\n"+oldComplaint);
 			System.out.println("\nConfirming new status: "+newStatus);
 			
