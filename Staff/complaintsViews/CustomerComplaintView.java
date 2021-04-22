@@ -15,8 +15,10 @@ import javax.swing.table.DefaultTableModel;
 import client.Client;
 import controllers.ComplaintController;
 import controllers.ResponseController;
+import controllers.UserController;
 import models.Complaint;
 import models.Response;
+import models.User;
 import utils.CustomizedException;
 
 /**
@@ -197,34 +199,40 @@ public class CustomerComplaintView extends javax.swing.JInternalFrame {
         
         String custId = model.getValueAt(selectedRowIndex,1).toString();      
         
-        if (model.getValueAt(selectedRowIndex,2) == null) {
-        	System.out.println("Employee Id is null");
-        	cdv.jTextField2.setText("Not assigned");
-        } else {
-        	String empId = model.getValueAt(selectedRowIndex,2).toString();
-        	cdv.jTextField2.setText(empId); 
-        }
+        int custIdInt = Integer.parseInt(custId);
+        UserController uc = new UserController();
         
+        try {
+			User customer = uc.findById(custIdInt);
+
+			String fName = customer.getFirstName();
+			String lName = customer.getLastName();
+			String mail = customer.getEmail();
+			String num = customer.getContactNum();
+			
+	        String compDetails = model.getValueAt(selectedRowIndex,4).toString();   
+	        String compType = model.getValueAt(selectedRowIndex,6).toString();
+
+	        cdv.jTextField7.setText(compId);
+	        cdv.jTextField1.setText(custId); 
+	        cdv.jTextField2.setText(fName);  
+	        cdv.jTextField3.setText(lName);
+	        cdv.jTextField4.setText(mail);
+	        cdv.jTextField5.setText(compType);
+	        cdv.jTextField6.setText(num);
+	        cdv.jTextArea1.setText(compDetails);
+	        
+	        
+	        cdv.setVisible(true);
+	        cdv.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	        cdv.setLocationRelativeTo(null);
+	        
+			
+		} catch (CustomizedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         
-        String compCategory = model.getValueAt(selectedRowIndex,3).toString();
-        String compDetails = model.getValueAt(selectedRowIndex,4).toString();
-        String compDate = model.getValueAt(selectedRowIndex,5).toString();
-        String compType = model.getValueAt(selectedRowIndex,6).toString();
-        String compStatus = model.getValueAt(selectedRowIndex,7).toString();
-             
-        
-        cdv.jTextField7.setText(compId);
-        cdv.jTextField1.setText(custId);                 
-        cdv.jTextField3.setText(compCategory);
-        cdv.jTextField4.setText(compDate);
-        cdv.jTextField5.setText(compType);
-        cdv.jTextField6.setText(compStatus);
-        cdv.jTextArea1.setText(compDetails);
-        
-        
-        cdv.setVisible(true);
-        cdv.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        cdv.setLocationRelativeTo(null);
         
         
          

@@ -209,6 +209,8 @@ public void setInputComplaint(Complaint inputComplaint) {
 								"Response added successfully!\n"
 								+ "Submitted: "+sqlDate
 				          			    );
+						
+						this.dispose();
 					} else {
 						System.out.println("Complaint creation unsuccessful");
 					}

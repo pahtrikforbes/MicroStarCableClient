@@ -613,10 +613,6 @@ public class TechnicianComplaintView extends javax.swing.JInternalFrame implemen
        
        String compId = model.getValueAt(selectedRowIndex, 0).toString();        
        
-       String custId = model.getValueAt(selectedRowIndex,1).toString();      
-       
-       String empId = model.getValueAt(selectedRowIndex,2).toString();
-       
        
        int compIdInt = Integer.parseInt(compId);
        ComplaintController cc1 = new ComplaintController();
@@ -627,6 +623,8 @@ public class TechnicianComplaintView extends javax.swing.JInternalFrame implemen
 	       ar.complaintIdTextField.setText(compId);
 	       ar.setInputComplaint(selectedComplaint);
 	       ar.setLocationRelativeTo(null);
+	       ar.setVisible(true);
+	      
 	       
 	} catch (CustomizedException e) {
 		// TODO Auto-generated catch block
