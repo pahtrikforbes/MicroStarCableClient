@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -114,6 +115,7 @@ public class TechnicianComplaintView extends javax.swing.JInternalFrame implemen
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+       jButton7 = new javax.swing.JButton();
         
         
         
@@ -195,7 +197,7 @@ public class TechnicianComplaintView extends javax.swing.JInternalFrame implemen
         });
         
         jButton5.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jButton5.setText("View All Responses");
+        jButton5.setText("View Complaint Responses");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -211,6 +213,16 @@ public class TechnicianComplaintView extends javax.swing.JInternalFrame implemen
         });
         jButton6.setBounds(620,520,168,28);
         this.add(jButton6);
+        
+        jButton7.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jButton7.setText("View All Responses");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	jButton7ActionPerformed(evt);
+            }
+        });
+        jButton7.setBounds(620,560,168,28);
+        this.add(jButton7);
         
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -627,7 +639,38 @@ public class TechnicianComplaintView extends javax.swing.JInternalFrame implemen
       
     }  
     
-                  
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    	System.out.println("Add response clicked!");
+   
+    	DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+
+        // get the selected row index
+       int selectedRowIndex = jTable1.getSelectedRow();
+       
+       
+       System.out.println("Selected: "+selectedRowIndex);
+       
+       String compId = model.getValueAt(selectedRowIndex, 0).toString();        
+       
+       String custId = model.getValueAt(selectedRowIndex,1).toString();      
+       
+       String empId = model.getValueAt(selectedRowIndex,2).toString();
+       
+       
+       int compIdInt = Integer.parseInt(compId);
+       ComplaintController cc1 = new ComplaintController();
+       try {
+		Complaint selectedComplaint = cc1.findById(compIdInt);
+		
+		DisplayAllResponses dar = new DisplayAllResponses();
+
+	       
+	} catch (CustomizedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+      
+    }          
 
     /**
      * @param args the command line arguments
@@ -679,6 +722,7 @@ public class TechnicianComplaintView extends javax.swing.JInternalFrame implemen
     private javax.swing.JTextField jTextField1;
     // End of variables declaration 
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     
 	@Override
 	public void actionPerformed(ActionEvent arg0) {

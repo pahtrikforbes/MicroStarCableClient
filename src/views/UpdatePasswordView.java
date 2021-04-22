@@ -15,6 +15,8 @@ import javax.swing.JTextField;
 
 import controllers.AuthController;
 
+
+
 public class UpdatePasswordView  extends JFrame implements ActionListener{
 
 	/**
