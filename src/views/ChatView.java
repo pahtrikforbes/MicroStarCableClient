@@ -49,6 +49,12 @@ public class ChatView extends JInternalFrame implements InternalFrameListener, A
     	rightBoxContraints = new GridBagConstraints();
         client = new Client();
         readMessage.start();
+        showForm();
+        
+        BasicInternalFrameUI basic = ((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI());
+		for (MouseListener li : basic.getNorthPane().getMouseListeners()) {
+			basic.getNorthPane().removeMouseListener(li);
+		}
     }
     
     public void createWindow()
@@ -66,7 +72,7 @@ public class ChatView extends JInternalFrame implements InternalFrameListener, A
     	this.mainPanel.setLayout(new BorderLayout());
     	this.southPanel.setLayout(new GridBagLayout());
     	this.southPanel.setBackground(Color.BLUE);
-        this.mainPanel.setBounds(15, 5, 500, 600);
+        this.mainPanel.setBounds(220, 5, 500, 600);
         this.messageBox.requestFocusInWindow();
         this.chatBox.setEditable(false);
         this.chatBox.setFont(new Font("Times New Roman", Font.PLAIN, 12));

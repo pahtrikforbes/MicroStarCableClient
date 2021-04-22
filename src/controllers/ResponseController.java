@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import client.Client;
+import models.Complaint;
 import models.Response;
 import utils.CustomizedException;
 
@@ -20,14 +21,21 @@ public class ResponseController {
 
 
 	public int createResponse(Response response) throws CustomizedException{
-		 int responseId = -1;
+		 
+		System.out.println("Test7");
+		int responseId = -1;
 		 client.setOperation("createResponse");
 		
 		try {
 			client.initDataStreams();
 			client.getObjectOutStream().writeObject(client.getOperation());
+			System.out.println("Test5");
+			
 			client.getObjectOutStream().writeObject(client.getEndPoint());
+			System.out.println("Test 6");
+			
 			client.getObjectOutStream().writeObject(response);
+			System.out.println("Test 7");
 			
 			String success = (String)client.getObjectInStream().readObject();
 			
@@ -38,13 +46,14 @@ public class ResponseController {
 				CustomizedException e = (CustomizedException)client.getObjectInStream().readObject();
 				throw new CustomizedException(e.getMessage());
 			}
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new CustomizedException(e.getMessage());
-		} catch (ClassNotFoundException e1) {
+		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			throw new CustomizedException(e1.getMessage());
+			e.printStackTrace();
 		}
 	   
 	   return responseId;
@@ -239,3 +248,18 @@ public class ResponseController {
 	   return result;
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -12,6 +12,7 @@ import javax.swing.JTable;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
+import ResponseView.addResponse;
 import controllers.ComplaintController;
 import controllers.ResponseController;
 import controllers.UserController;
@@ -132,8 +133,49 @@ public class RepresentativeComplaintsView extends javax.swing.JInternalFrame imp
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-  	  }
-			
+  	  }else if (num == 4) {
+  		  try {
+				ArrayList <Complaint> displayList = cc.getAllBroadbandComplaints();
+				System.out.println("List successfully retrieved!");
+				 Object rowData[] = new Object[8];
+			        for (int i =0; i < displayList.size(); i++ ){
+			            rowData[0] = displayList.get(i).getComplaintID();
+			            rowData[1] = displayList.get(i).getCustID().getUserId();
+			            rowData[2] = displayList.get(i).getEmpID() != null?displayList.get(i).getEmpID().getUserId():null;
+			            rowData[3] = displayList.get(i).getCategory();
+			            rowData[4] = displayList.get(i).getComplaint();
+			            rowData[5] = displayList.get(i).getComplaintDate();
+			            rowData[6] = displayList.get(i).getComplaintType();
+			            rowData[7] = displayList.get(i).getComplaintStatus();
+			         
+			            model.addRow(rowData);
+			        }
+			} catch (CustomizedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+  	  }else if (num == 5) {
+    		  try {
+  				ArrayList <Complaint> displayList = cc.getAllCableComplaints();
+  				System.out.println("List successfully retrieved!");
+  				 Object rowData[] = new Object[8];
+  			        for (int i =0; i < displayList.size(); i++ ){
+  			            rowData[0] = displayList.get(i).getComplaintID();
+  			            rowData[1] = displayList.get(i).getCustID().getUserId();
+  			            rowData[2] = displayList.get(i).getEmpID() != null?displayList.get(i).getEmpID().getUserId():null;
+  			            rowData[3] = displayList.get(i).getCategory();
+  			            rowData[4] = displayList.get(i).getComplaint();
+  			            rowData[5] = displayList.get(i).getComplaintDate();
+  			            rowData[6] = displayList.get(i).getComplaintType();
+  			            rowData[7] = displayList.get(i).getComplaintStatus();
+  			         
+  			            model.addRow(rowData);
+  			        }
+  			} catch (CustomizedException e1) {
+  				// TODO Auto-generated catch block
+  				e1.printStackTrace();
+  			}
+  	  }	
   	 
   }
     
@@ -163,6 +205,7 @@ public class RepresentativeComplaintsView extends javax.swing.JInternalFrame imp
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
 
         BasicInternalFrameUI basic = ((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI());
 		for (MouseListener li : basic.getNorthPane().getMouseListeners()) {
@@ -192,7 +235,8 @@ public class RepresentativeComplaintsView extends javax.swing.JInternalFrame imp
         jLabel2.setText("View By Category");
 
         jComboBox1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All Complaints", "Mild Complaints", "Moderate Complaints", "Severe Complaints" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All Complaints", "Mild Complaints", 
+        		"Moderate Complaints", "Severe Complaints","Broadband Complaints", "Cable Complaints"}));
 
         jButton1.setText("GO");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -277,6 +321,17 @@ public class RepresentativeComplaintsView extends javax.swing.JInternalFrame imp
                 jButton8ActionPerformed(evt);
             }
         });
+        
+        jButton9.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jButton9.setText("Add Response");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+        
+        jButton9.setBounds(330,495,168,28);
+        this.add(jButton9);
         
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -438,6 +493,26 @@ public class RepresentativeComplaintsView extends javax.swing.JInternalFrame imp
 				addRowsToJTable(num3);
 				
 			break;
+			case "Broadband Complaints":
+				jTable1.setModel(new DefaultTableModel(null, new String [] {
+	  	                "Complaint Id", "Customer Id", "Employee Id",
+	  	                "Category", "Details", "Date", "Type", "Status"
+	              }));
+				System.out.println("Broadband Complaints");
+				int num4 = 4;
+				addRowsToJTable(num4);
+				
+			break;
+			case "Cable Complaints":
+				jTable1.setModel(new DefaultTableModel(null, new String [] {
+	  	                "Complaint Id", "Customer Id", "Employee Id",
+	  	                "Category", "Details", "Date", "Type", "Status"
+	              }));
+				System.out.println("Cable Complaints");
+				int num5 = 5;
+				addRowsToJTable(num5);
+				
+			break;
 		}
     }
     
@@ -456,37 +531,39 @@ public class RepresentativeComplaintsView extends javax.swing.JInternalFrame imp
        
        String custId = model.getValueAt(selectedRowIndex,1).toString();      
        
-       if (model.getValueAt(selectedRowIndex,2) == null) {
-       	System.out.println("Employee Id is null");
-       	cdv.jTextField2.setText("Not assigned");
-       } else {
-       	String empId = model.getValueAt(selectedRowIndex,2).toString();
-       	cdv.jTextField2.setText(empId); 
-       }
+       int custIdInt = Integer.parseInt(custId);
        
+       User customer = new User();
+       UserController uc = new UserController();
        
-       String compCategory = model.getValueAt(selectedRowIndex,3).toString();
-       String compDetails = model.getValueAt(selectedRowIndex,4).toString();
-       String compDate = model.getValueAt(selectedRowIndex,5).toString();
-       String compType = model.getValueAt(selectedRowIndex,6).toString();
-       String compStatus = model.getValueAt(selectedRowIndex,7).toString();
-            
-//       System.out.println("\nDate contents: "+compDate);
-//       System.out.println("Status contents: "+compStatus);
-       
-       cdv.jTextField7.setText(compId);
-       cdv.jTextField1.setText(custId);                 
-       cdv.jTextField3.setText(compCategory);
-       cdv.jTextField4.setText(compDate);
-       cdv.jTextField5.setText(compType);
-       cdv.jTextField6.setText(compStatus);
-       cdv.jTextArea1.setText(compDetails);
-       
-       
-       cdv.setVisible(true);
-       cdv.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-       cdv.setLocationRelativeTo(null);
-       
+       try {
+		customer = uc.findById(custIdInt);
+		String fName = customer.getFirstName();
+		String lName = customer.getLastName();
+		String mail = customer.getEmail();
+		String contactNum = customer.getContactNum();
+		System.out.println("Contact Number: "+contactNum);
+		String compType = model.getValueAt(selectedRowIndex,6).toString();
+		String compDetails = model.getValueAt(selectedRowIndex,4).toString();
+		
+		   cdv.jTextField7.setText(compId);
+	       cdv.jTextField1.setText(custId);   
+	       cdv.jTextField2.setText(fName);
+	       cdv.jTextField3.setText(lName);
+	       cdv.jTextField4.setText(mail);
+	       cdv.jTextField5.setText(compType);
+	       cdv.jTextField6.setText(contactNum);
+	       cdv.jTextArea1.setText(compDetails);
+	       
+	       cdv.setVisible(true);
+	       cdv.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	       cdv.setLocationRelativeTo(null);
+		
+	} catch (CustomizedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+ 
     }
     
     public void addRowsToJTableFind(int in) {
@@ -651,17 +728,24 @@ public class RepresentativeComplaintsView extends javax.swing.JInternalFrame imp
   			            String data3 = model2.getValueAt(lastResponse, 3).toString();
   			            
   			            
-  			       System.out.println("Response Id: "+data0);     
-  			              
-  			        
-  			        	ResponseDetailsView rdv = new ResponseDetailsView(); 
+  			            System.out.println("Response Id: "+data0);     
+  			            ComplaintController cc = new ComplaintController();  
+  			       		Complaint c1 = cc.findById(complaintId1);
+  			       		
+  			       		User assignedTech = c1.getEmpID();
+  			       		String techFName = assignedTech.getFirstName();
+  			       		String techLName = assignedTech.getLastName();
+  			       		
+  			        	LatestResponseView rdv = new LatestResponseView(); 
   			            rdv.setLocationRelativeTo(null);
   			            rdv.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
   			            
-  			            rdv.jTextField1.setText(data0);
-  			            rdv.jTextField2.setText(data1);
-  			            rdv.jTextField3.setText(data2);
-  			            rdv.jTextArea1.setText(data3);
+  			            rdv.respIdTextField.setText(data0);
+  			            rdv.compIdTextField.setText(data1);
+  			            rdv.dateTextField.setText(data2);
+  			            rdv.respDetails.setText(data3);
+  			            rdv.fNameTextField.setText(techFName);
+  			            rdv.lNameTextField.setText(techLName);
   			            
   			            rdv.setVisible(true);
   			            
@@ -795,7 +879,7 @@ public class RepresentativeComplaintsView extends javax.swing.JInternalFrame imp
     	}
     }  
     
-//    Assign Technician Button
+
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {                                         
     	System.out.println("Assign Technician button pressed!");
     	
@@ -808,6 +892,39 @@ public class RepresentativeComplaintsView extends javax.swing.JInternalFrame imp
     	njf.setVisible(true);
     	
     }  
+    
+
+    
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    	System.out.println("Add response button pressed!");
+    	
+    	DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+
+        // get the selected row index
+       int selectedRowIndex = jTable1.getSelectedRow();
+       
+       
+       System.out.println("Selected: "+selectedRowIndex);
+       
+       String compId = model.getValueAt(selectedRowIndex, 0).toString();        
+       
+       
+       int compIdInt = Integer.parseInt(compId);
+       ComplaintController cc1 = new ComplaintController();
+       try {
+		Complaint selectedComplaint = cc1.findById(compIdInt);
+		
+			addResponse ar = new addResponse();
+	       ar.complaintIdTextField.setText(compId);
+	       ar.setInputComplaint(selectedComplaint);
+	       ar.setLocationRelativeTo(null);
+	       ar.setVisible(true);
+       } catch (CustomizedException e) {
+   		// TODO Auto-generated catch block
+   		e.printStackTrace();
+   	}
+       
+   }  
     
     /**
      * @param args the command line arguments
@@ -862,7 +979,7 @@ public class RepresentativeComplaintsView extends javax.swing.JInternalFrame imp
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration 
-    
+    private javax.swing.JButton jButton9;
     
 	@Override
 	public void actionPerformed(ActionEvent e) {

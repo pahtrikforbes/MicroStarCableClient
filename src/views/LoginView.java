@@ -116,9 +116,6 @@ public class LoginView extends JFrame implements ActionListener {
 	 }
 	
 
-/**
- *
- */
 public void actionPerformed(ActionEvent e) {
 		
 		if(e.getSource() == this.loginButton) {
@@ -129,13 +126,17 @@ public void actionPerformed(ActionEvent e) {
 				 authController = new AuthController();
 				 UserController uc = new UserController();
 				 authController.login(userId, String.copyValueOf(password),this.role);
-				 System.out.println("here");
 				 User loggedInUser = uc.findById(userId);
 
 				JOptionPane.showMessageDialog(null,"User logged in successfully.");
 				this.reset();
+
+
+				this.dispose();
+				
 				new ParentWindow(role, loggedInUser);
 				
+
 			} catch (Exception e2) {
 				// TODO: handle exception
 				JOptionPane.showMessageDialog(null,e2.getMessage());
@@ -146,12 +147,6 @@ public void actionPerformed(ActionEvent e) {
 		}
 		
 	}
-
-
-
-
-
-
 
 
 

@@ -7,9 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 
-import controllers.UserController;
 import models.User;
-import utils.CustomizedException;
 import utils.Role;
 
 public class ParentWindow extends JFrame implements ActionListener {
@@ -20,7 +18,7 @@ public class ParentWindow extends JFrame implements ActionListener {
 	
 	public ParentWindow(Role role,User user) {
 		desktop = new JDesktopPane();
-		mainView = new MainView(role, user);
+		mainView = new MainView(role, user,this);
 		showForm();	
 	}
 	
@@ -67,14 +65,6 @@ public class ParentWindow extends JFrame implements ActionListener {
 		
 	}
 	
-	
-	public static void main(String[] args) {
-		
-		User user = new User("Jill", "Jack", "", "", Role.TECHNICIAN, "");
-		new ParentWindow(user.getRole(), user);
-		
-		
-	}
 		
 }
 

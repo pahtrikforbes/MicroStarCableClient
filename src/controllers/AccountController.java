@@ -37,11 +37,9 @@ public class AccountController {
 				throw new CustomizedException(e.getMessage());
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 			throw new CustomizedException(e.getMessage());
 		} catch (ClassNotFoundException e1) {
-			// TODO Auto-generated catch block
 			throw new CustomizedException(e1.getMessage());
 		}
 		return acctId;

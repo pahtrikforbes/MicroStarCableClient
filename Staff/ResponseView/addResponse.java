@@ -30,7 +30,7 @@ import java.util.*;
 import java.sql.*;
 
 
-public class addResponse extends JInternalFrame implements ActionListener{
+public class addResponse extends JFrame implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
 
@@ -40,9 +40,8 @@ public class addResponse extends JInternalFrame implements ActionListener{
 	private JLabel responseLabel;
 	
 	
-	private JTextField complaintIdTextField;
+	public JTextField complaintIdTextField;
 	private JTextArea responseTextArea;
-	
 	
 	
 	private JLabel responseEmptyLabel;
@@ -77,20 +76,20 @@ public class addResponse extends JInternalFrame implements ActionListener{
 	
 	public void createWindow() {
 		this.setTitle("Add Response");
-		this.setBounds(0,0,490,580);
+		this.setSize(440,440);
 		this.getContentPane().setLayout(null);
 	    this.setVisible(true);
-	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//	    this.setResizable(false);
+	    this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	    this.setResizable(false);
 	}
 	 
 
 	public void setLocationAndSize()
     {
 //		Setting Location and Size of Each Component
-        this.complaintIdLabel.setBounds(240,20,160,70);
+        this.complaintIdLabel.setBounds(50,20,160,70);
      
-        this.responseLabel.setBounds(240,170,160,70);
+        this.responseLabel.setBounds(50,65,160,70);
 
         
 //		Set label fonts
@@ -108,15 +107,16 @@ public class addResponse extends JInternalFrame implements ActionListener{
        
         
 //		Set bounds
-        this.complaintIdTextField.setBounds(400,43,185,23);
+        this.complaintIdTextField.setBounds(200,43,185,23);
        
        
-        this.responseTextArea.setBounds(400,193,185,170);       
+        this.responseTextArea.setBounds(200,90,185,170);       
         Border border = BorderFactory.createLineBorder(Color.GRAY, 1);
         responseTextArea.setBorder(border);
-        this.submitButton.setBounds(300,395,100,35);
-        this.resetButton.setBounds(440,395,100,35);     
+        this.submitButton.setBounds(100,290,100,35);
+        this.resetButton.setBounds(240,290,100,35);     
         
+        this.complaintIdTextField.setEnabled(false);
     }
 	
 //    Adds components to the JFrame
@@ -152,7 +152,16 @@ public class addResponse extends JInternalFrame implements ActionListener{
     	 this.addComponentsToFrame();
     }
     
+   public Complaint inputComplaint;
     
+
+	public Complaint getInputComplaint() {
+	return inputComplaint;
+}
+
+public void setInputComplaint(Complaint inputComplaint) {
+	this.inputComplaint = inputComplaint;
+}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -161,42 +170,47 @@ public class addResponse extends JInternalFrame implements ActionListener{
 			
 			System.out.println("\nSubmit button clicked!");
 			String complaintIdText = complaintIdTextField.getText();
+			System.out.println("Test1");
 			String responseText = responseTextArea.getText();
 			
 			
-			if (!responseText.equals("") && !complaintIdText.equals("")) {
+			if (!responseText.equals("") ) {
 //				System.out.println("Both are not Empty");
-				Response response = new Response();
 				ResponseController uc = new ResponseController();
 				ComplaintController cc = new ComplaintController();
-				int complaintId = Integer.parseInt(complaintIdText.trim());
+				int complaintId = Integer.parseInt(complaintIdText);
 				
-				Complaint complaint = null;
-				try {
-					complaint = cc.findById(complaintId);
-				} catch (CustomizedException e2) {
-					// TODO Auto-generated catch block
-					e2.printStackTrace();
-				}
+				System.out.println("Now inside if Statement in adResponse\n"
+						+ "Details of selected complaint: "+inputComplaint);
 			
 				
-				response.setComplaint_id(complaint);
-				response.setResponse(this.responseTextArea.getText());
+//				Complaint complaint = null;
+			
 				
+				Response response = new Response();
+				System.out.println("now setting response complaint id");
+				response.setComplaint_id(inputComplaint);
+				response.setResponse(this.responseTextArea.getText());
+				System.out.println("Test2");
 				
 				
 				java.sql.Date sqlDate = new java.sql.Date(new java.util.Date().getTime());
 				response.setResponse_date(sqlDate);
 				
+				System.out.println("Test3");
 				
 				try {
+					System.out.println("Test6");
 					int responseId = uc.createResponse(response);
+					System.out.println("Test4");
 					
 					if(responseId  > 0) {
 						JOptionPane.showMessageDialog(addResponse.this,
 								"Response added successfully!\n"
 								+ "Submitted: "+sqlDate
 				          			    );
+						
+						this.dispose();
 					} else {
 						System.out.println("Complaint creation unsuccessful");
 					}

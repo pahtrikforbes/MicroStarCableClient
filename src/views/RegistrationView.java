@@ -201,8 +201,8 @@ public class RegistrationView extends JFrame implements ActionListener {
 				try {
 					UserController uc = new UserController();
 					AccountController ac = new AccountController();
-					//int userId = uc.createUser(user);
-					//user = uc.findById(userId);
+					int userId = uc.createUser(user);
+					user.setUserId(userId);
 					Account account = new Account(null,0, user);
 					int acId = ac.createAccount(account);
 					 
@@ -216,6 +216,7 @@ public class RegistrationView extends JFrame implements ActionListener {
 						 new LoginRegisterPrompt();
 
 						 this.dispose();
+						
 					}
 				} catch (CustomizedException e1) {
 					// TODO Auto-generated catch block

@@ -69,22 +69,22 @@ public class ComplaintDetailsView extends JFrame {
         jLabel2.setText("Customer Id");
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
-        jLabel3.setText("Employee Id");
+        jLabel3.setText("First Name");
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
-        jLabel4.setText("Category");
+        jLabel4.setText("Last Name");
 
         jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         jLabel5.setText("Complaint");
 
         jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
-        jLabel6.setText("Complaint Date");
+        jLabel6.setText("Email Address");
 
         jLabel7.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         jLabel7.setText("Complaint Type");
 
         jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
-        jLabel8.setText("Complaint Status");
+        jLabel8.setText("Contact Number");
 
         jTextField1.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
 

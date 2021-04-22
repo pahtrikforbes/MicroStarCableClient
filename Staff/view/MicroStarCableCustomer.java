@@ -17,7 +17,8 @@ package view;
 import complaintsViews.CustomerComplaintView;
 import complaintsViews.RepresentativeComplaintsView;
 	import controllers.ComplaintController;
-	import models.Complaint;
+import loginregisterprompt.LoginRegisterPrompt;
+import models.Complaint;
 import models.User;
 import utils.CustomizedException;
 
@@ -100,6 +101,7 @@ import utils.CustomizedException;
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == logoutBtn) {
 				System.out.println("\nLogout Button clicked!");
+				new LoginRegisterPrompt();
 				
 			}
 			else if (e.getSource() == i1) {

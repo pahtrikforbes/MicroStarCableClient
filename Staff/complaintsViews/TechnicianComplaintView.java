@@ -13,10 +13,12 @@ import javax.swing.JTable;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
+import ResponseView.addResponse;
 import controllers.ComplaintController;
 import controllers.ResponseController;
 import models.Complaint;
 import models.Response;
+import models.User;
 import utils.CustomizedException;
 
 /**
@@ -36,20 +38,39 @@ public class TechnicianComplaintView extends javax.swing.JInternalFrame implemen
         initComponents();
     }
 
-    public void addRowsToJTable(int num) {
+    public int techId; 
+ 
+    
+    public int getTechId() {
+		return techId;
+	}
+
+
+	public void setTechId(int techId) {
+		this.techId = techId;
+	}
+
+
+	public void addRowsToJTable(int num) {
     	  DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
 //        Grab the returned array list and put it into a variable of type Arraylist
     	  ComplaintController cc = new ComplaintController();
     	  if(num == 0) {
     		  try {
-    			  
-  				ArrayList <Complaint> displayList = cc.getAllComplaints();
+    			  int tech = techId;
+  				ArrayList <Complaint> displayList = cc.getComplaintsPerTechnician(tech);
   				System.out.println("List successfully retrieved!");
+  				if(displayList.size() == 0) {
+  					JOptionPane.showMessageDialog(TechnicianComplaintView.this,
+		         			  	"No complaints have been assigned to you",
+		         			    "Complaint View Tip",
+		         			    JOptionPane.INFORMATION_MESSAGE);
+  				} else {
   				 Object rowData[] = new Object[8];
   			        for (int i =0; i < displayList.size(); i++ ){
   			            rowData[0] = displayList.get(i).getComplaintID();
   			            rowData[1] = displayList.get(i).getCustID().getUserId();
-  			            rowData[2] = displayList.get(i).getEmpID() != null?displayList.get(i).getEmpID().getUserId():null;
+			            rowData[2] = displayList.get(i).getEmpID() != null?displayList.get(i).getEmpID().getUserId():null;
   			            rowData[3] = displayList.get(i).getCategory();
   			            rowData[4] = displayList.get(i).getComplaint();
   			            rowData[5] = displayList.get(i).getComplaintDate();
@@ -57,76 +78,15 @@ public class TechnicianComplaintView extends javax.swing.JInternalFrame implemen
   			            rowData[7] = displayList.get(i).getComplaintStatus();
   			         
   			            model.addRow(rowData);
+  			                  
+  			           		            
   			        }
+  				}
   			} catch (CustomizedException e1) {
   				// TODO Auto-generated catch block
   				e1.printStackTrace();
   			}
   			
-    	  } else if (num ==1) {
-    		  try {
-  				ArrayList <Complaint> displayList = cc.getAllMildComplaints();
-  				System.out.println("List successfully retrieved!");
-  				System.out.println(displayList);
-  				 Object rowData[] = new Object[8];
-  			        for (int i =0; i < displayList.size(); i++ ){
-  			            rowData[0] = displayList.get(i).getComplaintID();
-  			            rowData[1] = displayList.get(i).getCustID().getUserId();
-  			            rowData[2] = displayList.get(i).getEmpID() != null?displayList.get(i).getEmpID().getUserId():null;
-  			            rowData[3] = displayList.get(i).getCategory();
-  			            rowData[4] = displayList.get(i).getComplaint();
-  			            rowData[5] = displayList.get(i).getComplaintDate();
-  			            rowData[6] = displayList.get(i).getComplaintType();
-  			            rowData[7] = displayList.get(i).getComplaintStatus(); 
-  			         
-  			            model.addRow(rowData);
-  			        }
-  			} catch (CustomizedException e1) {
-  				// TODO Auto-generated catch block
-  				e1.printStackTrace();
-  			}
-    	  } else if (num == 2) {
-    		  try {
-  				ArrayList <Complaint> displayList = cc.getAllModerateComplaints();
-  				System.out.println("List successfully retrieved!");
-  				 Object rowData[] = new Object[8];
-  			        for (int i =0; i < displayList.size(); i++ ){
-  			            rowData[0] = displayList.get(i).getComplaintID();
-  			            rowData[1] = displayList.get(i).getCustID().getUserId();
-  			            rowData[2] = displayList.get(i).getEmpID() != null?displayList.get(i).getEmpID().getUserId():null;
-  			            rowData[3] = displayList.get(i).getCategory();
-  			            rowData[4] = displayList.get(i).getComplaint();
-  			            rowData[5] = displayList.get(i).getComplaintDate();
-  			            rowData[6] = displayList.get(i).getComplaintType();
-  			            rowData[7] = displayList.get(i).getComplaintStatus();
-  			         
-  			            model.addRow(rowData);
-  			        }
-  			} catch (CustomizedException e1) {
-  				// TODO Auto-generated catch block
-  				e1.printStackTrace();
-  			}
-    	  } else if (num == 3) {
-    		  try {
-  				ArrayList <Complaint> displayList = cc.getAllSevereComplaints();
-  				System.out.println("\nList successfully retrieved!");
-  				 Object rowData[] = new Object[8];
-  			        for (int i =0; i < displayList.size(); i++ ){
-  			            rowData[0] = displayList.get(i).getComplaintID();
-  			            rowData[1] = displayList.get(i).getCustID().getUserId();
-  			            rowData[2] = displayList.get(i).getEmpID() != null?displayList.get(i).getEmpID().getUserId():null;
-  			            rowData[3] = displayList.get(i).getCategory();
-  			            rowData[4] = displayList.get(i).getComplaint();
-  			            rowData[5] = displayList.get(i).getComplaintDate();
-  			            rowData[6] = displayList.get(i).getComplaintType();
-  			            rowData[7] = displayList.get(i).getComplaintStatus();
-  			            
-  			            model.addRow(rowData);
-  			        }
-  			} catch (CustomizedException e1) {
-  				// TODO Auto-generated catch block
-  				e1.printStackTrace();
-  			}
     	  }
   			
     	 
@@ -150,12 +110,14 @@ public class TechnicianComplaintView extends javax.swing.JInternalFrame implemen
         jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-
+        jButton6 = new javax.swing.JButton();
+        
+        
+        
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
@@ -181,10 +143,10 @@ public class TechnicianComplaintView extends javax.swing.JInternalFrame implemen
         jScrollPane1.setViewportView(jTable1);
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jLabel2.setText("View By Category");
+        jLabel2.setText("View Complaints");
 
         jComboBox1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All Complaints", "Mild Complaints", "Moderate Complaints", "Severe Complaints" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All Assigned Complaints"}));
 
         jButton1.setText("GO");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -213,12 +175,6 @@ public class TechnicianComplaintView extends javax.swing.JInternalFrame implemen
             }
         });
 
-        jButton2.setText("GO");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         jLabel4.setText("Other Actions");
@@ -246,6 +202,16 @@ public class TechnicianComplaintView extends javax.swing.JInternalFrame implemen
                 jButton5ActionPerformed(evt);
             }
         });
+        
+        jButton6.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jButton6.setText("Add Response");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        jButton6.setBounds(620,520,168,28);
+        this.add(jButton6);
         
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -351,7 +317,7 @@ public class TechnicianComplaintView extends javax.swing.JInternalFrame implemen
 		System.out.println("Selected: "+choice);
 		
 		switch(choice) {
-			case "All Complaints":
+			case "All Assigned Complaints":
 				jTable1.setModel(new DefaultTableModel(null, new String [] {
 	  	                "Complaint Id", "Customer Id", "Employee Id",
 	  	                "Category", "Details", "Date", "Type", "Status"
@@ -361,36 +327,7 @@ public class TechnicianComplaintView extends javax.swing.JInternalFrame implemen
 				addRowsToJTable(num);
 				
 			break;
-			case "Mild Complaints":
-				jTable1.setModel(new DefaultTableModel(null, new String [] {
-	  	                "Complaint Id", "Customer Id", "Employee Id",
-	  	                "Category", "Details", "Date", "Type", "Status"
-	              }));
-				System.out.println("Mild Complaints");
-				int num1 = 1;
-				addRowsToJTable(num1);
-				
-			break;
-			case "Moderate Complaints":
-				jTable1.setModel(new DefaultTableModel(null, new String [] {
-	  	                "Complaint Id", "Customer Id", "Employee Id",
-	  	                "Category", "Details", "Date", "Type", "Status"
-	              }));
-				System.out.println("Moderate Complaints");
-				int num2 = 2;
-				addRowsToJTable(num2);
-				
-			break;
-			case "Severe Complaints":
-				jTable1.setModel(new DefaultTableModel(null, new String [] {
-	  	                "Complaint Id", "Customer Id", "Employee Id",
-	  	                "Category", "Details", "Date", "Type", "Status"
-	              }));
-				System.out.println("Severe Complaints");
-				int num3 = 3;
-				addRowsToJTable(num3);
-				
-			break;
+			
 		}
     }
     
@@ -566,6 +503,7 @@ public class TechnicianComplaintView extends javax.swing.JInternalFrame implemen
     
     JTable jTable2 = new JTable(); 
     
+    
     public void addRowsToJTableLatest(int complaintId) {
     	jTable2.setModel(new DefaultTableModel(null, new String [] {
                 "Response Id","Complaint Id","Response", "Response"
@@ -602,19 +540,25 @@ public class TechnicianComplaintView extends javax.swing.JInternalFrame implemen
   			            String data3 = model2.getValueAt(lastResponse, 3).toString();
   			            
   			            
-  			       System.out.println("Response Id: "+data0);     
-  			              
-  			        
-  			        	ResponseDetailsView rdv = new ResponseDetailsView(); 
-  			            rdv.setLocationRelativeTo(null);
-  			            rdv.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-  			            
-  			            rdv.jTextField1.setText(data0);
-  			            rdv.jTextField2.setText(data1);
-  			            rdv.jTextField3.setText(data2);
-  			            rdv.jTextArea1.setText(data3);
-  			            
-  			            rdv.setVisible(true);
+  			            ComplaintController cc = new ComplaintController();  
+			       		Complaint c1 = cc.findById(complaintId1);
+			       		
+			       		User assignedTech = c1.getEmpID();
+			       		String techFName = assignedTech.getFirstName();
+			       		String techLName = assignedTech.getLastName();
+			       		
+			        	LatestResponseView rdv = new LatestResponseView(); 
+			            rdv.setLocationRelativeTo(null);
+			            rdv.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			            
+			            rdv.respIdTextField.setText(data0);
+			            rdv.compIdTextField.setText(data1);
+			            rdv.dateTextField.setText(data2);
+			            rdv.respDetails.setText(data3);
+			            rdv.fNameTextField.setText(techFName);
+			            rdv.lNameTextField.setText(techLName);
+			            
+			            rdv.setVisible(true);
   			            
   			          
   			} catch (ArrayIndexOutOfBoundsException e2) {
@@ -655,10 +599,41 @@ public class TechnicianComplaintView extends javax.swing.JInternalFrame implemen
         drv.setVisible(true);
     }  
     
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        // TODO add your handling code here:
-    }                                        
-                         
+    
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    	System.out.println("Add response clicked!");
+   
+    	DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+
+        // get the selected row index
+       int selectedRowIndex = jTable1.getSelectedRow();
+       
+       
+       System.out.println("Selected: "+selectedRowIndex);
+       
+       String compId = model.getValueAt(selectedRowIndex, 0).toString();        
+       
+       
+       int compIdInt = Integer.parseInt(compId);
+       ComplaintController cc1 = new ComplaintController();
+       try {
+		Complaint selectedComplaint = cc1.findById(compIdInt);
+		
+			addResponse ar = new addResponse();
+	       ar.complaintIdTextField.setText(compId);
+	       ar.setInputComplaint(selectedComplaint);
+	       ar.setLocationRelativeTo(null);
+	       ar.setVisible(true);
+	      
+	       
+	} catch (CustomizedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+      
+    }  
+    
+                  
 
     /**
      * @param args the command line arguments
@@ -697,7 +672,6 @@ public class TechnicianComplaintView extends javax.swing.JInternalFrame implemen
 
     // Variables declaration - do not modify                     
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -710,6 +684,7 @@ public class TechnicianComplaintView extends javax.swing.JInternalFrame implemen
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration 
+    private javax.swing.JButton jButton6;
     
 	@Override
 	public void actionPerformed(ActionEvent arg0) {

@@ -30,7 +30,7 @@ public class DisplayAllResponses extends javax.swing.JInternalFrame {
     	  DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
 //        Grab the returned array list and put it into a variable of type Arraylist
     	  ResponseController cc = new ResponseController();
-    	 
+    		System.out.println("Test1");
     		  try {
   				ArrayList <Response> displayList = cc.getAllResponses();
   				System.out.println("List successfully retrieved!");
