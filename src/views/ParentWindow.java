@@ -20,7 +20,7 @@ public class ParentWindow extends JFrame implements ActionListener {
 	
 	public ParentWindow(Role role,User user) {
 		desktop = new JDesktopPane();
-		mainView = new MainView(role, user);
+		mainView = new MainView(role, user,this);
 		showForm();	
 	}
 	

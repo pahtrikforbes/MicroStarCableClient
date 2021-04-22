@@ -21,7 +21,8 @@ import javax.swing.JPanel;
 import complaintsViews.ComplaintView;
 	import complaintsViews.RepresentativeComplaintsView;
 	import controllers.ComplaintController;
-	import models.Complaint;
+import loginregisterprompt.LoginRegisterPrompt;
+import models.Complaint;
 import models.User;
 import utils.CustomizedException;
 import views.ChatView;
@@ -325,7 +326,8 @@ import views.ChatView;
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == logoutBtn) {
 			System.out.println("\nLogout Button clicked!");
-			
+			dispose();
+			new LoginRegisterPrompt();
 		}
 		else if (e.getSource() == i1) {
 			System.out.println("\nSubmit Complaint clicked!");
