@@ -397,11 +397,12 @@ public class MainView extends JInternalFrame implements ActionListener, ItemList
 	public void itemStateChanged(ItemEvent e) {
 		
 		if(togBtn.isSelected()){
+			
 				ChatView cv1;
 				try {
-					rightPanel.removeAll();
 					cv1 = new ChatView();
 					rightPanel.add(cv1);		
+					togBtn.repaint();
 					Color c2 = new Color(255,51,0);
 					togBtn.setText("GO OFFLINE"); 
 					togBtn.setBackground(c2);	
@@ -409,17 +410,17 @@ public class MainView extends JInternalFrame implements ActionListener, ItemList
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-			}
-			else {
-				rightPanel.removeAll();
-				Color c1 = new Color(51,255,0);
-				togBtn.setText("GO ONLINE");
-				togBtn.setBackground(c1);
-		
-			} 
-		}
+				
+			
+		}else {
+			rightPanel.removeAll();
+			Color c1 = new Color(51,255,0);
+			togBtn.setText("GO ONLINE");
+			togBtn.setBackground(c1);
+	
+		} 
 	        	  
-}  
+	 }  
 		
-
+}
 		
