@@ -18,6 +18,7 @@ import controllers.ComplaintController;
 import controllers.ResponseController;
 import models.Complaint;
 import models.Response;
+import models.User;
 import utils.CustomizedException;
 
 /**
@@ -502,6 +503,7 @@ public class TechnicianComplaintView extends javax.swing.JInternalFrame implemen
     
     JTable jTable2 = new JTable(); 
     
+    
     public void addRowsToJTableLatest(int complaintId) {
     	jTable2.setModel(new DefaultTableModel(null, new String [] {
                 "Response Id","Complaint Id","Response", "Response"
@@ -538,19 +540,25 @@ public class TechnicianComplaintView extends javax.swing.JInternalFrame implemen
   			            String data3 = model2.getValueAt(lastResponse, 3).toString();
   			            
   			            
-  			       System.out.println("Response Id: "+data0);     
-  			              
-  			        
-  			        	ResponseDetailsView rdv = new ResponseDetailsView(); 
-  			            rdv.setLocationRelativeTo(null);
-  			            rdv.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-  			            
-  			            rdv.jTextField1.setText(data0);
-  			            rdv.jTextField2.setText(data1);
-  			            rdv.jTextField3.setText(data2);
-  			            rdv.jTextArea1.setText(data3);
-  			            
-  			            rdv.setVisible(true);
+  			            ComplaintController cc = new ComplaintController();  
+			       		Complaint c1 = cc.findById(complaintId1);
+			       		
+			       		User assignedTech = c1.getEmpID();
+			       		String techFName = assignedTech.getFirstName();
+			       		String techLName = assignedTech.getLastName();
+			       		
+			        	LatestResponseView rdv = new LatestResponseView(); 
+			            rdv.setLocationRelativeTo(null);
+			            rdv.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			            
+			            rdv.respIdTextField.setText(data0);
+			            rdv.compIdTextField.setText(data1);
+			            rdv.dateTextField.setText(data2);
+			            rdv.respDetails.setText(data3);
+			            rdv.fNameTextField.setText(techFName);
+			            rdv.lNameTextField.setText(techLName);
+			            
+			            rdv.setVisible(true);
   			            
   			          
   			} catch (ArrayIndexOutOfBoundsException e2) {

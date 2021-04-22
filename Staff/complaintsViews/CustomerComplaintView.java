@@ -300,12 +300,12 @@ public class CustomerComplaintView extends javax.swing.JInternalFrame {
   			        	ResponseDetailsView rdv = new ResponseDetailsView(); 
   			            rdv.setLocationRelativeTo(null);
   			            rdv.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-  			            
+  			            /*
   			            rdv.jTextField1.setText(data0);
   			            rdv.jTextField2.setText(data1);
   			            rdv.jTextField3.setText(data2);
   			            rdv.jTextArea1.setText(data3);
-  			            
+  			            */
   			            rdv.setVisible(true);
   			            
   			          

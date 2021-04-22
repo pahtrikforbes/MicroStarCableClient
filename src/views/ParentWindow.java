@@ -70,7 +70,7 @@ public class ParentWindow extends JFrame implements ActionListener {
 	
 	public static void main(String[] args) {
 		
-		User user = new User("Jill", "Jack", "", "", Role.TECHNICIAN, "");
+		User user = new User("Jill", "Jack", "",Role.REPRESENTATIVE, "", "");
 		new ParentWindow(user.getRole(), user);
 		
 		

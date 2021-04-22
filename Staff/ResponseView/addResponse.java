@@ -76,7 +76,7 @@ public class addResponse extends JFrame implements ActionListener{
 	
 	public void createWindow() {
 		this.setTitle("Add Response");
-		this.setSize(470,580);
+		this.setSize(440,440);
 		this.getContentPane().setLayout(null);
 	    this.setVisible(true);
 	    this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -87,9 +87,9 @@ public class addResponse extends JFrame implements ActionListener{
 	public void setLocationAndSize()
     {
 //		Setting Location and Size of Each Component
-        this.complaintIdLabel.setBounds(240,20,160,70);
+        this.complaintIdLabel.setBounds(50,20,160,70);
      
-        this.responseLabel.setBounds(240,170,160,70);
+        this.responseLabel.setBounds(50,65,160,70);
 
         
 //		Set label fonts
@@ -107,14 +107,14 @@ public class addResponse extends JFrame implements ActionListener{
        
         
 //		Set bounds
-        this.complaintIdTextField.setBounds(400,43,185,23);
+        this.complaintIdTextField.setBounds(200,43,185,23);
        
        
-        this.responseTextArea.setBounds(400,193,185,170);       
+        this.responseTextArea.setBounds(200,90,185,170);       
         Border border = BorderFactory.createLineBorder(Color.GRAY, 1);
         responseTextArea.setBorder(border);
-        this.submitButton.setBounds(300,395,100,35);
-        this.resetButton.setBounds(440,395,100,35);     
+        this.submitButton.setBounds(100,290,100,35);
+        this.resetButton.setBounds(240,290,100,35);     
         
         this.complaintIdTextField.setEnabled(false);
     }

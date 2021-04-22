@@ -517,37 +517,39 @@ public class RepresentativeComplaintsView extends javax.swing.JInternalFrame imp
        
        String custId = model.getValueAt(selectedRowIndex,1).toString();      
        
-       if (model.getValueAt(selectedRowIndex,2) == null) {
-       	System.out.println("Employee Id is null");
-       	cdv.jTextField2.setText("Not assigned");
-       } else {
-       	String empId = model.getValueAt(selectedRowIndex,2).toString();
-       	cdv.jTextField2.setText(empId); 
-       }
+       int custIdInt = Integer.parseInt(custId);
        
+       User customer = new User();
+       UserController uc = new UserController();
        
-       String compCategory = model.getValueAt(selectedRowIndex,3).toString();
-       String compDetails = model.getValueAt(selectedRowIndex,4).toString();
-       String compDate = model.getValueAt(selectedRowIndex,5).toString();
-       String compType = model.getValueAt(selectedRowIndex,6).toString();
-       String compStatus = model.getValueAt(selectedRowIndex,7).toString();
-            
-//       System.out.println("\nDate contents: "+compDate);
-//       System.out.println("Status contents: "+compStatus);
-       
-       cdv.jTextField7.setText(compId);
-       cdv.jTextField1.setText(custId);                 
-       cdv.jTextField3.setText(compCategory);
-       cdv.jTextField4.setText(compDate);
-       cdv.jTextField5.setText(compType);
-       cdv.jTextField6.setText(compStatus);
-       cdv.jTextArea1.setText(compDetails);
-       
-       
-       cdv.setVisible(true);
-       cdv.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-       cdv.setLocationRelativeTo(null);
-       
+       try {
+		customer = uc.findById(custIdInt);
+		String fName = customer.getFirstName();
+		String lName = customer.getLastName();
+		String mail = customer.getEmail();
+		String contactNum = customer.getContactNum();
+		System.out.println("Contact Number: "+contactNum);
+		String compType = model.getValueAt(selectedRowIndex,6).toString();
+		String compDetails = model.getValueAt(selectedRowIndex,4).toString();
+		
+		   cdv.jTextField7.setText(compId);
+	       cdv.jTextField1.setText(custId);   
+	       cdv.jTextField2.setText(fName);
+	       cdv.jTextField3.setText(lName);
+	       cdv.jTextField4.setText(mail);
+	       cdv.jTextField5.setText(compType);
+	       cdv.jTextField6.setText(contactNum);
+	       cdv.jTextArea1.setText(compDetails);
+	       
+	       cdv.setVisible(true);
+	       cdv.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	       cdv.setLocationRelativeTo(null);
+		
+	} catch (CustomizedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+ 
     }
     
     public void addRowsToJTableFind(int in) {
@@ -712,17 +714,24 @@ public class RepresentativeComplaintsView extends javax.swing.JInternalFrame imp
   			            String data3 = model2.getValueAt(lastResponse, 3).toString();
   			            
   			            
-  			       System.out.println("Response Id: "+data0);     
-  			              
-  			        
-  			        	ResponseDetailsView rdv = new ResponseDetailsView(); 
+  			            System.out.println("Response Id: "+data0);     
+  			            ComplaintController cc = new ComplaintController();  
+  			       		Complaint c1 = cc.findById(complaintId1);
+  			       		
+  			       		User assignedTech = c1.getEmpID();
+  			       		String techFName = assignedTech.getFirstName();
+  			       		String techLName = assignedTech.getLastName();
+  			       		
+  			        	LatestResponseView rdv = new LatestResponseView(); 
   			            rdv.setLocationRelativeTo(null);
   			            rdv.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
   			            
-  			            rdv.jTextField1.setText(data0);
-  			            rdv.jTextField2.setText(data1);
-  			            rdv.jTextField3.setText(data2);
-  			            rdv.jTextArea1.setText(data3);
+  			            rdv.respIdTextField.setText(data0);
+  			            rdv.compIdTextField.setText(data1);
+  			            rdv.dateTextField.setText(data2);
+  			            rdv.respDetails.setText(data3);
+  			            rdv.fNameTextField.setText(techFName);
+  			            rdv.lNameTextField.setText(techLName);
   			            
   			            rdv.setVisible(true);
   			            
